@@ -105,6 +105,58 @@ for line in labels_file:
     sentences_src.append(line.split())
     sent_src.append(line)
 
-for layer in range(7):
+for layer in range(6):
+    # compute constituents probabilities
+    maxprob = np.zeros((size - 1, size - 1))
+    for pos in range(size - 1):
+        for i in range(size - 1):
+            sumprob = 0
+            for j in range(i, size - 1):
+                sumprob = sumprob + word_mixture[layer][pos][j]
+                if (maxprob[i][j] < sumprob):
+                    maxprob[i][j] = sumprob
+                #maxprob[i][j] = maxprob[i][j] + sumprob
+
+    # CKY algorithm
+    ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
+    for span in range(2, size - 1):
+        for pos in range(0, size - 1):
+            if (pos + span < size - 1):
+                best_prob = 0
+                best_variant = 0
+                for variant in range(1, span):
+                    var_prob = maxprob[pos][pos + span - variant] * maxprob[pos + span - variant][pos + span]
+                    if (best_prob < var_prob):
+                        best_prob = var_prob
+                        best_variant = variant
+                maxprob[pos][pos + span] *= best_prob
+                ckyback[pos][pos + span] = best_variant
+                #print('For ' + str(pos) + ' ' + str(pos+span) + ' is best: ' + str(best_variant))
+    # CKY go back and create brackets
+    queue = [(0, size - 2)]
+    brackets = [''] * (size - 1)
+    #for i in range(size - 1):
+     #   brackets[i] = ''
+    #print('---')
+    while (queue != []):
+        (i, j) = queue.pop()
+        #print(str(i) + ' ' + str(j))
+        if (j - i >= 2):
+            brackets[i] = brackets[i] + '('
+            brackets[j] = ')' + brackets[j]
+            #print(ckyback[i][j])
+            queue.append((i, j - ckyback[i][j]))
+            queue.append((j - ckyback[i][j], j))
+            #print('->' + str(i) + ' ' + str(i + j - ckyback[i][j]))
+            #print('->' + str(i + ckyback[i][j]) + ' ' + str(i + j))
+
+    for i in (range(size - 2)):
+        print (brackets[i], end='')
+        print (sentences_src[0][i], end='')
+    print (brackets[size - 2])
+
     heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
     plt.savefig(args.heatmaps + '.' + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
+
+
+
