@@ -2,13 +2,18 @@
 
 import codecs
 import sys
+import argparse
 
-sys.path.append('/home/marecek/troja/neuralmonkey')
+sys.path.append('/lnet/troja/projects/emnlp18-nonautoregressive/neuralmonkey')
 
 from neuralmonkey.vocabulary import from_t2t_vocabulary, Vocabulary
 from neuralmonkey.processors import wordpiece as wp
 
-vocabulary = from_t2t_vocabulary("/home/popel/work/qt21/data/vocab.encs.32768")
+ap = argparse.ArgumentParser()
+ap.add_argument("--dictionary", help="Dictionary")
+args= ap.parse_args()
+
+vocabulary = from_t2t_vocabulary(args.dictionary)
 
 for line in sys.stdin:
     sentence = line.split()
