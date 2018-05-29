@@ -124,12 +124,25 @@ alignment = list()
 if (args.alignment):
     alignment_file = open(args.alignment, "r")
     for line in alignment_file:
-        alignment.append(line.split())
+        ali = list()
+        for a in line.split():
+            ali.append(int(a))
+        alignment.append(ali)
     print("Alignment size: " + str(len(alignment[0])))
+
+word_count = alignment[0][-1] + 1
+words = ['' for x in range(word_count)]
+for i in range(len(alignment[0])):
+    token = sentences_src[0][i]
+    if (token[-1] == '_'):
+        token = token[:-1]
+    words[alignment[0][i]] += token
+
 
 for layer in range(0,7):
     # compute constituents probabilities
     maxprob = np.zeros((size - 1, size - 1))
+    prob = np.zeros((word_count, word_count))
     for i in range(size - 1):
         for j in range(i, size - 1):
             ssum = 0
@@ -141,43 +154,61 @@ for layer in range(0,7):
                         ssum += word_mixture[layer][k][l]
                 #maxprob[i][j] = ssum / (j - i + 1)**2
                 maxprob[i][j] = ssum / (j - i + 1)
+                prob[alignment[0][i]][alignment[0][j]] = maxprob[i][j]
                 #maxprob[i][j] = ssum
             else:
                 #print(str(i) + ' ' + str(j))
                 maxprob[i][j] = 0
-            
-
-    print(maxprob)
-    # CKY algorithm
-    ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
-    ctree = [[0 for x in range(size - 1)] for y in range(size - 1)]
-    for i in range(size - 1):
-        token = sentences_src[0][i]
-        if (token[-1] == '_'):
-            token = token[:-1]
-        ctree[i][i] = token
-
-    for span in range(1, size - 1):
-        for pos in range(0, size - 1):
-            if (pos + span < size - 1):
+    # CKY on words (not on wordpieces)
+    ctree = [[0 for i in range(word_count)] for j in range(word_count)]
+    for i in range(word_count):
+        ctree[i][i] = words[i]
+    for span in range(1, word_count):
+        for pos in range(0, word_count):
+            if (pos + span < word_count):
                 best_prob = -1
                 best_variant = 0
                 for variant in range(1, span + 1):
-                    print(str(pos) + ' ' + str(span) + ' ' + str(best_variant))
-                    var_prob = maxprob[pos][pos + span - variant] * maxprob[pos + span - variant + 1][pos + span]
-                    #print (str(pos)+','+str(pos+span)+' -> '+str(pos)+','+str(pos+span-variant)+' + '+str(pos+span-variant+1)+','+str(pos+span)+': '+str(var_prob)) 
-                    #var_prob = maxprob[pos][pos + span - variant] + maxprob[pos + span - variant][pos + span]
+                    var_prob = prob[pos][pos + span - variant] * prob[pos + span - variant + 1][pos + span]
+                    #var_prob = prob[pos][pos + span - variant] + prob[pos + span - variant + 1][pos + span]
                     if (best_prob < var_prob):
                         best_prob = var_prob
                         best_variant = variant
-                #maxprob[pos][pos + span] *= best_prob
-                maxprob[pos][pos + span] *= 1
-                #maxprob[pos][pos + span] += best_prob
-                ckyback[pos][pos + span] = best_variant
-                print("B: " + str(pos) + ' ' + str(span) + ' ' + str(best_variant))
+                #prob[pos][pos + span] *= best_prob
+                #prob[pos][pos + span] += best_prob
+                prob[pos][pos + span] *= 1
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
+    #print(maxprob)
+    # CKY algorithm
+    #ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
+    #ctree = [[0 for x in range(size - 1)] for y in range(size - 1)]
+    #for i in range(size - 1):
+    #    token = sentences_src[0][i]
+    #    if (token[-1] == '_'):
+    #        token = token[:-1]
+    #    ctree[i][i] = token
+
+    #for span in range(1, size - 1):
+    #    for pos in range(0, size - 1):
+    #        if (pos + span < size - 1):
+    #            best_prob = -1
+    #            best_variant = 0
+    #            for variant in range(1, span + 1):
+    #                print(str(pos) + ' ' + str(span) + ' ' + str(best_variant))
+    #                var_prob = maxprob[pos][pos + span - variant] * maxprob[pos + span - variant + 1][pos + span]
+    #                #print (str(pos)+','+str(pos+span)+' -> '+str(pos)+','+str(pos+span-variant)+' + '+str(pos+span-variant+1)+','+str(pos+span)+': '+str(var_prob)) 
+    #                #var_prob = maxprob[pos][pos + span - variant] + maxprob[pos + span - variant][pos + span]
+    #                if (best_prob < var_prob):
+    #                    best_prob = var_prob
+    #                    best_variant = variant
+    #            #maxprob[pos][pos + span] *= best_prob
+    #            maxprob[pos][pos + span] *= 1
+    #            #maxprob[pos][pos + span] += best_prob
+    #            ckyback[pos][pos + span] = best_variant
+    #            print("B: " + str(pos) + ' ' + str(span) + ' ' + str(best_variant))
+    #            ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
     file = open(args.tree + str(layer), 'w')
-    file.write('( ' + str(ctree[0][size - 2]) + ')')
+    file.write(str(ctree[0][word_count - 1]))
     file.close()
     print("Output written.")
 
