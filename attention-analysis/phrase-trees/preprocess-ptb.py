@@ -30,6 +30,7 @@ for filename in sorted(glob.glob('/home/marecek/nltk_data/corpora/ptb/' + args.p
         # extract list of POS tags and remove POS tags from the trees
         sent_tags = list()
         for sub in trees[i].subtrees():
+            sub.set_label("X")
             for n, child in enumerate(sub):
                 if isinstance(child, str):
                     continue
