@@ -67,7 +67,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--attentions", help="NPZ file with attentions")
 ap.add_argument("--alignment", help="Alignment to the PTB tokens")
 ap.add_argument("--labels", help="Labels separated by spaces")
-ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
+#ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
 ap.add_argument("--tree", help="Output trees filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
@@ -154,8 +154,8 @@ for layer in range(0,7):
                         ssum += word_mixture[layer][k][l]
                 #maxprob[i][j] = ssum / (j - i + 1)**2
                 maxprob[i][j] = ssum / (j - i + 1)
-                prob[alignment[0][i]][alignment[0][j]] = maxprob[i][j]
                 #maxprob[i][j] = ssum
+                prob[alignment[0][i]][alignment[0][j]] = maxprob[i][j]
             else:
                 #print(str(i) + ' ' + str(j))
                 maxprob[i][j] = 0
@@ -169,8 +169,8 @@ for layer in range(0,7):
                 best_prob = -1
                 best_variant = 0
                 for variant in range(1, span + 1):
-                    var_prob = prob[pos][pos + span - variant] * prob[pos + span - variant + 1][pos + span]
-                    #var_prob = prob[pos][pos + span - variant] + prob[pos + span - variant + 1][pos + span]
+                    #var_prob = prob[pos][pos + span - variant] * prob[pos + span - variant + 1][pos + span]
+                    var_prob = prob[pos][pos + span - variant] + prob[pos + span - variant + 1][pos + span]
                     if (best_prob < var_prob):
                         best_prob = var_prob
                         best_variant = variant
@@ -207,10 +207,11 @@ for layer in range(0,7):
     #            ckyback[pos][pos + span] = best_variant
     #            print("B: " + str(pos) + ' ' + str(span) + ' ' + str(best_variant))
     #            ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
-    file = open(args.tree + str(layer), 'w')
-    file.write(str(ctree[0][word_count - 1]))
-    file.close()
-    print("Output written.")
+    if (layer == 6):
+        file = open(args.tree, 'w')
+        file.write(str(ctree[0][word_count - 1]) + '\n')
+        file.close()
+        print("Output written.")
 
     #print(maxprob)
     #print(ckyback)
@@ -246,8 +247,8 @@ for layer in range(0,7):
     #    print (sentences_src[0][i], end='')
     #    print (right_brackets[i])
 
-    heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
-    plt.savefig(args.heatmaps + '.' + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
+    #heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
+    #plt.savefig(args.heatmaps + '.' + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
 
 # Global CKY algorithm
 #gtree = [[0 for x in range(size - 1)] for y in range(size - 1)]
