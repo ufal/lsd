@@ -1,0 +1,10 @@
+1.7_fiction_notok -- grepped fiction from plaintext CzEng 1.7 (no other processing)
+
+1.7_fiction_udtok -- tokenized with UDPipe 1.2
+(https://github.com/ufal/udpipe/releases/tag/v1.2.0) using tokenization models from
+http://hdl.handle.net/11234/1-2364 i.e. trained by Milan Straka on UD 2.0 data;
+using PDT for Czech and EWT for English;
+EWT seems suitable since it should be able to handle non-standard words and
+punctuation
+
+
