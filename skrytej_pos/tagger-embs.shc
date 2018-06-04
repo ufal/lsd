@@ -38,9 +38,9 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-rm -rf tagger-hidden
+rm -rf tagger-embs
 source activate /home/libovicky/.conda/envs/py35/
-rurneuralmonkey/bin/neuralmonkey-train tagger-hidden.ini 
+rurneuralmonkey/bin/neuralmonkey-train tagger-embs.ini 
 
 # wait 15s so that the epilogue can record the info accurately
 sleep 15s
