@@ -38,9 +38,9 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-rm -rf tagger-embs-only
+rm -rf tagger-embs-only-rand
 source activate /home/libovicky/.conda/envs/py35/
-rurneuralmonkey/bin/neuralmonkey-train tagger-embs-only.ini 
+rurneuralmonkey/bin/neuralmonkey-train tagger-embs-only-rand.ini 
 
 # wait 15s so that the epilogue can record the info accurately
 sleep 15s
