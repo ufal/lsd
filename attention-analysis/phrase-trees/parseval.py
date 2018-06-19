@@ -146,12 +146,15 @@ def evaluate(segments1, segments2):
    errorCandidates = []
    errors = []
    for s2 in segments2:
+       print s2
        for s1 in segments1:
            if equal(s1,s2):
+               #print (s1, s2)
                correct = correct + 1
                break
    precision = float(correct)/len(segments1)
    recall = float(correct)/len(segments2)
+   print (correct, len(segments1), len(segments2))
 
    # Find errors
    for s1 in segments1:
@@ -311,9 +314,11 @@ for i in range(len(parts1)):
 
 precision = precision/len(parts1)
 recall = recall/len(parts1)
+f1 = 2 / (1 / precision + 1 / recall)
 crossing = crossing/len(parts1)
 
 print '########## TOTAL ##########'
 print ''
-print 'Average precision, recall and cross brackets:'
-print (precision, recall, crossing)
+print 'Average precision, recall, F1, and cross brackets:'
+print (precision, recall, f1, crossing)
+#print(str(len(parts1)) + ' ' + str(len(parts2)))

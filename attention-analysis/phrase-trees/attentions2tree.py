@@ -5,6 +5,8 @@ import codecs
 import argparse
 import matplotlib.pyplot as plt
 from nltk import Tree
+import random
+import math
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
@@ -65,9 +67,10 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--attentions", help="NPZ file with attentions")
+ap.add_argument("--weights", help="NPZ file with projection weights")
 ap.add_argument("--alignment", help="Alignment to the PTB tokens")
 ap.add_argument("--labels", help="Labels separated by spaces")
-#ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
+ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
 ap.add_argument("--tree", help="Output trees filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
@@ -84,15 +87,33 @@ print("Number of heads detected:" + str(head_count))
 word_mixture = list()
 word_mixture.append(np.identity(size))
 
+if (args.weights):
+    w = np.load(args.weights)
+
 for layer in (range(6)):
+    if (args.weights):
+        head_weights = np.split(w["encoder/layer_" + str(layer) + "/self_attention/output_proj/kernel:0"], 16, axis=1)
     att = x["encoder/layer_" + str(layer) + "/self_attention/add:0"][0]
     layer_matrix = np.zeros((size, size))
+    head_weight_sum = 0
     for head in (range(head_count)):
+        head_weight = 1
+        #head_weight = random.random()
+        if (args.weights):
+            head_weight = math.exp(np.sum(head_projs[head]) / 10 )
+        print("Weight of head" + str(head) + ": " + str(head_weight))
+        head_weight_sum += head_weight
         matrix = att[head]
         #softmax
         deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0)
-        layer_matrix = layer_matrix + deps
-    layer_matrix = layer_matrix / head_count
+        layer_matrix = layer_matrix + deps * head_weight
+    layer_matrix = layer_matrix / head_weight_sum
+################ ONE HAEAD ONLY!!!!!!!
+#    matrix = att[4]
+#    deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0)
+#    layer_matrix = deps
+################ ONE HAEAD ONLY!!!!!!!
+
     if (args.not_aggreg):
         word_mixture.append(layer_matrix)
     else:
@@ -138,6 +159,19 @@ for i in range(len(alignment[0])):
         token = token[:-1]
     words[alignment[0][i]] += token
 
+for i in range(len(words)):
+    if (words[i] == '('):
+        words[i] = '-LRB-'
+    elif (words[i] == ')'):
+        words[i] = '-RRB-'
+    elif (words[i] == '['):
+        words[i] = '-LSB-'
+    elif (words[i] == ']'):
+        words[i] = '-RSB-'
+    elif (words[i] == '{'):
+        words[i] = '-LCB-'
+    elif (words[i] == '}'):
+        words[i] = '-RCB-'
 
 for layer in range(0,7):
     # compute constituents probabilities
@@ -169,8 +203,8 @@ for layer in range(0,7):
                 best_prob = -1
                 best_variant = 0
                 for variant in range(1, span + 1):
-                    #var_prob = prob[pos][pos + span - variant] * prob[pos + span - variant + 1][pos + span]
-                    var_prob = prob[pos][pos + span - variant] + prob[pos + span - variant + 1][pos + span]
+                    var_prob = prob[pos][pos + span - variant] * prob[pos + span - variant + 1][pos + span]
+                    #var_prob = prob[pos][pos + span - variant] + prob[pos + span - variant + 1][pos + span]
                     if (best_prob < var_prob):
                         best_prob = var_prob
                         best_variant = variant
@@ -178,6 +212,21 @@ for layer in range(0,7):
                 #prob[pos][pos + span] += best_prob
                 prob[pos][pos + span] *= 1
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
+                #if (prob[pos][pos + span - best_variant] + prob[pos + span - best_variant + 1][pos + span] * 0.5 < prob[pos][pos + span]):
+                #    print("Flatten.")
+                #    children = list()
+                #    if isinstance(ctree[pos][pos + span - best_variant], str):
+                #        children.append(ctree[pos][pos + span - best_variant])
+                #    else:
+                #        for n, child in enumerate(ctree[pos][pos + span - best_variant]):
+                #            children.append(child)
+                #    if isinstance(ctree[pos + span - best_variant + 1][pos + span], str):
+                #        children.append(ctree[pos + span - best_variant + 1][pos + span])
+                #    else:
+                #        for n, child in enumerate(ctree[pos + span - best_variant + 1][pos + span]):
+                #            children.append(child)
+                #    ctree[pos][pos + span] = Tree('X', children)
+
     #print(maxprob)
     # CKY algorithm
     #ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
@@ -247,8 +296,9 @@ for layer in range(0,7):
     #    print (sentences_src[0][i], end='')
     #    print (right_brackets[i])
 
-    #heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
-    #plt.savefig(args.heatmaps + '.' + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
+    if (layer < 7):
+        heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
+        plt.savefig(args.heatmaps + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
 
 # Global CKY algorithm
 #gtree = [[0 for x in range(size - 1)] for y in range(size - 1)]
