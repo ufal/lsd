@@ -111,7 +111,7 @@ for src_lang in ["en", "de", "fr", "es"]:
 
 trg_mixture = list()
 trg_direct = list()
-trg_hier = list()
+trg_hier = np.zeros((6,4))
 
 for layer in (range(6)):
     if (args.scheme == 'flat'):
@@ -166,22 +166,23 @@ for layer in (range(6)):
             atth = x["decoder/layer_" + str(layer) + "/encdec_attention/enc_hier/energies:0"][0]
             print(x["decoder/layer_" + str(layer) + "/encdec_attention/enc_hier/energies:0"])
             print(x["decoder/layer_" + str(layer) + "/encdec_attention/enc_hier/energies:0"].shape)
-            lmh = np.zeros((trg_size, 4))
+            atth = np.squeeze(atth, axis=1)
+            lmh = [0, 0, 0, 0]
             for head in (range(8)):
                 #depsh = np.transpose(np.exp(np.transpose(atth[head])) / np.sum(np.exp(np.transpose(atth[head])), axis=0))
-                depsh = np.exp(atth[head]) / np.sum(np.exp(atth[head]), axis=1)
+                depsh = np.exp(atth[head]) / np.sum(np.exp(atth[head]))
                 lmh += depsh
-            lmh = lmh / 4
-            print(lmh)
-            trg_mixture.append(np.concatenate((np.multiply(np.matmul(lm[0], mixture[lang[0]][4]), lmh[:,[0]]), \
-                                               np.multiply(np.matmul(lm[1], mixture[lang[1]][4]), lmh[:,[1]]), \
-                                               np.multiply(np.matmul(lm[2], mixture[lang[2]][4]), lmh[:,[2]]), \
-                                               np.multiply(np.matmul(lm[3], mixture[lang[3]][4]), lmh[:,[3]])), axis=1))
-            trg_direct.append(np.concatenate((np.multiply(np.matmul(lm[0], mixture[lang[0]][0]), lmh[:,[0]]), \
-                                             np.multiply(np.matmul(lm[1], mixture[lang[1]][0]), lmh[:,[1]]), \
-                                             np.multiply(np.matmul(lm[2], mixture[lang[2]][0]), lmh[:,[2]]), \
-                                             np.multiply(np.matmul(lm[3], mixture[lang[3]][0]), lmh[:,[3]])), axis=1))
-            trg_hier.append(lmh)
+            lmh = lmh / 8
+            print("Distribution across languages: " + str(lmh))
+            trg_mixture.append(np.concatenate((np.multiply(np.matmul(lm[0], mixture[lang[0]][4]), lmh[0]), \
+                                               np.multiply(np.matmul(lm[1], mixture[lang[1]][4]), lmh[1]), \
+                                               np.multiply(np.matmul(lm[2], mixture[lang[2]][4]), lmh[2]), \
+                                               np.multiply(np.matmul(lm[3], mixture[lang[3]][4]), lmh[3])), axis=1))
+            trg_direct.append(np.concatenate((np.multiply(np.matmul(lm[0], mixture[lang[0]][0]), lmh[0]), \
+                                             np.multiply(np.matmul(lm[1], mixture[lang[1]][0]), lmh[1]), \
+                                             np.multiply(np.matmul(lm[2], mixture[lang[2]][0]), lmh[2]), \
+                                             np.multiply(np.matmul(lm[3], mixture[lang[3]][0]), lmh[3])), axis=1))
+            trg_hier[layer] = lmh
 
 
 en_labels = list()
@@ -223,9 +224,10 @@ for layer in range(6):
     heatmap(trg_mixture[layer], "", "", "", es_labels[0] + fr_labels[0] + de_labels[0] + en_labels[0], cs_labels[0])
     plt.savefig(args.heatmaps + str(layer) + '.pdf', dpi=400, format='pdf', bbox_inches='tight')
     tikz_save(args.heatmaps + str(layer) + '.tex')
-    if(args.scheme == 'hierarchical'):
-        heatmap(trg_hier[layer], "", "", "", ["es", "fr", "de", "en"], cs_labels[0])
-        plt.savefig(args.heatmaps + 'H.png', dpi=400, format='png', bbox_inches='tight')
+if(args.scheme == 'hierarchical'):
+    heatmap(trg_hier, "", "", "", ["es", "fr", "de", "en"], ["layer 0", "layer 1", "layer 2", "layer 3", "layer 4", "layer 5"])
+    plt.savefig(args.heatmaps + 'H.pdf', dpi=400, format='pdf', bbox_inches='tight')
+    tikz_save(args.heatmaps + 'H.tex')
 
 
 
