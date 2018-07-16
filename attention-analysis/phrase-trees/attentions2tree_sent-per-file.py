@@ -22,12 +22,16 @@ def deptree(size, weights, wordpieces):
     # MST input starts with number of tokens
     mst_input = [str(size)]
     for child in range(size):
-        for head in range(size):
+        for head in range(child, size-1):
             if child != head:
-                score = -weights[head][child]
+                score = -weights[child][head]
                 # MST uses 1-based indices
                 mst_input.append(str(head+1))
                 mst_input.append(str(child+1))
+                mst_input.append(str(score))
+                
+                mst_input.append(str(child+1))
+                mst_input.append(str(head+1))
                 mst_input.append(str(score))
 
     try:
