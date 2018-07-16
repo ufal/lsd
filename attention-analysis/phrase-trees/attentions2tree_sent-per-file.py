@@ -8,6 +8,36 @@ from nltk import Tree
 import random
 import math
 
+# size = number of tokens
+# weights[i][j] = word_mixture[6][i][j] = attention weight
+# wordpieces[i] = sentences_src[0][i] = wordpiece
+def deptree(size, weights, wordpieces):
+    lines = wordpieces
+    lines.append('\n\n')
+    lines.append('child -> parent (weight)\n\n')
+    for i in range(size):
+        best_head = -1
+        best_score = -1
+        for j in range(size):
+            #lines.extend((
+            #    str(i), ' ', wordpieces[i], ' - ',
+            #    str(j), ' ', wordpieces[j], ':\t',
+            #    str(weights[j][i]), '\n'
+            #))
+            if i != j:
+                score = weights[j][i]
+                if score > best_score:
+                    best_score = score
+                    best_head = j
+        
+        lines.extend((
+            str(i), ' ', wordpieces[i], ' -> ',
+            str(best_head), ' ', wordpieces[best_head], ' (',
+            str(best_score), ')\n'
+        ))
+
+    return lines
+
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
     Inspired by:
@@ -232,7 +262,9 @@ for layer in range(6,7):
     # dependency parser
     if args.deptree != None:
         with open(args.deptree, 'w') as deptree_fh:
-            deptree_fh.write('STROM')
+            deptree_fh.writelines(
+                    deptree(size, word_mixture[6], sentences_src[0])
+                    )
         print("Dep tree written.")
     
     #print(maxprob)
