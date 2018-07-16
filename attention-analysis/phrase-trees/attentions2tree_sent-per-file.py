@@ -72,6 +72,7 @@ ap.add_argument("--alignment", help="Alignment to the PTB tokens")
 ap.add_argument("--labels", help="Labels separated by spaces")
 ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
 ap.add_argument("--tree", help="Output trees filename stem")
+ap.add_argument("--deptree", help="Output dependency trees filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
 
@@ -229,7 +230,10 @@ for layer in range(6,7):
                     ctree[pos][pos + span] = Tree('X', children)
 
     # dependency parser
-    # TODO:
+    if args.deptree != None:
+        with open(args.deptree, 'w') as deptree_fh:
+            deptree_fh.write('STROM')
+        print("Dep tree written.")
     
     #print(maxprob)
     # CKY algorithm
