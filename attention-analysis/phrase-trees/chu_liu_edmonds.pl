@@ -8,8 +8,16 @@ use Graph;
 use Graph::Directed;
 use Graph::ChuLiuEdmonds;
 
+# run e.g. with "-h" option to show doc
 if ( @ARGV != 0 ) {
-    die("Usage: $0 < graphs (length parent child weight p c w p c w...) > MSTs (p-c p-c p-c p-c...); 1-based indexing \n");
+die("Usage: $0 < input_graphs > MSTs
+input_graphs = length parent child weight p c w p c w... (one sentence per line)
+MSTs = p-c p-c p-c p-c...
+Uses 1-based indexing for parent and child; this is in accord with CoNLL where 0 is the root.
+Computes MINIMUM spanning tree (use negative weights to get maximum).
+Does not explicitly mark the root: the root is the node with no parent.
+The 'length' is the number of tokens -- e.g. 5 for nodes 1 to 5.
+");
 }
 
 while (<>) {
