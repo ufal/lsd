@@ -7,31 +7,52 @@ import matplotlib.pyplot as plt
 from nltk import Tree
 import random
 import math
+import subprocess
 
 # size = number of tokens
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces[i] = sentences_src[0][i] = wordpiece
 def deptree(size, weights, wordpieces):
-    lines = wordpieces
-    lines.append('\n\n')
-    lines.append('child -> parent (weight)\n\n')
+    # MST input starts with number of tokens
+    mst_input = [str(size)]
     for child in range(size):
-        best_head = -1
-        best_score = -1
         for head in range(size):
             if child != head:
                 score = weights[head][child]
-                if score > best_score:
-                    best_score = score
-                    best_head = head
-        
-        lines.extend((
-            str(child), ':', wordpieces[child], ' -> ',
-            str(best_head), ':', wordpieces[best_head], ' (',
-            str(best_score), ')\n'
-        ))
+                # MST uses 1-based indices
+                mst_input.append(str(head+1))
+                mst_input.append(str(child+1))
+                mst_input.append(str(score))
 
-    return lines
+    try:
+        mst_result = subprocess.run(
+            args="./chu_liu_edmonds.pl",
+            input=" ".join(mst_input),
+            #text=True,
+            universal_newlines=True,
+            #capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True)
+    except subprocess.CalledProcessError as e:
+        print("Calling MST died with exception:\n  ", e, "\n")
+        print(e.stderr)
+        print("\n")
+        raise
+
+    return mst_result.stdout + "\n" + " ".join(wordpieces)
+        
+    #lines = wordpieces
+    #lines.append('\n\n')
+    #lines.append('child -> parent (weight)\n\n')
+    
+    #lines.extend((
+    #    str(child), ':', wordpieces[child], ' -> ',
+    #    str(best_head), ':', wordpieces[best_head], ' (',
+    #    str(best_score), ')\n'
+    #))
+
+    #return lines
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
