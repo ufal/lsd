@@ -13,12 +13,18 @@ import subprocess
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces[i] = sentences_src[0][i] = wordpiece
 def deptree(size, weights, wordpieces):
+    # prepare output
+    lines = []
+    lines.append("# text = ")
+    lines.append(" ".join(wordpieces))
+    lines.append("\n")
+
     # MST input starts with number of tokens
     mst_input = [str(size)]
     for child in range(size):
         for head in range(size):
             if child != head:
-                score = weights[head][child]
+                score = -weights[head][child]
                 # MST uses 1-based indices
                 mst_input.append(str(head+1))
                 mst_input.append(str(child+1))
@@ -40,19 +46,29 @@ def deptree(size, weights, wordpieces):
         print("\n")
         raise
 
-    return mst_result.stdout + "\n" + " ".join(wordpieces)
-        
-    #lines = wordpieces
-    #lines.append('\n\n')
-    #lines.append('child -> parent (weight)\n\n')
-    
-    #lines.extend((
-    #    str(child), ':', wordpieces[child], ' -> ',
-    #    str(best_head), ':', wordpieces[best_head], ' (',
-    #    str(best_score), ')\n'
-    #))
+    # parent for each child; init with 0 (will stay for root);
+    # 1-based indexes
+    tree = dict()
+    for child in range(size):
+        tree[child+1] = 0
 
-    #return lines
+    # store MST output into tree
+    for pc in mst_result.stdout.split():
+        head, child = [int(s) for s in pc.split("-")]
+        tree[child] = head
+       
+    for child in range(size):
+        id = child+1
+        head = tree[id]
+        form = wordpieces[child]
+        # store parent form as lemma :-)
+        lemma = 'ROOT' if head == 0 else wordpieces[head-1]
+        lines.append("\t".join((
+            str(id), form, lemma, str(head)
+            )))
+        lines.append('\n')
+
+    return lines
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
