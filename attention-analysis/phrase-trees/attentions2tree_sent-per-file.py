@@ -15,24 +15,19 @@ def deptree(size, weights, wordpieces):
     lines = wordpieces
     lines.append('\n\n')
     lines.append('child -> parent (weight)\n\n')
-    for i in range(size):
+    for child in range(size):
         best_head = -1
         best_score = -1
-        for j in range(size):
-            #lines.extend((
-            #    str(i), ' ', wordpieces[i], ' - ',
-            #    str(j), ' ', wordpieces[j], ':\t',
-            #    str(weights[j][i]), '\n'
-            #))
-            if i != j:
-                score = weights[j][i]
+        for head in range(size):
+            if child != head:
+                score = weights[head][child]
                 if score > best_score:
                     best_score = score
-                    best_head = j
+                    best_head = head
         
         lines.extend((
-            str(i), ' ', wordpieces[i], ' -> ',
-            str(best_head), ' ', wordpieces[best_head], ' (',
+            str(child), ':', wordpieces[child], ' -> ',
+            str(best_head), ':', wordpieces[best_head], ' (',
             str(best_score), ')\n'
         ))
 
