@@ -21,18 +21,37 @@ def deptree(size, weights, wordpieces):
 
     # MST input starts with number of tokens
     mst_input = [str(size)]
+    # the first dimension is the child, because in this way, for a fixed
+    # child, the weights for all prospective heads are normalized to sum to 1;
+    # this is good, as the heads compete for being the head of the child
     for child in range(size):
-        for head in range(child, size-1):
+        # the second dimension is thus the parent;
+        # we avoid the last node as parent, because it is typically the
+        # sentence-final full stop, which seems to act as a constant term for
+        # attention, giving it all the attention that it does not want to give
+        # elsewhere, effectively leading to the last token usually being the
+        # one receiving the highest attention (and, subsequently, becoming the
+        # parent of all tokens in the sentence in the parsing); we avoid that,
+        # because we believe that the network giving so much attention to the
+        # full stop has a technical rather than semantic interpretation
+        # TODO: switch NM to add EOS to end of each sentence, which could
+        # function as the constant term (to be ignored) and let us get rid of
+        # this hack here
+        for head in range(size-1):
             if child != head:
+                # the Perl script computes MINIMUM spanning tree
                 score = -weights[child][head]
-                # MST uses 1-based indices
-                mst_input.append(str(head+1))
-                mst_input.append(str(child+1))
-                mst_input.append(str(score))
+               
+                # MST uses 1-based indices;
+                # it expects triplets of head id, child id, and weight
+                mst_input.extend((
+                    str(head+1), str(child+1), str(score)
+                    ))
                 
-                mst_input.append(str(child+1))
-                mst_input.append(str(head+1))
-                mst_input.append(str(score))
+                #symmetrization:
+                #mst_input.append(str(child+1))
+                #mst_input.append(str(head+1))
+                #mst_input.append(str(score))
 
     try:
         mst_result = subprocess.run(
