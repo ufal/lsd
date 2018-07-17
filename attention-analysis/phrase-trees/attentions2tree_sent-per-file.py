@@ -28,7 +28,7 @@ def deptree(size, weights, wordpieces):
     lines = []
     for child in range(size-1):
         links = []
-        for head in range(size-1):
+        for head in range(child, size-1):
             if mst[child][head] != 0 or mst[head][child] != 0:
                 links.append(str(head))
         # 5    the_    3,4,6
