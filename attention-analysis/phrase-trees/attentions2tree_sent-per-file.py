@@ -40,9 +40,34 @@ def deptree(size, weights, wordpieces):
     return ('\n'.join(lines), '\n', '\n')
 
 def staredness(size, weights, wordpieces):
-    lines = []
+    # input
+    staredness = dict()
+    for victim in range(size):
+        staredness[victim] = sum([
+            weights[voyeur][victim] for voyeur in range(size)
+        ])
 
-    return lines
+    # process
+    # 1 means most stared upon
+    staredness_rank = dict()
+    rank = 0
+    for victim in sorted(staredness, key=staredness.get, reverse=True):
+        staredness_rank[victim] = rank
+        rank += 1
+
+    # output
+    result = []
+    for victim in range(size):
+        rank = staredness_rank[victim]
+        spaces = '..' * rank
+        result.append(spaces)
+        result.append('[')
+        result.append(str(rank))
+        result.append('] ')
+        result.append(wordpieces[victim])
+        result.append('\n')
+
+    return result
     
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
