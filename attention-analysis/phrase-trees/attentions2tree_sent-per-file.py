@@ -15,25 +15,26 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 # wordpieces[i] = sentences_src[0][i] = wordpiece
 def deptree(size, weights, wordpieces):
     graph = [ [0] * size for i in range(size)  ]
-    for child in range(size-1):
-        for head in range(size-1):
-            if child != head:
+    for brother in range(size-1):
+        for sister in range(brother+1, size-1):
+            for column in range(size):
                 # MINIMUM spanning tree
-                # symmetrized
-                score = - weights[child][head] - weights[head][child]
-                graph[child][head] = score
+                # now sum
+                # TODO max
+                score = - weights[column][brother] * weights[column][sister]
+                graph[brother][sister] += score
 
     mst = minimum_spanning_tree(graph).toarray()
 
     lines = []
-    for child in range(size-1):
-        links = []
-        for head in range(child, size-1):
-            if mst[child][head] != 0 or mst[head][child] != 0:
-                links.append(str(head))
+    for brother in range(size-1):
+        sisters = []
+        for sister in range(brother+1, size-1):
+            if mst[brother][sister] != 0 or mst[sister][brother] != 0:
+                sisters.append(str(sister))
         # 5    the_    3,4,6
         lines.append('\t'.join((
-            str(child), wordpieces[child], ','.join(links)
+            str(brother), wordpieces[brother], ','.join(sisters)
         )))
 
     return ('\n'.join(lines), '\n', '\n')
