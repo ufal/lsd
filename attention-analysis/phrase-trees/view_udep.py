@@ -3,7 +3,7 @@
 
 import sys
 
-COMPACT = 30
+COMPACT = 28
 
 # at start or end of line, symbol is / or \ and also the --- is drawn
 # in the middle, symbol is |
