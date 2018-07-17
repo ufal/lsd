@@ -40,7 +40,8 @@ def deptree(size, weights, wordpieces):
         for head in range(size-1):
             if child != head:
                 # the Perl script computes MINIMUM spanning tree
-                score = -weights[child][head]
+                # symmetrization
+                score = - weights[child][head] - weights[head][child]
                
                 # MST uses 1-based indices;
                 # it expects triplets of head id, child id, and weight
@@ -48,11 +49,6 @@ def deptree(size, weights, wordpieces):
                     str(head+1), str(child+1), str(score)
                     ))
                 
-                #symmetrization:
-                #mst_input.append(str(child+1))
-                #mst_input.append(str(head+1))
-                #mst_input.append(str(score))
-
     try:
         mst_result = subprocess.run(
             args="./chu_liu_edmonds.pl",
