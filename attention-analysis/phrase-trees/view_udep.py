@@ -77,27 +77,24 @@ def print_sentence(words, links):
         spaces = ' ' * (max_word_length + 4)
         print(spaces, *intra_lines[i], sep='')
 
-words = []
-links = []
-sentid = 1
-for line in sys.stdin:
-    if line == '\n':
-        print("=====", "SENTENCE", sentid, "=====")
-        print()
-        print_sentence(words, links)
-        print()
-        words = []
-        links = []
-        sentid += 1
-    else:
-        fields = line.strip('\n').split('\t')
-        assert len(fields) == 3
-        assert int(fields[0]) == len(words)
-        words.append(fields[1])
-        if fields[2] != '':
-            links.append([int(l) for l in fields[2].split(',')])
-        else:
-            links.append([])
-if len(words) > 0:
+sentid = 0
+for filename in sys.argv[1:]:
+    sentid += 1
+    print()
+    print("=====", "SENTENCE", sentid, "FILE", filename, "=====")
+    print()
+    words = []
+    links = []
+    with open(filename) as fh:
+        for line in fh:
+            if line != '\n':
+                fields = line.strip('\n').split('\t')
+                assert len(fields) == 3
+                assert int(fields[0]) == len(words)
+                words.append(fields[1])
+                if fields[2] != '':
+                    links.append([int(l) for l in fields[2].split(',')])
+                else:
+                    links.append([])
     print_sentence(words, links)
 
