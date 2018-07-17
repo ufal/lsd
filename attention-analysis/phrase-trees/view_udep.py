@@ -27,11 +27,14 @@ def print_sentence(words, links):
     # construct graph
     token_lines = [ [' '] for i in range(length)  ]
     intra_lines = [ [' '] for i in range(length)  ]
+    # lists of links of given legth
+    longer_links = [ [] for i in range(length) ]
     for i in range(length):
         for l in links[i]:
-            assert i < l, "Links must only go further in the file"
+            link_length = l-i
+            assert link_length > 0, "Links must only go left to right"
 
-            if l == i+1:
+            if link_length == 1:
                 # neighbours are special
                 if token_lines[i][0] == '/':
                     token_lines[i][0] = 'X'
@@ -42,34 +45,40 @@ def print_sentence(words, links):
                     intra_lines[i][0] = '|'
                     token_lines[l][0] = '/'
             else:
-                # find a free layer to put the link into
-                layer = 0
-                ok = False
-                while not ok:
-                    layer += 3
-                    ok = True
-                    # check intra lines
-                    for m in range(i, l):
-                        if len(intra_lines[m]) > layer:
-                            if intra_lines[m][layer] == '|':
-                                ok = False
-                    # check token lines
-                    for m in range(i, l+1):
-                        if len(token_lines[m]) > layer:
-                            if token_lines[m][layer] == '\\':
-                                ok = False
-                            if token_lines[m][layer] == '|':
-                                ok = False
-                            if token_lines[m][layer] == '/':
-                                ok = False
-                # draw the link
-                assert ok
-                draw_line(token_lines[i], layer, '\\')
-                draw_line(intra_lines[i], layer, '|')
-                for m in range(i+1, l):
-                    draw_line(token_lines[m], layer, '|')
-                    draw_line(intra_lines[m], layer, '|')
-                draw_line(token_lines[l], layer, '/')
+                # put off for now
+                longer_links[link_length].append( (i, l) )
+
+    # now go over the longer links from shortest to longest
+    for link_length in range(length):
+        for i, l in longer_links[link_length]:
+            # find a free layer to put the link into
+            layer = 0
+            ok = False
+            while not ok:
+                layer += 3
+                ok = True
+                # check intra lines
+                for m in range(i, l):
+                    if len(intra_lines[m]) > layer:
+                        if intra_lines[m][layer] == '|':
+                            ok = False
+                # check token lines
+                for m in range(i, l+1):
+                    if len(token_lines[m]) > layer:
+                        if token_lines[m][layer] == '\\':
+                            ok = False
+                        if token_lines[m][layer] == '|':
+                            ok = False
+                        if token_lines[m][layer] == '/':
+                            ok = False
+            # draw the link
+            assert ok
+            draw_line(token_lines[i], layer, '\\')
+            draw_line(intra_lines[i], layer, '|')
+            for m in range(i+1, l):
+                draw_line(token_lines[m], layer, '|')
+                draw_line(intra_lines[m], layer, '|')
+            draw_line(token_lines[l], layer, '/')
 
     # print graph
     max_word_length = max([len(w) for w in words])
