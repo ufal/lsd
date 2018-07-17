@@ -14,40 +14,29 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces[i] = sentences_src[0][i] = wordpiece
 def deptree(size, weights, wordpieces):
-    # prepare output
-    lines = []
-    lines.append("# text = ")
-    lines.append(" ".join(wordpieces))
-    lines.append("\n")
-
     graph = [ [0] * size for i in range(size)  ]
     for child in range(size-1):
         for head in range(size-1):
             if child != head:
                 # MINIMUM spanning tree
-                # symmetrization
+                # symmetrized
                 score = - weights[child][head] - weights[head][child]
                 graph[child][head] = score
 
-    #lines.append(str(graph))
-    #lines.append("\n\n")
+    mst = minimum_spanning_tree(graph).toarray()
 
-    mst = minimum_spanning_tree(graph)
-    lines.append(str(mst))
-    lines.append("\n\n")
-
-    msta = mst.toarray()
-    result = []
+    lines = []
     for child in range(size-1):
+        links = []
         for head in range(size-1):
-            if msta[child][head] != 0:
-                result.append(str(child) + "-" + str(head))
-    lines.append("\n".join(result))
+            if mst[child][head] != 0 or mst[head][child] != 0:
+                links.append(str(head))
+        # 5    the_    3,4,6
+        lines.append('\t'.join((
+            str(child), wordpieces[child], ','.join(links)
+        )))
 
-
-
-    
-    return lines
+    return ('\n'.join(lines),)
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
