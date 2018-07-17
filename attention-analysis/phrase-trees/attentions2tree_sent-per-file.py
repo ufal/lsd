@@ -49,21 +49,10 @@ def staredness(size, weights, wordpieces):
 
     # process
     # 1 means most stared upon
-    staredness_rank = dict()
-    rank = 0
-    for victim in sorted(staredness, key=staredness.get, reverse=True):
-        staredness_rank[victim] = rank
-        rank += 1
-
-    # output
     result = []
-    for victim in range(size):
-        rank = staredness_rank[victim]
-        spaces = '..' * rank
+    for victim in sorted(staredness, key=staredness.get, reverse=True):
+        spaces = '     ' * victim
         result.append(spaces)
-        result.append('[')
-        result.append(str(rank))
-        result.append('] ')
         result.append(wordpieces[victim])
         result.append('\n')
 
