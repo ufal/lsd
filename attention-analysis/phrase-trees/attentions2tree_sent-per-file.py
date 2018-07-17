@@ -36,7 +36,7 @@ def deptree(size, weights, wordpieces):
             str(child), wordpieces[child], ','.join(links)
         )))
 
-    return ('\n'.join(lines),)
+    return ('\n'.join(lines), '\n', '\n')
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
