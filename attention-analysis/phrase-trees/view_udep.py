@@ -77,16 +77,20 @@ def print_sentence(words, links):
         spaces = ' ' * (max_word_length + 4)
         print(spaces, *intra_lines[i], sep='')
 
-
 words = []
 links = []
+sentid = 1
 for line in sys.stdin:
-    fields = line.strip('\n').split('\t')
-    if len(fields) == 0:
+    if line == '\n':
+        print("=====", "SENTENCE", sentid, "=====")
+        print()
         print_sentence(words, links)
+        print()
         words = []
         links = []
+        sentid += 1
     else:
+        fields = line.strip('\n').split('\t')
         assert len(fields) == 3
         assert int(fields[0]) == len(words)
         words.append(fields[1])
