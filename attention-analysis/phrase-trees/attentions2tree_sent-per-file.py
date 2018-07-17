@@ -8,6 +8,7 @@ from nltk import Tree
 import random
 import math
 import subprocess
+from scipy.sparse.csgraph import minimum_spanning_tree
 
 # size = number of tokens
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -19,74 +20,26 @@ def deptree(size, weights, wordpieces):
     lines.append(" ".join(wordpieces))
     lines.append("\n")
 
-    # MST input starts with number of tokens
-    mst_input = [str(size)]
-    # the first dimension is the child, because in this way, for a fixed
-    # child, the weights for all prospective heads are normalized to sum to 1;
-    # this is good, as the heads compete for being the head of the child
-    for child in range(size):
-        # the second dimension is thus the parent;
-        # we avoid the last node as parent, because it is typically the
-        # sentence-final full stop, which seems to act as a constant term for
-        # attention, giving it all the attention that it does not want to give
-        # elsewhere, effectively leading to the last token usually being the
-        # one receiving the highest attention (and, subsequently, becoming the
-        # parent of all tokens in the sentence in the parsing); we avoid that,
-        # because we believe that the network giving so much attention to the
-        # full stop has a technical rather than semantic interpretation
-        # TODO: switch NM to add EOS to end of each sentence, which could
-        # function as the constant term (to be ignored) and let us get rid of
-        # this hack here
+    graph = [ [0] * size for i in range(size)  ]
+    for child in range(size-1):
         for head in range(size-1):
             if child != head:
-                # the Perl script computes MINIMUM spanning tree
+                # MINIMUM spanning tree
                 # symmetrization
                 score = - weights[child][head] - weights[head][child]
-               
-                # MST uses 1-based indices;
-                # it expects triplets of head id, child id, and weight
-                mst_input.extend((
-                    str(head+1), str(child+1), str(score)
-                    ))
-                
-    try:
-        mst_result = subprocess.run(
-            args="./chu_liu_edmonds.pl",
-            input=" ".join(mst_input),
-            #text=True,
-            universal_newlines=True,
-            #capture_output=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=True)
-    except subprocess.CalledProcessError as e:
-        print("Calling MST died with exception:\n  ", e, "\n")
-        print(e.stderr)
-        print("\n")
-        raise
+                graph[child][head] = score
 
-    # parent for each child; init with 0 (will stay for root);
-    # 1-based indexes
-    tree = dict()
-    for child in range(size):
-        tree[child+1] = 0
+    lines.append(str(graph))
+    lines.append("\n\n")
 
-    # store MST output into tree
-    for pc in mst_result.stdout.split():
-        head, child = [int(s) for s in pc.split("-")]
-        tree[child] = head
-       
-    for child in range(size):
-        id = child+1
-        head = tree[id]
-        form = wordpieces[child]
-        # store parent form as lemma :-)
-        lemma = 'ROOT' if head == 0 else wordpieces[head-1]
-        lines.append("\t".join((
-            str(id), form, lemma, str(head)
-            )))
-        lines.append('\n')
+    mst = minimum_spanning_tree(graph)
+    #for a in mst:
+    #    lines.append(str(a))
+    #    lines.append('\n')
 
+
+    lines.append(str(mst))
+    
     return lines
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
