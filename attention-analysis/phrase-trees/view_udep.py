@@ -3,6 +3,8 @@
 
 import sys
 
+COMPACT = 30
+
 # at start or end of line, symbol is / or \ and also the --- is drawn
 # in the middle, symbol is |
 def draw_line(line_list, layer, symbol='|'):
@@ -31,9 +33,14 @@ def print_sentence(words, links):
 
             if l == i+1:
                 # neighbours are special
-                token_lines[i][0] = '+'
-                intra_lines[i][0] = '|'
-                token_lines[l][0] = '+'
+                if token_lines[i][0] == '/':
+                    token_lines[i][0] = 'X'
+                    intra_lines[i][0] = '|'
+                    token_lines[l][0] = '/'
+                else:
+                    token_lines[i][0] = '\\'
+                    intra_lines[i][0] = '|'
+                    token_lines[l][0] = '/'
             else:
                 # find a free layer to put the link into
                 layer = 0
@@ -74,8 +81,9 @@ def print_sentence(words, links):
         print(intro, str(i), spaces, word, '-', *token_lines[i], sep='')
         
         # intra line
-        spaces = ' ' * (max_word_length + 4)
-        print(spaces, *intra_lines[i], sep='')
+        if length < COMPACT:
+            spaces = ' ' * (max_word_length + 4)
+            print(spaces, *intra_lines[i], sep='')
 
 sentid = 0
 for filename in sys.argv[1:]:
