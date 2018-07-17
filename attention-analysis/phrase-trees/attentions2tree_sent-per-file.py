@@ -39,6 +39,11 @@ def deptree(size, weights, wordpieces):
 
     return ('\n'.join(lines), '\n', '\n')
 
+def staredness(size, weights, wordpieces):
+    lines = []
+
+    return lines
+    
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
     Inspired by:
@@ -104,6 +109,7 @@ ap.add_argument("--labels", help="Labels separated by spaces")
 ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
 ap.add_argument("--tree", help="Output trees filename stem")
 ap.add_argument("--deptree", help="Output dependency trees filename stem")
+ap.add_argument("--staredness", help="Output staredness filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
 
@@ -267,6 +273,15 @@ for layer in range(6,7):
                     deptree(size, word_mixture[6], sentences_src[0])
                     )
         print("Dep tree written.")
+
+    # staredness -- how much words are stared upon :-)
+    if args.staredness != None:
+        with open(args.staredness, 'w') as staredness_fh:
+            staredness_fh.writelines(
+                    staredness(size, word_mixture[6], sentences_src[0])
+                    )
+        print("Staredness written.")
+    
     
     #print(maxprob)
     # CKY algorithm
