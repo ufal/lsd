@@ -29,16 +29,23 @@ def deptree(size, weights, wordpieces):
                 score = - weights[child][head] - weights[head][child]
                 graph[child][head] = score
 
-    lines.append(str(graph))
-    lines.append("\n\n")
+    #lines.append(str(graph))
+    #lines.append("\n\n")
 
     mst = minimum_spanning_tree(graph)
-    #for a in mst:
-    #    lines.append(str(a))
-    #    lines.append('\n')
-
-
     lines.append(str(mst))
+    lines.append("\n\n")
+
+    msta = mst.toarray()
+    result = []
+    for child in range(size-1):
+        for head in range(size-1):
+            if msta[child][head] != 0:
+                result.append(str(child) + "-" + str(head))
+    lines.append("\n".join(result))
+
+
+
     
     return lines
 
