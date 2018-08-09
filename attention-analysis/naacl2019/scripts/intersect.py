@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import gzip
+import random
 
 base = "data/europarl/europarl-v7.cs-en.en.gz"
 
@@ -42,7 +43,10 @@ prefix = "data/europarl/intersect."
 
 with open(prefix + "cs.out", "w") as fcs, open(prefix + "en.out", "w") as fen, open(prefix + "de.out", "w") as fde, open(prefix + "es.out", "w") as fes, open(prefix + "et.out", "w") as fet, open(prefix + "fi.out", "w") as ffi, open(prefix + "fr.out", "w") as ffr:
 
-    for en, cs in dykt["cs"].items():
+    ens = list(dykt["cs"].keys())
+    random.shuffle(ens)
+
+    for en in ens:
         if all(en in dykt[l] for l in ["de","es","et","fi","fr"]):
 
             
