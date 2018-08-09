@@ -14,7 +14,7 @@ with gzip.open("data/europarl/europarl-v7.cs-en.en.gz") as fen, gzip.open("data/
         while ln_en in dykt["cs"]:
             ln_en += "#"
 
-        dykt["cs"][ln_en] = [ln_cs]
+        dykt["cs"][ln_en] = ln_cs
 
 print("len of dyk cs: {}".format(len(dykt["cs"])))
 
