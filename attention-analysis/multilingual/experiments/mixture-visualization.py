@@ -18,7 +18,7 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
 
     # Plot it out
-    fig, ax = plt.subplots(figsize=(16, 3))    
+    fig, ax = plt.subplots(figsize=(3, 3))    
     c = ax.pcolor(AUC, edgecolors='k', linestyle= 'dashed', linewidths=0.2, cmap='pink', vmin=0.0, vmax=1.0)
 
     # put the major ticks at the middle of each cell
@@ -217,13 +217,13 @@ print("EN labels: " + str(len(en_labels[0])))
 print("CS labels: " + str(len(cs_labels[0])))
 
 
-for layer in range(6):
-    heatmap(trg_direct[layer], "", "", "", es_labels[0] + fr_labels[0] + de_labels[0] + en_labels[0], cs_labels[0])
-    plt.savefig(args.heatmaps + '-direct' + str(layer) + '.pdf', dpi=400, format='pdf', bbox_inches='tight')
-    tikz_save(args.heatmaps + '-direct' + str(layer) + '.tex')
-    heatmap(trg_mixture[layer], "", "", "", es_labels[0] + fr_labels[0] + de_labels[0] + en_labels[0], cs_labels[0])
-    plt.savefig(args.heatmaps + str(layer) + '.pdf', dpi=400, format='pdf', bbox_inches='tight')
-    tikz_save(args.heatmaps + str(layer) + '.tex')
+#for layer in range(6):
+#    heatmap(trg_direct[layer], "", "", "", es_labels[0] + fr_labels[0] + de_labels[0] + en_labels[0], cs_labels[0])
+#    plt.savefig(args.heatmaps + '-direct' + str(layer) + '.pdf', dpi=400, format='pdf', bbox_inches='tight')
+#    tikz_save(args.heatmaps + '-direct' + str(layer) + '.tex')
+#    heatmap(trg_mixture[layer], "", "", "", es_labels[0] + fr_labels[0] + de_labels[0] + en_labels[0], cs_labels[0])
+#    plt.savefig(args.heatmaps + str(layer) + '.pdf', dpi=400, format='pdf', bbox_inches='tight')
+#    tikz_save(args.heatmaps + str(layer) + '.tex')
 if(args.scheme == 'hierarchical'):
     heatmap(trg_hier, "", "", "", ["es", "fr", "de", "en"], ["layer 0", "layer 1", "layer 2", "layer 3", "layer 4", "layer 5"])
     plt.savefig(args.heatmaps + 'H.pdf', dpi=400, format='pdf', bbox_inches='tight')

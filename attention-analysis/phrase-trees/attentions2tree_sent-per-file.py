@@ -173,8 +173,8 @@ for i in range(len(words)):
     elif (words[i] == '}'):
         words[i] = '-RCB-'
 
-#for layer in range(0,7):
-for layer in range(6,7): 
+for layer in range(0,7):
+#for layer in range(6,7): 
     # compute constituents probabilities
     maxprob = np.zeros((size - 1, size - 1))
     prob = np.zeros((word_count, word_count))
@@ -187,9 +187,14 @@ for layer in range(6,7):
                 for k in range(i, j + 1):
                     for l in range(i, j + 1):
                         ssum += word_mixture[layer][k][l]
-                #maxprob[i][j] = ssum / (j - i + 1)**2
                 maxprob[i][j] = ssum / (j - i + 1)
-                #maxprob[i][j] = ssum
+                #maxprob[i][j] = 0
+                #for k in range(size):
+                #    s = 0
+                #    for l in range(i, j + 1):
+                #        s += word_mixture[layer][l][k]
+                #    if s > maxprob[i][j]:
+                #        maxprob[i][j] = s
                 prob[alignment[0][i]][alignment[0][j]] = maxprob[i][j]
             else:
                 #print(str(i) + ' ' + str(j))
@@ -213,23 +218,21 @@ for layer in range(6,7):
                 #prob[pos][pos + span] += best_prob
                 prob[pos][pos + span] *= 1
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
-                if (prob[pos][pos + span - best_variant] + prob[pos + span - best_variant + 1][pos + span] * 0.6 < prob[pos][pos + span]):
-                    #print("Flatten.")
-                    children = list()
-                    if isinstance(ctree[pos][pos + span - best_variant], str):
-                        children.append(ctree[pos][pos + span - best_variant])
-                    else:
-                        for n, child in enumerate(ctree[pos][pos + span - best_variant]):
-                            children.append(child)
-                    if isinstance(ctree[pos + span - best_variant + 1][pos + span], str):
-                        children.append(ctree[pos + span - best_variant + 1][pos + span])
-                    else:
-                        for n, child in enumerate(ctree[pos + span - best_variant + 1][pos + span]):
-                            children.append(child)
-                    ctree[pos][pos + span] = Tree('X', children)
+                #if (prob[pos][pos + span - best_variant] + prob[pos + span - best_variant + 1][pos + span] * 0.6 < prob[pos][pos + span]):
+                #    #print("Flatten.")
+                #    children = list()
+                #    if isinstance(ctree[pos][pos + span - best_variant], str):
+                #        children.append(ctree[pos][pos + span - best_variant])
+                #      else:
+                #        for n, child in enumerate(ctree[pos][pos + span - best_variant]):
+                #            children.append(child)
+                #    if isinstance(ctree[pos + span - best_variant + 1][pos + span], str):
+                #        children.append(ctree[pos + span - best_variant + 1][pos + span])
+                #    else:
+                #        for n, child in enumerate(ctree[pos + span - best_variant + 1][pos + span]):
+                #            children.append(child)
+                #    ctree[pos][pos + span] = Tree('X', children)
 
-    # dependency parser
-    # TODO:
     
     #print(maxprob)
     # CKY algorithm
@@ -299,10 +302,13 @@ for layer in range(6,7):
     #    print (left_brackets[i], end='')
     #    print (sentences_src[0][i], end='')
     #    print (right_brackets[i])
+    
+    # dependency parser
+    # TODO:
 
-    if (layer < 7):
-        heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
-        plt.savefig(args.heatmaps + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
+    heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
+    plt.savefig(args.heatmaps + '-l' + str(layer) + '.pdf', dpi=300, format='pdf', bbox_inches='tight')
+    print("Layer " + str(layer) + " visualization saved.")
 
 # Global CKY algorithm
 #gtree = [[0 for x in range(size - 1)] for y in range(size - 1)]

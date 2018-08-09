@@ -108,7 +108,7 @@ for line in labels_file:
 
 global_maxprob = np.zeros((size - 1, size - 1))
 
-for layer in range(1,6):
+for layer in range(0,6):
     # compute constituents probabilities
     maxprob = np.zeros((size - 1, size - 1))
     for pos in range(size - 1):
@@ -133,7 +133,7 @@ for layer in range(1,6):
     ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
     ctree = [[0 for x in range(size - 1)] for y in range(size - 1)]
     for i in range(size - 1):
-        ctree[i][i] = sentences_src[0][i]
+        ctree[i][i] = Tree('X', [sentences_src[0][i]])
 
     for span in range(1, size - 1):
         for pos in range(0, size - 1):
@@ -209,7 +209,7 @@ for span in range(1, size - 1):
                 if (best_prob < var_prob):
                     best_prob = var_prob
                     best_variant = variant
-            gtree[pos][pos + span] = Tree('X', [gtree[pos][pos + span - best_variant], gtree[pos + span - best_variant + 1][pos + span]])
+            gtree[pos][pos + span] = Tree('', [gtree[pos][pos + span - best_variant], gtree[pos + span - best_variant + 1][pos + span]])
 print("GLOBAL TREE:")
 print(gtree[0][size - 2])
 print()
