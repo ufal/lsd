@@ -4,7 +4,7 @@ import gzip
 
 base = "data/europarl/europarl-v7.cs-en.en.gz"
 
-dykt = {"cs": {}, "de": {}, "es": {}, "et": {}}
+dykt = {"cs": {}, "de": {}, "es": {}, "et": {}, "fi": {}, "fr":            {}}
 
 with gzip.open("data/europarl/europarl-v7.cs-en.en.gz") as fen, gzip.open("data/europarl/europarl-v7.cs-en.cs.gz") as fcs:
     for line1, line2 in zip(fen, fcs):
