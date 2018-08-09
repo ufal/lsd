@@ -5,9 +5,6 @@ D=/net/projects/LSD/naacl2019-data/
 
 for l in cs en de fr fi es et
 do
-    tokenize.sh $l \
-    < $D/europarl/intersect.$l.out \
-    > $D/europarl/intersect.$l.tok \
-    &
+    ./split.sh $D/europarl/intersect.$l.tok &
 done
 

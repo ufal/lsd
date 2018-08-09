@@ -5,5 +5,5 @@
 
 D=/net/projects/LSD/naacl2019-data/
 
-$D/mosesdecoder/scripts/recaser/train-truecaser.perl --corpus $2 --model $D/truecaser/$1.truecaser
+$D/mosesdecoder/scripts/recaser/train-truecaser.perl --corpus $2 --model $D/truecasers/$1.truecaser
 
