@@ -7,7 +7,57 @@ import matplotlib.pyplot as plt
 from nltk import Tree
 import random
 import math
+import subprocess
+from scipy.sparse.csgraph import minimum_spanning_tree
 
+# size = number of tokens
+# weights[i][j] = word_mixture[6][i][j] = attention weight
+# wordpieces[i] = sentences_src[0][i] = wordpiece
+def deptree(size, weights, wordpieces):
+    graph = [ [0] * size for i in range(size)  ]
+    for brother in range(size-1):
+        for sister in range(brother+1, size-1):
+            for column in range(size):
+                # MINIMUM spanning tree
+                # now sum
+                # TODO max
+                score = - weights[column][brother] * weights[column][sister]
+                graph[brother][sister] += score
+
+    mst = minimum_spanning_tree(graph).toarray()
+
+    lines = []
+    for brother in range(size-1):
+        sisters = []
+        for sister in range(brother+1, size-1):
+            if mst[brother][sister] != 0 or mst[sister][brother] != 0:
+                sisters.append(str(sister))
+        # 5    the_    3,4,6
+        lines.append('\t'.join((
+            str(brother), wordpieces[brother], ','.join(sisters)
+        )))
+
+    return ('\n'.join(lines), '\n', '\n')
+
+def staredness(size, weights, wordpieces):
+    # input
+    staredness = dict()
+    for victim in range(size):
+        staredness[victim] = sum([
+            weights[voyeur][victim] for voyeur in range(size)
+        ])
+
+    # process
+    # 1 means most stared upon
+    result = []
+    for victim in sorted(staredness, key=staredness.get, reverse=True):
+        spaces = '     ' * victim
+        result.append(spaces)
+        result.append(wordpieces[victim])
+        result.append('\n')
+
+    return result
+    
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
     Inspired by:
@@ -72,6 +122,8 @@ ap.add_argument("--alignment", help="Alignment to the PTB tokens")
 ap.add_argument("--labels", help="Labels separated by spaces")
 ap.add_argument("--heatmaps", help="Ouput heatmaps filename stem")
 ap.add_argument("--tree", help="Output trees filename stem")
+ap.add_argument("--deptree", help="Output dependency trees filename stem")
+ap.add_argument("--staredness", help="Output staredness filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
 
@@ -101,11 +153,11 @@ for layer in (range(6)):
         #head_weight = random.random()
         if (args.weights):
             head_weight = math.exp(np.sum(head_projs[head]) / 10 )
-        print("Weight of head" + str(head) + ": " + str(head_weight))
+        #print("Weight of head" + str(head) + ": " + str(head_weight))
         head_weight_sum += head_weight
         matrix = att[head]
         #softmax
-        deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0)
+        deps = np.transpose(np.exp(np.transpose(matrix)) / np.sum(np.exp(np.transpose(matrix)), axis=0))
         layer_matrix = layer_matrix + deps * head_weight
     layer_matrix = layer_matrix / head_weight_sum
 ################ ONE HAEAD ONLY!!!!!!!
@@ -136,8 +188,8 @@ for line in labels_file:
     sent_src.append(line)
 
 print("Number of labels:" + str(len(sentences_src[0])))
-if (len(sentences_src[0]) + 1 != size):
-    print("ERROR: Number of labels and size of attention matrix is not equal")
+#if (len(sentences_src[0]) + 1 != size):
+#    print("ERROR: Number of labels and size of attention matrix is not equal")
 
 global_maxprob = np.zeros((size - 1, size - 1))
 
@@ -173,7 +225,8 @@ for i in range(len(words)):
     elif (words[i] == '}'):
         words[i] = '-RCB-'
 
-for layer in range(0,7):
+#for layer in range(0,7):
+for layer in range(6,7): 
     # compute constituents probabilities
     maxprob = np.zeros((size - 1, size - 1))
     prob = np.zeros((word_count, word_count))
@@ -212,21 +265,38 @@ for layer in range(0,7):
                 #prob[pos][pos + span] += best_prob
                 prob[pos][pos + span] *= 1
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
-                #if (prob[pos][pos + span - best_variant] + prob[pos + span - best_variant + 1][pos + span] * 0.5 < prob[pos][pos + span]):
-                #    print("Flatten.")
-                #    children = list()
-                #    if isinstance(ctree[pos][pos + span - best_variant], str):
-                #        children.append(ctree[pos][pos + span - best_variant])
-                #    else:
-                #        for n, child in enumerate(ctree[pos][pos + span - best_variant]):
-                #            children.append(child)
-                #    if isinstance(ctree[pos + span - best_variant + 1][pos + span], str):
-                #        children.append(ctree[pos + span - best_variant + 1][pos + span])
-                #    else:
-                #        for n, child in enumerate(ctree[pos + span - best_variant + 1][pos + span]):
-                #            children.append(child)
-                #    ctree[pos][pos + span] = Tree('X', children)
+                if (prob[pos][pos + span - best_variant] + prob[pos + span - best_variant + 1][pos + span] * 0.6 < prob[pos][pos + span]):
+                    #print("Flatten.")
+                    children = list()
+                    if isinstance(ctree[pos][pos + span - best_variant], str):
+                        children.append(ctree[pos][pos + span - best_variant])
+                    else:
+                        for n, child in enumerate(ctree[pos][pos + span - best_variant]):
+                            children.append(child)
+                    if isinstance(ctree[pos + span - best_variant + 1][pos + span], str):
+                        children.append(ctree[pos + span - best_variant + 1][pos + span])
+                    else:
+                        for n, child in enumerate(ctree[pos + span - best_variant + 1][pos + span]):
+                            children.append(child)
+                    ctree[pos][pos + span] = Tree('X', children)
 
+    # dependency parser
+    if args.deptree != None:
+        with open(args.deptree, 'w') as deptree_fh:
+            deptree_fh.writelines(
+                    deptree(size, word_mixture[6], sentences_src[0])
+                    )
+        print("Dep tree written.")
+
+    # staredness -- how much words are stared upon :-)
+    if args.staredness != None:
+        with open(args.staredness, 'w') as staredness_fh:
+            staredness_fh.writelines(
+                    staredness(size, word_mixture[6], sentences_src[0])
+                    )
+        print("Staredness written.")
+    
+    
     #print(maxprob)
     # CKY algorithm
     #ckyback = [[0 for x in range(size - 1)] for y in range(size - 1)]
