@@ -40,16 +40,16 @@ for lang in ["de", "es", "et", "fi", "fr"]:
 
 prefix = "data/europarl/intersect."
 
-with open(prefix + "cs.out", "w") as fcs, open(prefix + "en.out", "w") as fen, open(prefix + "de.out", "w") as ffr, open(prefix + "es.out", "w") as fes, open(prefix + "et.out", "w") as fde, open(prefix + "fi.out", "w") as ffi, open(prefix + "fr.out", "w") as ffr:
+with open(prefix + "cs.out", "w") as fcs, open(prefix + "en.out", "w") as fen, open(prefix + "de.out", "w") as fde, open(prefix + "es.out", "w") as fes, open(prefix + "et.out", "w") as fet, open(prefix + "fi.out", "w") as ffi, open(prefix + "fr.out", "w") as ffr:
 
     for en, cs in dykt["cs"].items():
         if all(en in dykt[l] for l in ["de","es","et","fi","fr"]):
 
             
             print(dykt["cs"][en], file=fcs)
-            print(dykt["de"][en], file=ffr)
+            print(dykt["de"][en], file=fde)
             print(dykt["es"][en], file=fes)
-            print(dykt["et"][en], file=fde)
+            print(dykt["et"][en], file=fet)
             print(dykt["fi"][en], file=ffi)
             print(dykt["fr"][en], file=ffr)
 
