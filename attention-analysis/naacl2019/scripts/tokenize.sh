@@ -4,5 +4,5 @@
 
 D=/net/projects/LSD/naacl2019-data/tokenizers
 
-$D/udpipe --tokenize --output=horizontal $D/$1.udpipe
+$D/udpipe --tokenizer=presegmented  --output=horizontal $D/$1.udpipe
 
