@@ -10,10 +10,15 @@ import math
 import subprocess
 from scipy.sparse.csgraph import minimum_spanning_tree
 
-# size = number of tokens
+ap = argparse.ArgumentParser()
+ap.add_argument("-a", "--attentions", help="NPZ file with attentions", required=True)
+ap.add_argument("-t", "--tokens", help="Labels (tokens) separated by spaces", required=True)
+args= ap.parse_args()
+
 # weights[i][j] = word_mixture[6][i][j] = attention weight
-# wordpieces[i] = sentences_src[0][i] = wordpiece
-def deptree(size, weights, wordpieces):
+# wordpieces = list of tokens
+def deptree(weights, wordpieces):
+    size = len(wordpieces)
     graph = [ [0] * size for i in range(size)  ]
     for brother in range(size-1):
         for sister in range(brother+1, size-1):
@@ -39,75 +44,41 @@ def deptree(size, weights, wordpieces):
 
     return ('\n'.join(lines), '\n', '\n')
 
-def staredness(size, weights, wordpieces):
-    # input
-    staredness = dict()
-    for victim in range(size):
-        staredness[victim] = sum([
-            weights[voyeur][victim] for voyeur in range(size)
-        ])
-
-    # process
-    # 1 means most stared upon
-    result = []
-    for victim in sorted(staredness, key=staredness.get, reverse=True):
-        spaces = '     ' * victim
-        result.append(spaces)
-        result.append(wordpieces[victim])
-        result.append('\n')
-
-    return result
-    
-ap = argparse.ArgumentParser()
-ap.add_argument("--attentions", help="NPZ file with attentions")
-ap.add_argument("--labels", help="Labels separated by spaces")
-ap.add_argument("--deptree", help="Output dependency trees filename stem")
-ap.add_argument("--staredness", help="Output staredness filename stem")
-args= ap.parse_args()
-
 #load data
 attentions_loaded = np.load(args.attentions)
 sentences_count = len(attentions_loaded.files)
-layers_count = attentions_loaded['att_0'].shape[0]
-heads_count = attentions_loaded['att_0'].shape[1]
+layers_count = attentions_loaded['arr_0'].shape[0]
+heads_count = attentions_loaded['arr_0'].shape[1]
+with open(args.tokens) as tokens_file:
+    tokens_loaded = [l.split() for l in tokens_file]
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
-    sentence_id = 'att_' + str(sentence_index)
+    sentence_id = 'arr_' + str(sentence_index)
     tokens_count = attentions_loaded[sentence_id].shape[2]
-    
+    # TODO add EOS token at end of each tokens list
+    tokens_list = tokens_loaded[sentence_index]
+    # TODO sentences truncated to 64 tokens it seems
+    # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
+    assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
+
+    # recursively compute layer weights
     word_mixture = list() 
     word_mixture.append(np.identity(tokens_count))
-    # recursively compute layer weights
     for layer in range(layers_count):
-        layer_matrix = np.zeros((size, size))
-        head_weight_sum = 0
-        for head in (range(head_count)):
-            matrix = att[head]
+        layer_matrix = np.zeros((tokens_count, tokens_count))
+        for head in range(heads_count):
+            matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
             deps = np.transpose(np.exp(np.transpose(matrix)) / np.sum(np.exp(np.transpose(matrix)), axis=0))
-            layer_matrix = layer_matrix + deps * head_weight
+            layer_matrix = layer_matrix + deps
+        # avg
         layer_matrix = layer_matrix / heads_count
+        # next layer = avg of this layer and prev layer
         word_mixture.append((word_mixture[layer] + layer_matrix) / 2)
 
-sentences_src = list()
-for line in labels_file:
-    sentences_src.append(line.split())
+    # compute trees
+    tree = deptree(word_mixture[6], tokens_list)
+    print('#', sentence_index)
+    print(tree)
 
-#for layer in range(0,7):
-for layer in range(6,7): 
-    # dependency parser
-    if args.deptree != None:
-        with open(args.deptree, 'w') as deptree_fh:
-            deptree_fh.writelines(
-                    deptree(size, word_mixture[6], sentences_src[0])
-                    )
-        print("Dep tree written.")
-
-    # staredness -- how much words are stared upon :-)
-    if args.staredness != None:
-        with open(args.staredness, 'w') as staredness_fh:
-            staredness_fh.writelines(
-                    staredness(size, word_mixture[6], sentences_src[0])
-                    )
-        print("Staredness written.")
