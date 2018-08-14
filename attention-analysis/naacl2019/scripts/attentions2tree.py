@@ -43,7 +43,7 @@ def deptree(weights, wordpieces):
             str(brother), wordpieces[brother], ','.join(sisters)
         )))
 
-    return ('\n'.join(lines), '\n', '\n')
+    return '\n'.join(lines)
 
 #load data
 attentions_loaded = np.load(args.attentions)
@@ -64,7 +64,7 @@ for sentence_index in range(sentences_count):
     assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     if len(tokens_list) > tokens_count:
         print('Truncating tokens from ', len(tokens_list), 'to', tokens_count,
-                'on line', sentence_id, '(0-based indexing)', file=sys.stderr)
+                'on line', sentence_index, '(0-based indexing)', file=sys.stderr)
         tokens_list = tokens_list[:tokens_count]
 
     # recursively compute layer weights
@@ -84,6 +84,8 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     tree = deptree(word_mixture[6], tokens_list)
-    print('#', sentence_index)
+    print('# sentence', sentence_index)
     print(tree)
+    print()
+
 
