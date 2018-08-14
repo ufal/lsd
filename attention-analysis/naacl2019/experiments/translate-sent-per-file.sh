@@ -24,7 +24,8 @@ s_target_out=\"$transl\"
 s_att_out=\"$att\"
 " > $inifile.ini
     /net/projects/LSD/naacl2019-data/neuralmonkey/bin/neuralmonkey-run $ATTENTION_INI $inifile.ini
-    cat $EXP_DIR/sent-per-file/transl* > $EXP_DIR/translations.txt
-    ../scripts/concatenate_attentions.py --input "$EXP_DIR/sent-per-file/att*" --output $EXP_DIR/attentions.npz
 done
+
+cat $EXP_DIR/sent-per-file/transl* > $EXP_DIR/translations.txt
+../scripts/concatenate_attentions.py $EXP_DIR/sent-per-file/att* $EXP_DIR/attentions.npz
 
