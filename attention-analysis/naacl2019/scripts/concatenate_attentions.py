@@ -9,7 +9,6 @@ input_files = sys.argv[1:]
 output_file = input_files.pop()
 
 for filename in input_files:
-    print(filename)
     x = np.load(filename)
     layers = list()
     for l in range(6):

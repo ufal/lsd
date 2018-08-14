@@ -1,7 +1,7 @@
 SRC="en"
-TGT="de"
-NUMHEADS=16
-TOKENS="bpe"
+TGT="fr"
+NUMHEADS=2
+TOKENS="bpe100k"
 
 qsub -V -cwd -b y -j y -q gpu-ms.q -l gpu=1,gpu_ram=11G,hostname=dll\* -N $SRC$TGT-${NUMHEADS}h-$TOKENS \
     source /net/work/people/helcl/virtualenv/tensorflow-1.4-gpu/bin/activate \; \

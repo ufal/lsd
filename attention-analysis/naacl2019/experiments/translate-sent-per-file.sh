@@ -1,8 +1,8 @@
 #!/bin/bash
 
-EXP_DIR=/net/projects/LSD/naacl2019-data/experiments/encs_16h
-TEST_DATA=/net/projects/LSD/naacl2019-data/europarl/intersect.en.bpe.test
-ATTENTION_INI=encs_16h_att.ini
+EXP_DIR=/net/projects/LSD/naacl2019-data/experiments/encs_16h_words
+TEST_DATA=/net/projects/LSD/naacl2019-data/europarl/intersect.en.tok.true.test
+ATTENTION_INI=encs_16h_words_att.ini
 VARIABLES=`cat $EXP_DIR/variables.data.best` 
 
 mkdir -p $EXP_DIR/sent-per-file
