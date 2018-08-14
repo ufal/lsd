@@ -8,6 +8,7 @@ from nltk import Tree
 import random
 import math
 import subprocess
+import sys
 from scipy.sparse.csgraph import minimum_spanning_tree
 
 ap = argparse.ArgumentParser()
@@ -61,6 +62,10 @@ for sentence_index in range(sentences_count):
     # TODO sentences truncated to 64 tokens it seems
     # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
+    if len(tokens_list) > tokens_count:
+        print('Truncating tokens from ', len(tokens_list), 'to', tokens_count,
+                'on line', sentence_id, '(0-based indexing)', file=sys.stderr)
+        tokens_list = tokens_list[:tokens_count]
 
     # recursively compute layer weights
     word_mixture = list() 
