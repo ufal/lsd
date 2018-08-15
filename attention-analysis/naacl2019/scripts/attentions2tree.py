@@ -14,6 +14,8 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 ap = argparse.ArgumentParser()
 ap.add_argument("-a", "--attentions", help="NPZ file with attentions", required=True)
 ap.add_argument("-t", "--tokens", help="Labels (tokens) separated by spaces", required=True)
+ap.add_argument("-d", "--deptrees", help="Output unoriented dep trees into this file")
+ap.add_argument("-e", "--eos", help="Attentions contain EOS", action="store_true")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -43,6 +45,9 @@ def deptree(weights, wordpieces):
             str(brother), wordpieces[brother], ','.join(sisters)
         )))
 
+    # end of sentence
+    lines.append('')
+
     return '\n'.join(lines)
 
 #load data
@@ -53,13 +58,17 @@ heads_count = attentions_loaded['arr_0'].shape[1]
 with open(args.tokens) as tokens_file:
     tokens_loaded = [l.split() for l in tokens_file]
 
+# outputs
+deptrees = list()
+
 # iterate over sentences
 for sentence_index in range(sentences_count):
     sentence_id = 'arr_' + str(sentence_index)
     tokens_count = attentions_loaded[sentence_id].shape[2]
-    # TODO add EOS token at end of each tokens list
     tokens_list = tokens_loaded[sentence_index]
-    # TODO sentences truncated to 64 tokens it seems
+    if args.eos:
+        tokens_list.append('EOS')
+    # NOTE sentences truncated to 64 tokens
     # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     if len(tokens_list) > tokens_count:
@@ -83,9 +92,16 @@ for sentence_index in range(sentences_count):
         word_mixture.append((word_mixture[layer] + layer_matrix) / 2)
 
     # compute trees
-    tree = deptree(word_mixture[6], tokens_list)
-    print('# sentence', sentence_index)
-    print(tree)
-    print()
+    if args.deptrees:
+        tree = deptree(word_mixture[6], tokens_list)
+        deptrees.append(tree)
+        #print('# sentence', sentence_index)
+        #print(tree)
+        #print()
+
+if args.deptrees:
+    with open(args.deptrees, 'w') as output:
+        print(*deptrees, sep='\n', file=output)
+
 
 
