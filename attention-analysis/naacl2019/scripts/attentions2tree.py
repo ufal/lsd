@@ -98,7 +98,7 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     if args.deptrees:
-        tree = deptree(word_mixture[6], tokens_list)
+        tree = deptree(np.transpose(word_mixture[6]), tokens_list)
         deptrees.append(tree)
         #print('# sentence', sentence_index)
         #print(tree)
