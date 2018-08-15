@@ -27,7 +27,7 @@ variables=[\"$EXP_DIR/$VARIABLES\"]
 [test_data]
 class=dataset.load_dataset_from_files
 s_source=\"$src\"
-s_target1_out=\"$transl\"
+s_target_out=\"$transl\"
 s_att_out=\"$att\"
 " > $datafile
     /net/projects/LSD/naacl2019-data/neuralmonkey/bin/neuralmonkey-run $EXP_DIR/get-attentions.ini $datafile
