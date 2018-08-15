@@ -75,12 +75,17 @@ for sentence_index in range(sentences_count):
         for head in range(heads_count):
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
-            deps = np.transpose(np.exp(np.transpose(matrix)) / np.sum(np.exp(np.transpose(matrix)), axis=0))
+            #deps = np.transpose(np.exp(np.transpose(matrix)) / np.sum(np.exp(np.transpose(matrix)), axis=0)) # puvodni
+            #deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0) # puvodni bez transpose
+            #exp_matrix = np.exp(matrix - np.amax(matrix, axis=0))
+            #deps = exp_matrix / np.sum(exp_matrix, axis=0)
+            exp_matrix = np.exp(matrix)
+            deps = exp_matrix / np.sum(exp_matrix, axis=1)
             layer_matrix = layer_matrix + deps
         # avg
         layer_matrix = layer_matrix / heads_count
         # next layer = avg of this layer and prev layer
-        word_mixture.append((word_mixture[layer] + layer_matrix) / 2)
+        word_mixture.append((np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2)
 
     # compute trees
     tree = deptree(word_mixture[6], tokens_list)
