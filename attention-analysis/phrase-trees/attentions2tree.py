@@ -75,8 +75,45 @@ ap.add_argument("--tree", help="Output trees filename stem")
 ap.add_argument("--not-aggreg", help="Not aggregated across layers")
 args= ap.parse_args()
 
-#load data
-x = np.load(args.attentions)
+# load head weights from file
+
+
+# load labels from file
+labels = list()
+labels_file = codecs.open(args.labels, "r", "utf-8")
+for line in labels_file:
+    labels.append(line.split())
+
+sent_num = len(labels)
+
+# load attentions from file
+attetions = list()
+attentions_file = np.load(args.attentions)
+for i in range(sent_num):
+    attentions.append(attentions_file["arr_" + str(i)])
+
+print("Number of sentences loaded " + str(sent_num))
+
+for i in range(sent_num):
+    sent_size = str(len(labels[i]))
+    if (attentions[i].shape[2] != len(labels[i])):
+        print("ERROR: Number of labels and size of the attention matrix is not equal")
+    print("Processing sentence " + str(i) + ", number of tokens: " + str(sent_size))
+
+    mixture = list()
+    mixture.append(np.identity(sent_size))
+    
+    for layer in range(6):
+        att_matrix = np.zeros((sent_size, sent_size))
+        for head in range(head_count):
+            att_softmax = np.exp(attentions[i][layer][head]) / np.sum(np.exp(attentions[i][layer][head]), axis=0)
+            att_matrix = att_matrix + att_softmax * weight[layer][head]
+        att_matrix /= weight_sum[layer]
+        if (args.not_aggreg):
+            mixture.append(att_matrix)
+        else:
+            mixture.append((mixture[layer] + att_matrix) / 2)
+
 
 # get number of tokens
 size = x["encoder/layer_0/self_attention/add:0"].shape[2]
@@ -84,8 +121,6 @@ head_count = x["encoder/layer_0/self_attention/add:0"].shape[1]
 print("Vector size:" + str(size))
 print("Number of heads detected:" + str(head_count))
 
-word_mixture = list()
-word_mixture.append(np.identity(size))
 
 if (args.weights):
     w = np.load(args.weights)
@@ -105,7 +140,6 @@ for layer in (range(6)):
         head_weight_sum += head_weight
         matrix = att[head]
         #softmax
-        deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0)
         layer_matrix = layer_matrix + deps * head_weight
     layer_matrix = layer_matrix / head_weight_sum
 ################ ONE HAEAD ONLY!!!!!!!
@@ -114,10 +148,6 @@ for layer in (range(6)):
 #    layer_matrix = deps
 ################ ONE HAEAD ONLY!!!!!!!
 
-    if (args.not_aggreg):
-        word_mixture.append(layer_matrix)
-    else:
-        word_mixture.append((word_mixture[layer] + layer_matrix) / 2)
 
 #dependencies = np.zeros((size, size))
 #for x in word_mixture[6]:
@@ -125,19 +155,6 @@ for layer in (range(6)):
 #    dependencies += o
 #np.savez("dependencies.npz", deps)
 #np.savez(args.mixtures, word_mixture)
-
-labels_file = codecs.open(args.labels, "r", "utf-8")
-
-sentences_src = list()
-sent_src = list()
-
-for line in labels_file:
-    sentences_src.append(line.split())
-    sent_src.append(line)
-
-print("Number of labels:" + str(len(sentences_src[0])))
-if (len(sentences_src[0]) + 1 != size):
-    print("ERROR: Number of labels and size of attention matrix is not equal")
 
 global_maxprob = np.zeros((size - 1, size - 1))
 
@@ -154,7 +171,7 @@ if (args.alignment):
 word_count = alignment[0][-1] + 1
 words = ['' for x in range(word_count)]
 for i in range(len(alignment[0])):
-    token = sentences_src[0][i]
+    token = labels[0][i]
     if (token[-1] == '_'):
         token = token[:-1]
     words[alignment[0][i]] += token
@@ -297,7 +314,7 @@ for layer in range(0,7):
     #    print (right_brackets[i])
 
     if (layer < 7):
-        heatmap(np.transpose(word_mixture[layer]), "", "", "", sentences_src[0], sentences_src[0])
+        heatmap(np.transpose(word_mixture[layer]), "", "", "", labels[0], labels[0])
         plt.savefig(args.heatmaps + str(layer) + '.png', dpi=300, format='png', bbox_inches='tight')
 
 # Global CKY algorithm

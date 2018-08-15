@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import numpy as np
+import sys
 
 attentions = list()
 
-for i in range(100):
-    filename = "sent-per-file-out/s" + str(i) + ".att.npz"
+input_files = sys.argv[1:]
+output_file = input_files.pop()
+
+for filename in input_files:
     x = np.load(filename)
     layers = list()
     for l in range(6):
@@ -13,6 +16,6 @@ for i in range(100):
         layers.append(att)
     all_layers = np.concatenate(layers, axis=0)
     attentions.append(all_layers)
-np.savez("attentions", *attentions)
+np.savez(output_file, *attentions)
 
 
