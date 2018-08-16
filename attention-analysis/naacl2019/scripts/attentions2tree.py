@@ -21,6 +21,8 @@ ap.add_argument("-d", "--deptrees",
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
+ap.add_argument("-l", "--layers", nargs='+', type=int,
+        help="Only visualize heatmaps for the specified layers; 1-based, 0 is identity; you can use -1 for the last layer")
 ap.add_argument("-k", "--heads", nargs='+', type=int,
         help="Only use the specified head(s) from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
@@ -127,6 +129,8 @@ with open(args.tokens) as tokens_file:
 # outputs
 if args.deptrees:
     deptrees = open(args.deptrees, 'w')
+else:
+    deptrees = None
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
@@ -200,8 +204,12 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     if args.visualizations:
-        for layer in range(layers_count + 1):
+        if args.layers:
+            layers = args.layers
+        else:
             # +1 because word_mixture[0] is the initial identity matrix
+            layers = range(layers_count + 1)
+        for layer in layers:
             heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
             plt.savefig(args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png', dpi=200, format='png', bbox_inches='tight')
             plt.close()
