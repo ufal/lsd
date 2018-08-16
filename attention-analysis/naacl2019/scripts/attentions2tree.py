@@ -137,13 +137,25 @@ for sentence_index in range(sentences_count):
         for head in range(heads_count):
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
+            #HACK
+            matrix = np.minimum(matrix, np.ones((tokens_count,tokens_count)) * 80.0)
+            matrix = np.maximum(matrix, np.ones((tokens_count,tokens_count)) * -80.0)
             exp_matrix = np.exp(matrix)
             deps = np.transpose(np.transpose(exp_matrix) / np.sum(exp_matrix, axis=1))
             layer_matrix = layer_matrix + deps
+            #if sentence_index == 6:
+            #print(np.min(matrix),file=sys.stderr)
+            #print("EXPMIN:"  + str(np.exp(np.min(matrix))),file=sys.stderr)
+            #print(deps, file=sys.stderr)
         # avg
         layer_matrix = layer_matrix / heads_count
         # next layer = avg of this layer and prev layer
         word_mixture.append((np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2)
+        #if sentence_index == 6:
+           #print("LM")
+           #print(layer_matrix)
+           #print("WM")
+           #print(word_mixture[-1])
 
     # compute trees
     if args.deptrees:
@@ -155,7 +167,7 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     # so far only for the 7th sentence
-    if args.visualizations and sentence_index == 6:
+    if args.visualizations and sentence_index == 7:
         for layer in range(layers_count + 1):
             # +1 because word_mixture[0] is the initial identity matrix
             heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
