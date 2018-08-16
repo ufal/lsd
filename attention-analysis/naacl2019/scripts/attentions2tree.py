@@ -3,6 +3,8 @@
 import numpy as np
 import codecs
 import argparse
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from nltk import Tree
 import random
@@ -21,8 +23,8 @@ ap.add_argument("-d", "--deptrees",
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
-ap.add_argument("-l", "--layers", nargs='+', type=int,
-        help="Only visualize heatmaps for the specified layers; 1-based, 0 is identity; you can use -1 for the last layer")
+ap.add_argument("-l", "--layer", type=int,
+        help="Only visualize heatmap for the specified layer; 0-based")
 ap.add_argument("-k", "--heads", nargs='+', type=int,
         help="Only use the specified head(s) from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
@@ -132,6 +134,11 @@ if args.deptrees:
 else:
     deptrees = None
 
+if args.layer:
+    layer_last = args.layer
+else:
+    layer_last = layers_count - 1
+
 # iterate over sentences
 for sentence_index in range(sentences_count):
     # option to only process selected sentences
@@ -156,10 +163,10 @@ for sentence_index in range(sentences_count):
     # recursively compute layer weights
     word_mixture = list() 
     word_mixture.append(np.identity(tokens_count))
-    for layer in range(layers_count):
+    for layer in range(layer_last + 1):
         layer_matrix = np.zeros((tokens_count, tokens_count))
         heads = range(heads_count)
-        if args.heads and layer == layers_count-1:
+        if args.heads and layer == layer_last:
             # in the last layer, we may only want to look at some heads
             heads = args.heads
         for head in heads:
@@ -204,8 +211,9 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     if args.visualizations:
-        if args.layers:
-            layers = args.layers
+        if args.layer:
+            # +1 because word_mixture[0] is the initial identity matrix
+            layers = [args.layer+1]
         else:
             # +1 because word_mixture[0] is the initial identity matrix
             layers = range(layers_count + 1)
