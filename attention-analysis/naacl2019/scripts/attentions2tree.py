@@ -15,7 +15,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-a", "--attentions", help="NPZ file with attentions", required=True)
 ap.add_argument("-t", "--tokens", help="Labels (tokens) separated by spaces", required=True)
 ap.add_argument("-d", "--deptrees", help="Output unoriented dep trees into this file")
-ap.add_argument("-h", "--heatmaps", help="Output heatmap prefix")
+ap.add_argument("-v", "--visualizations", help="Output heatmap prefix")
 ap.add_argument("-e", "--eos", help="Attentions contain EOS", action="store_true")
 args= ap.parse_args()
 
@@ -159,11 +159,11 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     # so far only for the first sentence
-    if args.heatmaps and sentence_index == 0:
+    if args.visualizations and sentence_index == 0:
         for layer in range(layers_count + 1):
             # +1 because word_mixture[0] is the initial identity matrix
-            heatmap(word_mixture[layer]), "", "", "", token_list, token_list)
-            plt.savefig(args.heatmaps + str(sentence_index) + '-l' + str(layer) + '.pdf', dpi=300, format='pdf', bbox_inches='tight')
+            heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
+            plt.savefig(args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png', dpi=200, format='png', bbox_inches='tight')
 
 if args.deptrees:
     with open(args.deptrees, 'w') as output:
