@@ -23,9 +23,6 @@ ap.add_argument("-v", "--visualizations",
 
 ap.add_argument("-k", "--heads", nargs='+', type=int,
         help="Only use the specified head(s) from the last layer; 0-based")
-#ap.add_argument("-l", "--layers", nargs='+', default=[-1],
-ap.add_argument("-l", "--layer", default=-1, type=int,
-        help="Only use the specified layer; 1-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
@@ -155,11 +152,11 @@ for sentence_index in range(sentences_count):
     # recursively compute layer weights
     word_mixture = list() 
     word_mixture.append(np.identity(tokens_count))
-    layers = range(layers_count)
-    for layer in layers:
+    for layer in range(layers_count):
         layer_matrix = np.zeros((tokens_count, tokens_count))
         heads = range(heads_count)
-        if args.heads and layers[layer+1] == layers[args.layer]:
+        if args.heads and layer == layers_count-1:
+            # in the last layer, we may only want to look at some heads
             heads = args.heads
         for head in heads:
             matrix = attentions_loaded[sentence_id][layer][head]
@@ -198,7 +195,7 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     if deptrees:
-        tree = deptree(np.transpose(word_mixture[args.layer]), tokens_list)
+        tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
         print(tree, file=deptrees)
 
     # draw heatmaps
