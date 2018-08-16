@@ -20,11 +20,12 @@ ap.add_argument("-d", "--deptrees",
         help="Output unoriented dep trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
-ap.add_argument("-k", "--heads", nargs='+',
+ap.add_argument("-k", "--heads", nargs='+', type=int,
         help="Only use the specified head(s) from the last layer; 0-based")
-ap.add_argument("-l", "--layers", nargs='+', default=[6],
-        help="Only use the specified layer(s); 1-based")
-ap.add_argument("-s", "--sentences", nargs='+',
+#ap.add_argument("-l", "--layers", nargs='+', default=[-1],
+ap.add_argument("-l", "--layer", default=-1, type=int,
+        help="Only use the specified layer; 1-based")
+ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
@@ -125,10 +126,17 @@ with open(args.tokens) as tokens_file:
     tokens_loaded = [l.split() for l in tokens_file]
 
 # outputs
-deptrees = list()
+if args.deptrees:
+    deptrees = open(args.deptrees, 'w')
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
+    # option to only process selected sentences
+    if args.sentences and sentence_index in args.sentences:
+        print('Processing sentence', sentence_index, file=sys.stderr)
+    else:
+        continue
+    
     sentence_id = 'arr_' + str(sentence_index)
     tokens_count = attentions_loaded[sentence_id].shape[2]
     tokens_list = tokens_loaded[sentence_index]
@@ -151,6 +159,11 @@ for sentence_index in range(sentences_count):
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
             #HACK
+            # TODO maybe this is bad, esp. if multiple values are high
+            # TODO do the max trick -- for each column (or row ????) subtract its max
+            # from all of its components to get the values into (-inf, 0]
+            # but this leads to underflows for low values, so maybe even
+            # better is to subtract max and then add 80, to get it into (-inf, 80]
             matrix = np.minimum(matrix, np.ones((tokens_count,tokens_count)) * 80.0)
             matrix = np.maximum(matrix, np.ones((tokens_count,tokens_count)) * -80.0)
             exp_matrix = np.exp(matrix)
@@ -171,24 +184,18 @@ for sentence_index in range(sentences_count):
            #print(word_mixture[-1])
 
     # compute trees
-    if args.deptrees:
-        tree = deptree(np.transpose(word_mixture[6]), tokens_list)
-        deptrees.append(tree)
-        #print('# sentence', sentence_index)
-        #print(tree)
-        #print()
+    if deptrees:
+        tree = deptree(np.transpose(word_mixture[args.layer]), tokens_list)
+        print(tree, file=deptrees)
 
     # draw heatmaps
-    # so far only for the 7th sentence
-    if args.visualizations and sentence_index == 7:
+    if args.visualizations:
         for layer in range(layers_count + 1):
             # +1 because word_mixture[0] is the initial identity matrix
             heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
             plt.savefig(args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png', dpi=200, format='png', bbox_inches='tight')
+            plt.close()
 
-if args.deptrees:
-    with open(args.deptrees, 'w') as output:
-        print(*deptrees, sep='\n', file=output)
-
-
+if deptrees:
+    deptrees.close()
 
