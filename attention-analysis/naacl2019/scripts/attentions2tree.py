@@ -12,11 +12,24 @@ import sys
 from scipy.sparse.csgraph import minimum_spanning_tree
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-a", "--attentions", help="NPZ file with attentions", required=True)
-ap.add_argument("-t", "--tokens", help="Labels (tokens) separated by spaces", required=True)
-ap.add_argument("-d", "--deptrees", help="Output unoriented dep trees into this file")
-ap.add_argument("-v", "--visualizations", help="Output heatmap prefix")
-ap.add_argument("-e", "--eos", help="Attentions contain EOS", action="store_true")
+ap.add_argument("-a", "--attentions", required=True,
+        help="NPZ file with attentions")
+ap.add_argument("-t", "--tokens", required=True,
+        help="Labels (tokens) separated by spaces")
+ap.add_argument("-d", "--deptrees",
+        help="Output unoriented dep trees into this file")
+ap.add_argument("-v", "--visualizations",
+        help="Output heatmap prefix")
+ap.add_argument("-k", "--heads", nargs='+',
+        help="Only use the specified head(s) from the last layer; 0-based")
+ap.add_argument("-l", "--layers", nargs='+', default=[6],
+        help="Only use the specified layer(s); 1-based")
+ap.add_argument("-s", "--sentences", nargs='+',
+        help="Only use the specified sentences; 0-based")
+ap.add_argument("-e", "--eos", action="store_true",
+        help="Attentions contain EOS")
+ap.add_argument("-n", "--noaggreg", action="store_true",
+        help="Do not aggregate the attentions over layers, just use one layer")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
