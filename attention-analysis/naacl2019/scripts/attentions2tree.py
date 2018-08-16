@@ -20,6 +20,7 @@ ap.add_argument("-d", "--deptrees",
         help="Output unoriented dep trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
+
 ap.add_argument("-k", "--heads", nargs='+', type=int,
         help="Only use the specified head(s) from the last layer; 0-based")
 #ap.add_argument("-l", "--layers", nargs='+', default=[-1],
@@ -27,6 +28,7 @@ ap.add_argument("-l", "--layer", default=-1, type=int,
         help="Only use the specified layer; 1-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
+
 ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
 ap.add_argument("-n", "--noaggreg", action="store_true",
@@ -153,9 +155,13 @@ for sentence_index in range(sentences_count):
     # recursively compute layer weights
     word_mixture = list() 
     word_mixture.append(np.identity(tokens_count))
-    for layer in range(layers_count):
+    layers = range(layers_count)
+    for layer in layers:
         layer_matrix = np.zeros((tokens_count, tokens_count))
-        for head in range(heads_count):
+        heads = range(heads_count)
+        if args.heads and layers[layer+1] == layers[args.layer]:
+            heads = args.heads
+        for head in heads:
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
             #HACK
@@ -174,9 +180,16 @@ for sentence_index in range(sentences_count):
             #print("EXPMIN:"  + str(np.exp(np.min(matrix))),file=sys.stderr)
             #print(deps, file=sys.stderr)
         # avg
-        layer_matrix = layer_matrix / heads_count
+        layer_matrix = layer_matrix / len(heads)
         # next layer = avg of this layer and prev layer
-        word_mixture.append((np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2)
+        # TODO add head weights from ff matrices
+        if args.noaggreg:
+            # this layer and residual connection -- attention over positions
+            wm_matrix = (layer_matrix + word_mixture[0]) / 2
+        else:
+            # recursively aggregated -- attention over input tokens
+            wm_matrix = (np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2
+        word_mixture.append(wm_matrix)
         #if sentence_index == 6:
            #print("LM")
            #print(layer_matrix)
