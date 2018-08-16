@@ -35,4 +35,5 @@ done
 
 cat $EXP_DIR/sent-per-file/transl* > $EXP_DIR/translations.txt
 ../scripts/concatenate_attentions.py $EXP_DIR/sent-per-file/att* $EXP_DIR/attentions.npz
+cp $TEST_DATA $EXP_DIR/source.txt
 
