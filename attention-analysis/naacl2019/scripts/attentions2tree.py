@@ -137,12 +137,8 @@ for sentence_index in range(sentences_count):
         for head in range(heads_count):
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
-            #deps = np.transpose(np.exp(np.transpose(matrix)) / np.sum(np.exp(np.transpose(matrix)), axis=0)) # puvodni
-            #deps = np.exp(matrix) / np.sum(np.exp(matrix), axis=0) # puvodni bez transpose
-            #exp_matrix = np.exp(matrix - np.amax(matrix, axis=0))
-            #deps = exp_matrix / np.sum(exp_matrix, axis=0)
             exp_matrix = np.exp(matrix)
-            deps = exp_matrix / np.sum(exp_matrix, axis=1)
+            deps = np.transpose(np.transpose(exp_matrix) / np.sum(exp_matrix, axis=1))
             layer_matrix = layer_matrix + deps
         # avg
         layer_matrix = layer_matrix / heads_count
@@ -158,8 +154,8 @@ for sentence_index in range(sentences_count):
         #print()
 
     # draw heatmaps
-    # so far only for the first sentence
-    if args.visualizations and sentence_index == 0:
+    # so far only for the 7th sentence
+    if args.visualizations and sentence_index == 6:
         for layer in range(layers_count + 1):
             # +1 because word_mixture[0] is the initial identity matrix
             heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
