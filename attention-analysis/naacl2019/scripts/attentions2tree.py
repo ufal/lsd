@@ -206,7 +206,7 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     if deptrees:
-        tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
+        tree = deptree(np.transpose(word_mixture[layer_last]), tokens_list)
         print(tree, file=deptrees)
 
     # draw heatmaps
