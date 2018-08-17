@@ -134,7 +134,7 @@ if args.deptrees:
 else:
     deptrees = None
 
-if args.layer:
+if args.layer != None:
     layer_last = args.layer
 else:
     layer_last = layers_count - 1
@@ -211,7 +211,7 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     if args.visualizations:
-        if args.layer:
+        if args.layer != None:
             # +1 because word_mixture[0] is the initial identity matrix
             layers = [args.layer+1]
         else:
