@@ -2,6 +2,9 @@
 # 1st arg = number of sentence
 S=$1
 
+# 2nd arg = index of last head
+H=$2
+
 F=s$S.html
 
 echo '<!DOCTYPE html>' > $F
@@ -31,7 +34,7 @@ do
     echo '<h3>Aggregated (layer '$l', sentence '$S')</h3>' >> $F
     
     # for each head
-    for k in $(seq 0 15)
+    for k in $(seq 0 $H)
     do
         IMG "s$S/k$k-l$l.png" >> $F
     done
@@ -43,7 +46,7 @@ do
     echo '<h3>Not aggregated (layer '$l', sentence '$S')</h3>' >> $F
     
     # for each head
-    for k in $(seq 0 15)
+    for k in $(seq 0 $H)
     do
         IMG "s$S/n-k$k-l$l.png" >> $F
     done

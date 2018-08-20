@@ -9,8 +9,11 @@ import sys
 attentions = list()
 attentions_file = np.load(sys.argv[1])
 
-#fns=attentions_file.files
+print(attentions_file)
+
+fns=attentions_file.files
 #print('\n'.join(fns))
+#print(len(fns))
 
 #for i in range(10):
 for i in range(111):
