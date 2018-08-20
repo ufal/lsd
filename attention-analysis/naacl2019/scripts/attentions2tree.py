@@ -196,7 +196,7 @@ for sentence_index in range(sentences_count):
             wm_matrix = (layer_matrix + word_mixture[0]) / 2
         else:
             # recursively aggregated -- attention over input tokens
-            wm_matrix = (np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2
+            wm_matrix = (np.matmul(layer_matrix, word_mixture[layer]) + word_mixture[layer]) / 2
         word_mixture.append(wm_matrix)
         #if sentence_index == 6:
            #print("LM")
