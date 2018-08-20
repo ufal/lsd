@@ -30,6 +30,8 @@ ap.add_argument("-k", "--heads", nargs='+', type=int,
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
+ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
+        help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
 ap.add_argument("-n", "--noaggreg", action="store_true",
@@ -196,7 +198,7 @@ for sentence_index in range(sentences_count):
             wm_matrix = (layer_matrix + word_mixture[0]) / 2
         else:
             # recursively aggregated -- attention over input tokens
-            wm_matrix = (np.matmul(word_mixture[layer], layer_matrix) + word_mixture[layer]) / 2
+            wm_matrix = (np.matmul(layer_matrix, word_mixture[layer]) + word_mixture[layer]) / 2
         word_mixture.append(wm_matrix)
         #if sentence_index == 6:
            #print("LM")
@@ -219,7 +221,10 @@ for sentence_index in range(sentences_count):
             layers = range(layers_count + 1)
         for layer in layers:
             heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
-            plt.savefig(args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png', dpi=200, format='png', bbox_inches='tight')
+            filename = args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png'
+            if args.sentences_as_dirs:
+                filename = "s" + str(sentence_index) + "/" + args.visualizations + "-l" + str(layer) + ".png"
+            plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
             plt.close()
 
 if deptrees:
