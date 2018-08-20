@@ -10,11 +10,11 @@ echo 'img {float: left; height: 200px; width: 200px; }' >> $F
 echo 'hr {clear: both}' >> $F
 echo '</style></head><body>' >> $F
 echo '<h1>Sentence '$S'</h1>' >> $F
-echo '<p>Averages shown in red squares</p>' >> $F
+echo '<p>Averages shown in squares</p>' >> $F
 
 function AIMG () {
     I=$1
-    echo '<a href="'$I'"><img border="10px solid red" src="'$I'"></a>'
+    echo '<a href="'$I'"><img border="2px solid blue" src="'$I'"></a>'
 }
 
 function IMG () {
@@ -30,25 +30,25 @@ do
     # Aggregated
     echo '<h3>Aggregated (layer '$l', sentence '$S')</h3>' >> $F
     
-    # average
-    AIMG "s$S/kall-l$l.png" >> $F
     # for each head
     for k in $(seq 0 15)
     do
         IMG "s$S/k$k-l$l.png" >> $F
     done
+    # average
+    AIMG "s$S/kall-l$l.png" >> $F
+    echo '<hr>' >> $F
 
     # Aggregated
     echo '<h3>Not aggregated (layer '$l', sentence '$S')</h3>' >> $F
     
-    # average
-    AIMG "s$S/n-kall-l$l.png" >> $F
     # for each head
     for k in $(seq 0 15)
     do
         IMG "s$S/n-k$k-l$l.png" >> $F
     done
-
+    # average
+    AIMG "s$S/n-kall-l$l.png" >> $F
     echo '<hr>' >> $F
 done
 
