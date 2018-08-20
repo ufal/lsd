@@ -10,14 +10,14 @@ fi
 SR=/net/projects/LSD/attention-analysis/naacl2019/
 R=$(pwd)
 
-mkdir matrices
+mkdir -p matrices
 cd matrices
 
 SENTENCES=$(seq 0 $S)
 
 for s in $SENTENCES
 do
-    mkdir s$s
+    mkdir -p s$s
     $SR/scripts/generate_html.sh $s
 done
 
