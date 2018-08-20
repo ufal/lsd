@@ -23,7 +23,7 @@ function IMG () {
 }
 
 # for each layer
-for l in $(seq 6 -1 1)
+for l in $(seq 5 -1 0)
 do
     echo '<h2>Layer '$l'</h2>' >> $F
     
@@ -51,10 +51,6 @@ do
     AIMG "s$S/n-kall-l$l.png" >> $F
     echo '<hr>' >> $F
 done
-
-# for 0th layer
-echo '<h2>Layer 0</h2>' >> $F
-AIMG "s$S/kall-l0.png" >> $F
 
 echo '</body></html>' >> $F
 

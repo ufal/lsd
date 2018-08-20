@@ -233,7 +233,7 @@ for sentence_index in range(sentences_count):
 
     # draw heatmaps
     if args.visualizations != None:
-        for layer in range(layers_count + 1):
+        for layer in range(layers_count):
             write_heatmap(tokens_list, sentence_index, vis, layer, 0)
             write_heatmap(tokens_list, sentence_index, vis, layer, 1)
             for head in range(heads_count):
