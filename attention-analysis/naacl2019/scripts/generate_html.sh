@@ -4,25 +4,11 @@ S=$1
 
 F=s$S.html
 
-cat << EOM > $F
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-EOM    
-
-echo Sentence $S >> $F
-
-cat << EOM >> $F
-    </title>
-    <style>
-        img {float: left; height: 200px; width: 200px; }
-        hr {clear: both}
-    </style>
-</head>
-<body>
-EOM
-
+echo '<!DOCTYPE html>' > $F
+echo '<html><head><title>'Sentence $S'</title><style>' >> $F
+echo 'img {float: left; height: 200px; width: 200px; }' >> $F
+echo 'hr {clear: both}' >> $F
+echo '</style></head><body>' >> $F
 echo '<h1>Sentence '$S'</h1>' >> $F
 echo '<p>Averages shown in red squares</p>' >> $F
 
