@@ -18,6 +18,7 @@ SENTENCES=$(seq 0 $S)
 for s in $SENTENCES
 do
     mkdir s$s
+    $SR/scripts/generate_html.sh $s
 done
 
 # all heads, aggreg and not-aggreg
@@ -35,7 +36,4 @@ do
         $SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v n-k$k -k $k -l $l -e -n
     done
 done
-
-# TODO also generate the HTML file, one for each sentence -- ideally each in a separate directory...
-
 
