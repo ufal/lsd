@@ -23,10 +23,10 @@ ap.add_argument("-d", "--deptrees",
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
-ap.add_argument("-l", "--layer", type=int,
-        help="Only visualize heatmap for the specified layer; 0-based")
-ap.add_argument("-k", "--heads", nargs='+', type=int,
-        help="Only use the specified head(s) from the last layer; 0-based")
+#ap.add_argument("-l", "--layer", type=int,
+#        help="Only visualize heatmap for the specified layer; 0-based")
+#ap.add_argument("-k", "--heads", nargs='+', type=int,
+#        help="Only use the specified head(s) from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
@@ -34,8 +34,8 @@ ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
-ap.add_argument("-n", "--noaggreg", action="store_true",
-        help="Do not aggregate the attentions over layers, just use one layer")
+#ap.add_argument("-n", "--noaggreg", action="store_true",
+#        help="Do not aggregate the attentions over layers, just use one layer")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -121,6 +121,25 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     fig = plt.gcf()
     #fig.set_size_inches(cm2inch(40, 20))
 
+def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
+    filename = ''
+    if args.sentences_as_dirs:
+        filename += "s" + str(sentence_index) + "/"
+    filename += args.visualizations
+    if not args.sentences_as_dirs:
+        filename += "s" + str(sentence_index) + '-'
+    if aggreg == 0:
+        filename += 'n-'
+    if head == -1:
+        filename += 'kall-'
+    else:
+        filename += 'k' + str(head) + '-'
+    filename += 'l' + str(layer)
+    filename += '.png'
+
+    heatmap(vis[layer][aggreg][head], "", "", "", tokens_list, tokens_list)
+    plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
+    plt.close()
 
 #load data
 attentions_loaded = np.load(args.attentions)
@@ -136,10 +155,14 @@ if args.deptrees:
 else:
     deptrees = None
 
-if args.layer != None:
-    layer_last = args.layer
-else:
-    layer_last = layers_count - 1
+# recursively aggregated -- attention over input tokens
+def wm_aggreg(this_layer, last_layer):
+    return (np.matmul(this_layer, last_layer) + last_layer) / 2
+
+# this layer and residual connection -- attention over positions
+def wm_avg(this_layer, first_layer):
+    return (this_layer + first_layer) / 2
+
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
@@ -165,13 +188,12 @@ for sentence_index in range(sentences_count):
     # recursively compute layer weights
     word_mixture = list() 
     word_mixture.append(np.identity(tokens_count))
-    for layer in range(layer_last + 1):
+    # for visualisation -- vis[layer][aggreg][head]
+    vis = list()
+    for layer in range(layers_count):
+        layer_deps = list()  # for vis
         layer_matrix = np.zeros((tokens_count, tokens_count))
-        heads = range(heads_count)
-        if args.heads and layer == layer_last:
-            # in the last layer, we may only want to look at some heads
-            heads = args.heads
-        for head in heads:
+        for head in range(heads_count):
             matrix = attentions_loaded[sentence_id][layer][head]
             #softmax
             #HACK
@@ -184,22 +206,19 @@ for sentence_index in range(sentences_count):
             matrix = np.maximum(matrix, np.ones((tokens_count,tokens_count)) * -80.0)
             exp_matrix = np.exp(matrix)
             deps = np.transpose(np.transpose(exp_matrix) / np.sum(exp_matrix, axis=1))
+            layer_deps.append(deps)
             layer_matrix = layer_matrix + deps
-            #if sentence_index == 6:
-            #print(np.min(matrix),file=sys.stderr)
-            #print("EXPMIN:"  + str(np.exp(np.min(matrix))),file=sys.stderr)
-            #print(deps, file=sys.stderr)
         # avg
         layer_matrix = layer_matrix / len(heads)
+        layer_deps.append(layer_matrix)
         # next layer = avg of this layer and prev layer
         # TODO add head weights from ff matrices
-        if args.noaggreg:
-            # this layer and residual connection -- attention over positions
-            wm_matrix = (layer_matrix + word_mixture[0]) / 2
-        else:
-            # recursively aggregated -- attention over input tokens
-            wm_matrix = (np.matmul(layer_matrix, word_mixture[layer]) + word_mixture[layer]) / 2
-        word_mixture.append(wm_matrix)
+        vis.append(
+                [wm_avg(m, word_mixture[0]) for m in layer_deps],
+                [wm_aggreg(m, word_mixture[layer]) for m in layer_deps],
+                )
+        word_mixture.append( wm_aggreg(layer_matrix, word_mixture[layer]) )
+
         #if sentence_index == 6:
            #print("LM")
            #print(layer_matrix)
@@ -208,24 +227,18 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     if deptrees:
-        tree = deptree(np.transpose(word_mixture[layer_last]), tokens_list)
-        print(tree, file=deptrees)
+        print("Deptrees disabled!", file=sys.stderr)
+        #tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
+        #print(tree, file=deptrees)
 
     # draw heatmaps
-    if args.visualizations:
-        if args.layer != None:
-            # +1 because word_mixture[0] is the initial identity matrix
-            layers = [args.layer+1]
-        else:
-            # +1 because word_mixture[0] is the initial identity matrix
-            layers = range(layers_count + 1)
-        for layer in layers:
-            heatmap(word_mixture[layer], "", "", "", tokens_list, tokens_list)
-            filename = args.visualizations + str(sentence_index) + '-l' + str(layer) + '.png'
-            if args.sentences_as_dirs:
-                filename = "s" + str(sentence_index) + "/" + args.visualizations + "-l" + str(layer) + ".png"
-            plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
-            plt.close()
+    if args.visualizations != None:
+        for layer in range(layers_count + 1):
+            write_heatmap(tokens_list, sentence_index, vis, layer, 0)
+            write_heatmap(tokens_list, sentence_index, vis, layer, 1)
+            for head in range(heads_count):
+                write_heatmap(tokens_list, sentence_index, vis, layer, 0, head)
+                write_heatmap(tokens_list, sentence_index, vis, layer, 1, head)
 
 if deptrees:
     deptrees.close()

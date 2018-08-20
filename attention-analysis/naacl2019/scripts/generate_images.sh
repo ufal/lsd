@@ -21,19 +21,5 @@ do
     $SR/scripts/generate_html.sh $s
 done
 
-# all heads, aggreg and not-aggreg
-$SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v kall   -e
-$SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v n-kall -e -n
-
-# for each layer
-for l in $(seq 0 5)
-do
-    # for each head
-    for k in $(seq 0 15)
-    do
-        # aggreg and not-aggreg
-        $SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v k$k   -k $k -l $l -e
-        $SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v n-k$k -k $k -l $l -e -n
-    done
-done
+$SR/scripts/attentions2tree.py -a $R/attentions.npz -t $R/source.txt -s $SENTENCES -D -v '' -e
 
