@@ -4,9 +4,9 @@
 #
 # !!! Memory limit
 #$ -hard
-#$ -l mem_free=1g
-#$ -l act_mem_free=1g
-#$ -l h_vmem=1g
+#$ -l mem_free=9g
+#$ -l act_mem_free=9g
+#$ -l h_vmem=9g
 #
 # Run in this directory
 #$ -cwd
@@ -37,14 +37,15 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-for f in train.txt val.txt test.txt
+#for f in train.txt val.txt test.txt
+for f in train.txt
 do
-    ./udpipe --tokenize --tokenizer=presegmented --output=horizontal cs.udpipe \
-    < /net/projects/LSD/sentiment/data/csfd_data/$f \
-    > /net/projects/LSD/sentiment/data/csfd_data/$f.udtok
+#    ./udpipe --tokenize --tokenizer=presegmented --output=horizontal cs.udpipe \
+#    < /net/projects/LSD/sentiment/data/csfd_data/$f \
+#    > /net/projects/LSD/sentiment/data/csfd_data/$f.udtok
     
     ./udpipe --tokenize --tokenizer=presegmented --output=horizontal en.udpipe \
     < /net/projects/LSD/sentiment/data/yelp_data/$f \
-    > /net/projects/LSD/sentiment/data/yelp_data/$f.udtok
+    > /net/projects/LSD/sentiment/data/yelp_data.$f.udtok
 done
 

@@ -209,14 +209,14 @@ for sentence_index in range(sentences_count):
             layer_deps.append(deps)
             layer_matrix = layer_matrix + deps
         # avg
-        layer_matrix = layer_matrix / len(heads)
+        layer_matrix = layer_matrix / heads_count
         layer_deps.append(layer_matrix)
         # next layer = avg of this layer and prev layer
         # TODO add head weights from ff matrices
-        vis.append(
+        vis.append([
                 [wm_avg(m, word_mixture[0]) for m in layer_deps],
                 [wm_aggreg(m, word_mixture[layer]) for m in layer_deps],
-                )
+                ])
         word_mixture.append( wm_aggreg(layer_matrix, word_mixture[layer]) )
 
         #if sentence_index == 6:
