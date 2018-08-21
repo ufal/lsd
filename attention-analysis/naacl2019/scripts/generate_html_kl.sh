@@ -7,12 +7,12 @@ function IMG () {
     echo '<a href="'$I'"><img src="'$I'"></a>'
 }
 
-for k in $(seq 0 $H)
-do
 for l in $(seq 0 $L)
 do
+for k in $(seq 0 $H)
+do
 
-    F=k$k-l$l.html
+    F=n-k$k-l$l.html
 
     echo '<a href="'$F'">'Layer $l, head $k'</a><br>'
 
@@ -24,7 +24,7 @@ do
 
     for s in $(seq 0 $S)
     do
-        IMG "s$s/k$k-l$l.png" >> $F
+        IMG "s$s/n-k$k-l$l.png" >> $F
     done
 
     echo '</body></html>' >> $F
