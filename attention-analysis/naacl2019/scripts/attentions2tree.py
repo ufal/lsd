@@ -45,11 +45,11 @@ def deptree(weights, wordpieces):
     graph = [ [0] * size for i in range(size)  ]
     for brother in range(size-1):
         for sister in range(brother+1, size-1):
-            for column in range(size):
+            for row in range(size):
                 # MINIMUM spanning tree
                 # now sum
                 # TODO max
-                score = - weights[column][brother] * weights[column][sister]
+                score = - weights[row][brother] * weights[row][sister]
                 graph[brother][sister] += score
 
     mst = minimum_spanning_tree(graph).toarray()
@@ -222,9 +222,10 @@ for sentence_index in range(sentences_count):
 
     # compute trees
     if deptrees:
-        print("Deptrees disabled!", file=sys.stderr)
-        #tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
-        #print(tree, file=deptrees)
+        # print("Deptrees disabled!", file=sys.stderr)
+        # tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
+        tree = deptree(word_mixture[-1], tokens_list)
+        print(tree, file=deptrees)
 
     # draw heatmaps
     if args.visualizations != None:
