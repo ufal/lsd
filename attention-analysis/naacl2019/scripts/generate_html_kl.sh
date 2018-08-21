@@ -7,7 +7,7 @@ function IMG () {
     echo '<a href="'$I'"><img src="'$I'"></a>'
 }
 
-for k in $(seq 0 $K)
+for k in $(seq 0 $H)
 do
 for l in $(seq 0 $L)
 do
@@ -29,5 +29,6 @@ do
 
     echo '</body></html>' >> $F
 
+done
 done
 
