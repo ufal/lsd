@@ -195,15 +195,10 @@ for sentence_index in range(sentences_count):
         layer_matrix = np.zeros((tokens_count, tokens_count))
         for head in range(heads_count):
             matrix = attentions_loaded[sentence_id][layer][head]
-            #softmax
-            #HACK
-            # TODO maybe this is bad, esp. if multiple values are high
-            # TODO do the max trick -- for each column (or row ????) subtract its max
-            # from all of its components to get the values into (-inf, 0]
-            # but this leads to underflows for low values, so maybe even
-            # better is to subtract max and then add 80, to get it into (-inf, 80]
-            matrix = np.minimum(matrix, np.ones((tokens_count,tokens_count)) * 80.0)
-            matrix = np.maximum(matrix, np.ones((tokens_count,tokens_count)) * -80.0)
+            # the max trick -- for each row subtract its max
+            # from all of its components to get the values into (-inf, 0]            
+            matrix = np.transpose(np.transpose(matrix) - np.max(matrix, axis=1))
+            # softmax
             exp_matrix = np.exp(matrix)
             deps = np.transpose(np.transpose(exp_matrix) / np.sum(exp_matrix, axis=1))
             layer_deps.append(deps)
