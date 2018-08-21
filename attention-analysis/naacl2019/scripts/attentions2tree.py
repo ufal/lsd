@@ -23,10 +23,10 @@ ap.add_argument("-d", "--deptrees",
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
-#ap.add_argument("-l", "--layer", type=int,
-#        help="Only visualize heatmap for the specified layer; 0-based")
-#ap.add_argument("-k", "--heads", nargs='+', type=int,
-#        help="Only use the specified head(s) from the last layer; 0-based")
+ap.add_argument("-l", "--layer", type=int, default=-1,
+        help="Only use the specified layer; 0-based")
+ap.add_argument("-k", "--head", type=int, default=-1,
+        help="Only use the specified head from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
@@ -34,8 +34,8 @@ ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
-#ap.add_argument("-n", "--noaggreg", action="store_true",
-#        help="Do not aggregate the attentions over layers, just use one layer")
+ap.add_argument("-n", "--noaggreg", action="store_true",
+        help="Do not aggregate the attentions over layers, just use one layer")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -224,7 +224,8 @@ for sentence_index in range(sentences_count):
     if deptrees:
         # print("Deptrees disabled!", file=sys.stderr)
         # tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
-        tree = deptree(word_mixture[-1], tokens_list)
+        aggreg = 0 if args.noaggreg else 1
+        tree = deptree(vis[args.layer][aggreg][args.head], tokens_list)
         print(tree, file=deptrees)
 
     # draw heatmaps
