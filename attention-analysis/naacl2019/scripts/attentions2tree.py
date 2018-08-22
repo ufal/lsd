@@ -73,14 +73,29 @@ def deptree(weights, wordpieces):
     return '\n'.join(lines)
 
 def oritree(weights, wordpieces):
-    lines = []
     size = len(wordpieces)
+    # disallow self-edges
     nondia = weights - np.eye(size)
+    # greedy heads
+    heads = list()
+    headweights = list()
     for child in range(size):
         head = np.argmax(nondia[child])
+        heads.append(head)
+        headweights.append(nondia[child][head])
+    # find root
+    root = np.argmin(headweights)
+    headweights[root] = nondia[root][root] + 1
+    heads[root] = -1
+    # conll-like output
+    lines = []
+    for child in range(size):
         # 5    the_    3
         lines.append('\t'.join((
-            str(child), wordpieces[child], str(head)
+            str(child + 1),
+            wordpieces[child],
+            str(heads[child] + 1),
+            str(round(headweights[child], 2))
         )))
     # end of sentence
     lines.append('')
