@@ -74,19 +74,36 @@ def deptree(weights, wordpieces):
 
 def oritree(weights, wordpieces):
     size = len(wordpieces)
-    # disallow self-edges
-    nondia = weights - np.eye(size)
-    # greedy heads
-    heads = list()
-    headweights = list()
-    for child in range(size):
-        head = np.argmax(nondia[child])
-        heads.append(head)
-        headweights.append(nondia[child][head])
-    # find root
-    root = np.argmin(headweights)
-    headweights[root] = nondia[root][root] + 1
+
+    # non-optimal greedy MST algorithm
+    heads = dict()
+    headweights = dict()
+    nodes = set(range(size))
+    # find root node
+    root = np.argmax(np.diag(weights))
     heads[root] = -1
+    headweights[root] = weights[root][root]
+    nodes.remove(root)
+    # construct tree
+    while nodes:
+        # find best child to attach into the partial tree
+        best_weight = -1
+        best_parent = -1
+        best_child  = -1
+        # children = not yet attached nodes
+        for child in nodes:
+            # parents = already attached nodes
+            for parent in heads.keys():
+                weight = weights[child][parent]
+                if weight > best_weight:
+                    best_weight = weight
+                    best_child  = child
+                    best_parent = parent
+        # attach best child
+        assert best_child != -1
+        heads[best_child] = best_parent
+        headweights[best_child] = best_weight
+        nodes.remove(best_child)
     # conll-like output
     lines = []
     for child in range(size):
