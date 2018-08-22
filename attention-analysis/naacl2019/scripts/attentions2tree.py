@@ -19,7 +19,9 @@ ap.add_argument("-a", "--attentions", required=True,
 ap.add_argument("-t", "--tokens", required=True,
         help="Labels (tokens) separated by spaces")
 ap.add_argument("-d", "--deptrees",
-        help="Output unoriented dep trees into this file")
+        help="Output unori dep trees into this file")
+ap.add_argument("-o", "--oritrees",
+        help="Output oriented dep trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
@@ -65,6 +67,21 @@ def deptree(weights, wordpieces):
             str(brother), wordpieces[brother], ','.join(sisters)
         )))
 
+    # end of sentence
+    lines.append('')
+
+    return '\n'.join(lines)
+
+def oritree(weights, wordpieces):
+    lines = []
+    size = len(wordpieces)
+    nondia = weights - np.eye(size)
+    for child in range(size):
+        head = np.argmax(nondia[child])
+        # 5    the_    3
+        lines.append('\t'.join((
+            str(child), wordpieces[child], str(head)
+        )))
     # end of sentence
     lines.append('')
 
@@ -154,6 +171,10 @@ if args.deptrees:
     deptrees = open(args.deptrees, 'w')
 else:
     deptrees = None
+if args.oritrees:
+    oritrees = open(args.oritrees, 'w')
+else:
+    oritrees = None
 
 # recursively aggregated -- attention over input tokens
 def wm_aggreg(this_layer, last_layer):
@@ -228,6 +249,13 @@ for sentence_index in range(sentences_count):
         tree = deptree(vis[args.layer][aggreg][args.head], tokens_list)
         print(tree, file=deptrees)
 
+    if oritrees:
+        # print("Deptrees disabled!", file=sys.stderr)
+        # tree = deptree(np.transpose(word_mixture[-1]), tokens_list)
+        aggreg = 0 if args.noaggreg else 1
+        tree = oritree(vis[args.layer][aggreg][args.head], tokens_list)
+        print(tree, file=oritrees)
+
     # draw heatmaps
     if args.visualizations != None:
         for layer in range(layers_count):
@@ -239,4 +267,6 @@ for sentence_index in range(sentences_count):
 
 if deptrees:
     deptrees.close()
+if oritrees:
+    oritrees.close()
 
