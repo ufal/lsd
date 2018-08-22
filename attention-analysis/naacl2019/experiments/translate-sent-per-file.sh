@@ -33,9 +33,8 @@ s_target_out=\"$transl\"
 s_att_out=\"$att\"
 " > $datafile; \
     
-    #/net/projects/LSD/naacl2019-data/neuralmonkey/bin/neuralmonkey-run $EXP_DIR/get-attentions.ini $datafile
     while [ ! -e $att.npz ] ; do
-        sleep 10
+        sleep 5
         /net/projects/LSD/naacl2019-data/neuralmonkey/bin/neuralmonkey-run $EXP_DIR/get-attentions.ini $datafile
     done
 
@@ -54,6 +53,7 @@ variables=[\"$EXP_DIR/$VARIABLES\"]
 [test_data]
 class=dataset.load_dataset_from_files
 s_source=\"$EXP_DIR/sent-per-file/src0000\"
+s_target_out=\"$EXP_DIR/transl0000\"
 s_weights_out=\"$EXP_DIR/weights\"
 " > $EXP_DIR/get-weights-data.ini; \
 /net/projects/LSD/naacl2019-data/neuralmonkey/bin/neuralmonkey-run $EXP_DIR/get-weights.ini $EXP_DIR/get-weights-data.ini

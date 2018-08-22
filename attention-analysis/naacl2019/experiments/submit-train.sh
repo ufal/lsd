@@ -1,6 +1,6 @@
 SRC="en"
-TGT="cs"
-NUMHEADS=2
+TGT="fr"
+NUMHEADS=4
 TOKENS="bpe100k"
 VOCSIZE=110000
 

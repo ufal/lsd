@@ -1,6 +1,6 @@
 SRC="en"
-TGT="fi"
-NUMHEADS=16
+TGT="fr"
+NUMHEADS=4
 TOKENS="bpe100k"
 
 qsub -cwd -b y -j y -q "cpu-troja.q@*" -hard -l mem_free=10g -l act_mem_free=10g -l h_vmem=10g -N TR_$SRC$TGT-${NUMHEADS}h-$TOKENS \
