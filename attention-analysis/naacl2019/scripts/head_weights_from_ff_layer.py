@@ -12,11 +12,19 @@ x = np.load(input_file)
 for l in range(6):
     head_weights = list()
     w_sum = 0
-    head = np.split(x["encoder/layer_" + str(l) + "/self_attention/output_proj/kernel:0"], 16)
+    hidden_kernel = x["encoder/layer_" + str(l) + "/feedforward/hidden_state/kernel:0"]
+    output_kernel = x["encoder/layer_" + str(l) + "/feedforward/output/kernel:0"]
+    #hidden_bias = x["encoder/layer_0/feedforward/hidden_state/bias:0"]
+    #output_bias = x["encoder/layer_0/feedforward/output/bias:0"]
+    #print(hidden_bias.shape)
+    #print(output_bias.shape)
+    print(output_kernel.shape)
+    head_kernel = np.split(hidden_kernel, 16)
     for h in range(16):
-        weights[l][h] = np.mean(np.absolute(head[h]))
+        ff_matmul = np.matmul(head_kernel[h],output_kernel)
+        weights[l][h] = np.max(np.matmul(head_kernel[h],output_kernel))
         w_sum += weights[l][h]
-    for h in range(16):
-        weights[l][h] /= w_sum
+    #for h in range(16):
+    #    weights[l][h] /= w_sum
 print(weights)
 np.savez(output_file, *weights)
