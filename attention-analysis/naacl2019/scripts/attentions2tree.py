@@ -112,7 +112,8 @@ def oritree(weights, wordpieces):
             str(child + 1),
             wordpieces[child],
             str(heads[child] + 1),
-            str(round(headweights[child], 2))
+            str(round(headweights[child], 2)),
+            wordpieces[heads[child]],
         )))
     # end of sentence
     lines.append('')
