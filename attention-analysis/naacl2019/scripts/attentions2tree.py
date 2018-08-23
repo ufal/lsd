@@ -141,20 +141,31 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
 def phrasetree(vis, wordpieces):
     size = len(wordpieces)
     phrase_weight = np.zeros((size, size))
+    print(vis[3][0][5])
     # iterate over all layers
     for layer in range(len(vis)):
         # iterate over all heads, no aggregation
-        for weights in vis[layer][0]:
+        for head in range(len(vis[layer][0])):
             for column in range(size):
-                for i in range(0, size - 1):
-                    current_sum = weights[i][column]
-                    for j in range(i + 1, size):
-                        current_sum += weights[j][column]
-                        # add weight of phrase with span (i, j) only if the average is higher than threshold
+                i = 0
+                while (i < size):
+                    current_sum = 0
+                    for j in range(i, size):
+                        value = vis[layer][0][head][j][column]
+                        if value < 0.2:
+                            j -= 1
+                            break
+                        current_sum += value
+                    if (j >= i):
+                        # averaged weight of phrase with span (i, j) 
                         pw = current_sum / (j - i + 1)
-                        if pw > 0.4:
-                            phrase_weight[i][j] += pw
+                        #if(layer==3 and head==5):
+                        #    print(str(i) + " " + str(j) + " " + str(column)+ " " + str(value) + " " + str(pw))
+                        if (phrase_weight[i][j] < pw):
+                            phrase_weight[i][j] = pw
+                    i = j + 2
 
+    print(phrase_weight)
     # parse the tree recursively in top-down fashion
     tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
     return(tree)
