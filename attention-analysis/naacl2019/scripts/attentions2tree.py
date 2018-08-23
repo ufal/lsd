@@ -157,7 +157,7 @@ def phrasetree(vis, wordpieces):
 
     # parse the tree recursively in top-down fashion
     tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
-    return(str(tree))
+    return(tree)
                         
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
@@ -334,8 +334,12 @@ for sentence_index in range(sentences_count):
 
     if phrasetrees:
         tree = phrasetree(vis, tokens_list)
-        print(tree, file=phrasetrees)
+        #print(str(tree), file=phrasetrees)
+        for subtree in tree.subtrees():
+            print(" ".join(subtree.leaves()), file=phrasetrees)
+        print("", file=phrasetrees)
 
+    
     # draw heatmaps
     if args.visualizations != None:
         for layer in range(layers_count):
