@@ -22,6 +22,8 @@ ap.add_argument("-d", "--deptrees",
         help="Output unori dep trees into this file")
 ap.add_argument("-o", "--oritrees",
         help="Output oriented dep trees into this file")
+ap.add_argument("-p", "--phrasetrees",
+        help="Output phrase trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 
@@ -119,6 +121,21 @@ def oritree(weights, wordpieces):
     lines.append('')
 
     return '\n'.join(lines)
+
+def phrasetree(vis, wordpieces)
+    size = len(wordpieces)
+    # iterate over all layers
+    for l in range(len(vis)):
+        # iterate over all heads, no aggregation
+        for weights in vis[l][0]:
+            for column in range(size):
+                for i in range(0, size - 1):
+                    current_sum = weights[i][column]
+                    for j in range(i, size):
+                        current_sum += weights[j][column]
+
+
+
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
@@ -288,6 +305,10 @@ for sentence_index in range(sentences_count):
         aggreg = 0 if args.noaggreg else 1
         tree = oritree(vis[args.layer][aggreg][args.head], tokens_list)
         print(tree, file=oritrees)
+
+    if phrasetrees:
+        tree = phrasetree(vis, tokens_list)
+        print(tree, file=phrasetrees)
 
     # draw heatmaps
     if args.visualizations != None:
