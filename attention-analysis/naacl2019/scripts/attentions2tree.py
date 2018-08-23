@@ -122,21 +122,40 @@ def oritree(weights, wordpieces):
 
     return '\n'.join(lines)
 
-def phrasetree(vis, wordpieces)
+def parse_subtree(i, j, phrase_weight, wordpieces):
+    
+    if (i == j):
+        return wordpieces[i]
+    
+    best_k = i
+    maximum = 0
+    for k in range(i, j):
+        value = phrase_weight[i][k] * phrase_weight[k + 1][j]
+        if value > maximum:
+            maximum = value
+            best_k = k
+    subtree1 = parse_subtree(i, best_k, phrase_weight, wordpieces)
+    subtree2 = parse_subtree(best_k + 1, j, phrase_weight, wordpieces)
+    return Tree('X', [subtree1, subtree2])
+
+def phrasetree(vis, wordpieces):
     size = len(wordpieces)
+    phrase_weight = np.zeros((size, size))
     # iterate over all layers
-    for l in range(len(vis)):
+    for layer in range(len(vis)):
         # iterate over all heads, no aggregation
-        for weights in vis[l][0]:
+        for weights in vis[layer][0]:
             for column in range(size):
                 for i in range(0, size - 1):
                     current_sum = weights[i][column]
-                    for j in range(i, size):
+                    for j in range(i + 1, size):
                         current_sum += weights[j][column]
-
-
-
-
+                        # add weight of phrase with span (i, j)
+                        phrase_weight[i][j] += current_sum / (j - i + 1)
+    # parse the tree recursively in top-down fashion
+    tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
+    return(str(tree))
+                        
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
     Copied form:
@@ -225,6 +244,10 @@ if args.oritrees:
     oritrees = open(args.oritrees, 'w')
 else:
     oritrees = None
+if args.phrasetrees:
+    phrasetrees = open(args.phrasetrees, 'w')
+else:
+    phrasetrees = None
 
 # recursively aggregated -- attention over input tokens
 def wm_aggreg(this_layer, last_layer):
