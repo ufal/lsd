@@ -150,8 +150,11 @@ def phrasetree(vis, wordpieces):
                     current_sum = weights[i][column]
                     for j in range(i + 1, size):
                         current_sum += weights[j][column]
-                        # add weight of phrase with span (i, j)
-                        phrase_weight[i][j] += current_sum / (j - i + 1)
+                        # add weight of phrase with span (i, j) only if the average is higher than threshold
+                        pw = current_sum / (j - i + 1)
+                        if pw > 0.4:
+                            phrase_weight[i][j] += pw
+
     # parse the tree recursively in top-down fashion
     tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
     return(str(tree))
