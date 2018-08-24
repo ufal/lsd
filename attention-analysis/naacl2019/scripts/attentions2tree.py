@@ -130,7 +130,7 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
     best_k = i
     maximum = 0
     for k in range(i, j):
-        value = phrase_weight[i][k] * phrase_weight[k + 1][j]
+        value = phrase_weight[i][k] + phrase_weight[k + 1][j]
         if value > maximum:
             maximum = value
             best_k = k
@@ -152,13 +152,12 @@ def phrasetree(vis, wordpieces):
                     current_sum = 0
                     for j in range(i, size):
                         value = vis[layer][0][head][j][column]
-                        if value < 0.2:
+                        if value < 0.1:
                             j -= 1
                             break
                         current_sum += value
                     if (j >= i):
-                        # averaged weight of phrase with span (i, j) 
-                        pw = current_sum / (j - i + 1)
+                        pw = current_sum #/ (j - i + 1)
                         #if(layer==3 and head==5):
                         #    print(str(i) + " " + str(j) + " " + str(column)+ " " + str(value) + " " + str(pw))
                         if (phrase_weight[i][j] < pw):
@@ -346,9 +345,11 @@ for sentence_index in range(sentences_count):
     if phrasetrees:
         tree = phrasetree(vis, tokens_list)
         #print(str(tree), file=phrasetrees)
-        for subtree in tree.subtrees():
-            print(" ".join(subtree.leaves()), file=phrasetrees)
-        print("", file=phrasetrees)
+        #for subtree in tree.subtrees():
+        #    print(" ".join(subtree.leaves()), file=phrasetrees)
+        #print("", file=phrasetrees)
+        tree.draw()
+        #tree.pretty_print()
 
     
     # draw heatmaps
