@@ -147,11 +147,8 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
     if (head != -1):
         head_list = [head]
     phrase_weight = np.zeros((size, size))
-    #print(vis[3][0][5])
     # iterate over all layers
     for l in layer_list:
-    #for layer in (1,5):
-        # iterate over all heads, no aggregation
         for h in head_list:
             for column in range(size):
                 i = 0
@@ -165,8 +162,6 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
                         current_sum += value
                     if (j >= i):
                         pw = current_sum #/ (j - i + 1)
-                        #if(layer==3 and head==5):
-                        #    print(str(i) + " " + str(j) + " " + str(column)+ " " + str(value) + " " + str(pw))
                         if (phrase_weight[i][j] < pw):
                             phrase_weight[i][j] = pw
                     i = j + 2
