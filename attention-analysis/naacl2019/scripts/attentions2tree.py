@@ -138,20 +138,27 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
     subtree2 = parse_subtree(best_k + 1, j, phrase_weight, wordpieces)
     return Tree('X', [subtree1, subtree2])
 
-def phrasetree(vis, wordpieces):
+def phrasetree(vis, wordpieces, layer, aggreg, head):
     size = len(wordpieces)
+    layer_list = range(len(vis))
+    if (layer != -1):
+        layer_list = [layer]
+    head_list = range(len(vis[layer][0]))
+    if (head != -1):
+        head_list = [head]
     phrase_weight = np.zeros((size, size))
-    print(vis[3][0][5])
+    #print(vis[3][0][5])
     # iterate over all layers
-    for layer in range(len(vis)):
+    for l in layer_list:
+    #for layer in (1,5):
         # iterate over all heads, no aggregation
-        for head in range(len(vis[layer][0])):
+        for h in head_list:
             for column in range(size):
                 i = 0
                 while (i < size):
                     current_sum = 0
                     for j in range(i, size):
-                        value = vis[layer][0][head][j][column]
+                        value = vis[l][aggreg][h][j][column]
                         if value < 0.1:
                             j -= 1
                             break
@@ -164,7 +171,7 @@ def phrasetree(vis, wordpieces):
                             phrase_weight[i][j] = pw
                     i = j + 2
 
-    print(phrase_weight)
+    #print(phrase_weight)
     # parse the tree recursively in top-down fashion
     tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
     return(tree)
@@ -343,13 +350,15 @@ for sentence_index in range(sentences_count):
         print(tree, file=oritrees)
 
     if phrasetrees:
-        tree = phrasetree(vis, tokens_list)
+        aggreg = 0 if args.noaggreg else 1
+        tree = phrasetree(vis, tokens_list, args.layer, aggreg, args.head)
         #print(str(tree), file=phrasetrees)
         #for subtree in tree.subtrees():
         #    print(" ".join(subtree.leaves()), file=phrasetrees)
         #print("", file=phrasetrees)
-        tree.draw()
-        #tree.pretty_print()
+        #tree.draw()
+        tree.pretty_print(stream=phrasetrees)
+        #print(tree.pformat(margin=5, indent=5))
 
     
     # draw heatmaps
