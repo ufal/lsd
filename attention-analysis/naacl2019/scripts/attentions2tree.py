@@ -361,9 +361,13 @@ for sentence_index in range(sentences_count):
     # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
     if len(tokens_list) > tokens_count:
+        TRUNCATED = True
         print('Truncating tokens from ', len(tokens_list), 'to', tokens_count,
                 'on line', sentence_index, '(0-based indexing)', file=sys.stderr)
         tokens_list = tokens_list[:tokens_count]
+    else:
+        TRUNCATED = False
+
 
     # recursively compute layer weights
     word_mixture = list() 
@@ -429,7 +433,8 @@ for sentence_index in range(sentences_count):
         #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
 
-        if args.conllu != None:
+        # TODO how to eval truncated sentences?
+        if args.conllu != None and not TRUNCATED:
             conllu_tree = conllu[sentence_index]
             # build phrasified dep tree
             pdtree = [Tree(tokens_list[i], [i]) for i in range(tokens_count)]
