@@ -37,8 +37,8 @@ ap.add_argument("-k", "--head", type=int, default=-1,
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
-ap.add_argument("-V", "--verbose", action="store_true",
-        help="Print more details")
+#ap.add_argument("-V", "--verbose", action="store_true",
+#        help="Print more details")
 ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
@@ -338,6 +338,11 @@ def wm_aggreg(this_layer, last_layer):
 def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
 
+# eval
+total_count_phrases = 0
+total_count_good = 0
+total_sum_scores = 0
+total_count_sentences = 0
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
@@ -420,7 +425,7 @@ for sentence_index in range(sentences_count):
         #tree.draw()
         #tree.pretty_print(stream=phrasetrees)
         tree.pretty_print(stream=phrasetrees, sentence=tokens_list)
-        tree.pretty_print(sentence=tokens_list)
+        tree.pretty_print(stream=sys.stderr, sentence=tokens_list)
         #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
 
@@ -453,7 +458,7 @@ for sentence_index in range(sentences_count):
 
             assert(len(orphans) == 0), "tokens_count=" + str(tokens_count) +  " orphans=" + str(orphans)
 
-            pdtree[root].pretty_print(sentence=tokens_list)
+            pdtree[root].pretty_print(sentence=tokens_list, stream=sys.stderr)
 
             # eval phrase tree
             count_phrases = 0
@@ -501,7 +506,12 @@ for sentence_index in range(sentences_count):
                     if type(subphrase) != int:
                         queue.append(subphrase)
 
-            print(count_good, '/', count_phrases, '=', count_good/count_phrases)
+            score = count_good/count_phrases
+            print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
+            total_count_sentences += 1
+            total_count_phrases += count_phrases
+            total_count_good += count_good
+            total_sum_scores += score
 
     
     # draw heatmaps
@@ -513,8 +523,15 @@ for sentence_index in range(sentences_count):
                 write_heatmap(tokens_list, sentence_index, vis, layer, 0, head)
                 write_heatmap(tokens_list, sentence_index, vis, layer, 1, head)
 
+if total_count_sentences > 0:
+    macroavg = total_sum_scores / total_count_sentences
+    avg = total_count_good / total_count_phrases
+    print('MacroAvg over sentences:', macroavg)
+    print('Avg over phrases:', total_count_good, '/', total_count_phrases, avg)
+
 if deptrees:
     deptrees.close()
 if oritrees:
     oritrees.close()
+
 
