@@ -26,6 +26,8 @@ ap.add_argument("-p", "--phrasetrees",
         help="Output phrase trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
+ap.add_argument("-c", "--conllu",
+        help="Eval against the given conllu faile")
 
 ap.add_argument("-l", "--layer", type=int, default=-1,
         help="Only use the specified layer; 0-based")
@@ -254,6 +256,21 @@ def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
     plt.close()
 
+# map 1-based word-based conllu token IDs
+# to 0-based wordpiece-based indices
+def tokens2wordpieces_map(wordpieces):
+    token_index = 0
+    wordpiece_index = -1
+    token2wordpiece = dict()
+    for wordpiece in wordpieces:
+        wordpiece_index += 1
+        if wordpiece.endswith('@@'):
+            pass
+        else:
+            token_index += 1
+            token2wordpiece[token_index] = wordpiece_index
+    return token2wordpiece
+
 #load data
 attentions_loaded = np.load(args.attentions)
 sentences_count = len(attentions_loaded.files)
@@ -261,6 +278,36 @@ layers_count = attentions_loaded['arr_0'].shape[0]
 heads_count = attentions_loaded['arr_0'].shape[1]
 with open(args.tokens) as tokens_file:
     tokens_loaded = [l.split() for l in tokens_file]
+if args.conllu != None:
+    CONLLU_ID = 0
+    CONLLU_HEAD = 6
+    with open(args.conllu) as conllu_file:
+        conllu = list()
+        sentence = None
+        sentid = 0
+        for line in conllu_file:
+            if line == '\n':
+                conllu.append(sentence)
+                sentence = None
+                sentid += 1
+            elif line.startswith('#'):
+                continue
+            else:
+                if sentence == None:
+                    sentence = dict()
+                    token2wordpiece = tokens2wordpieces_map(tokens_loaded[sentid])
+
+                fields = line.strip().split('\t')
+                if fields[CONLLU_ID].isdigit():
+                    child = token2wordpiece[int(fields[CONLLU_ID])]
+                    head = int(fields[CONLLU_HEAD])
+                    if head == 0:
+                        # root
+                        head = -1
+                    else:
+                        head = token2wordpiece[head]
+                    sentence[child] = head
+                # else special token -- continue
 
 # outputs
 if args.deptrees:
@@ -363,10 +410,42 @@ for sentence_index in range(sentences_count):
         #for subtree in tree.subtrees():
         #    print(" ".join(subtree.leaves()), file=phrasetrees)
         #print("", file=phrasetrees)
-        tree.draw()
+        #tree.draw()
         #tree.pretty_print(stream=phrasetrees)
+        tree.pretty_print(stream=phrasetrees, sentence=tokens_list)
         print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
+
+        if args.conllu != None:
+            # build phrasified dep tree
+            conllu_tree = conllu[sentence_index]
+            pdtree = [Tree(tokens_list[i], [i]) for i in range(tokens_count)]
+            # mapping child to head
+            heads = dict()
+            # a queue of unattached nodes (wordpiece prefixes)
+            orphans = list()
+            root = None
+            # e.g. "towel" = "to@@" "wel"
+            for child in range(tokens_count):
+                if child in conllu_tree:
+                    # full word or end of a word: "wel"
+                    head = conllu_tree[child]
+                    heads[child] = head
+                    if head == -1:
+                        root = child
+                    else:
+                        pdtree[head].append(pdtree[child])
+                    for orphan in orphans:
+                        heads[orphan] = child
+                        pdtree[child].append(orphan)
+                    orphans = list()
+                else:
+                    # wordpiece prefix of a word: "to@@"
+                    orphans.append(child)
+
+            pdtree[root].pretty_print(sentence=tokens_list)
+
+            # eval phrase tree
     
     # draw heatmaps
     if args.visualizations != None:
