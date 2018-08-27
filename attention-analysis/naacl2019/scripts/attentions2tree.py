@@ -11,6 +11,7 @@ import random
 import math
 import subprocess
 import sys
+from collections import deque
 from scipy.sparse.csgraph import minimum_spanning_tree
 
 ap = argparse.ArgumentParser()
@@ -36,6 +37,8 @@ ap.add_argument("-k", "--head", type=int, default=-1,
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 
+ap.add_argument("-V", "--verbose", action="store_true",
+        help="Print more details")
 ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
@@ -180,7 +183,7 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
                     i = j + 2
 
     #print(phrase_weight)
-    print(np.round(phrase_weight,1))
+    #print(np.round(phrase_weight,1))
     # parse the tree recursively in top-down fashion
     tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
     return(tree)
@@ -287,6 +290,10 @@ if args.conllu != None:
         sentid = 0
         for line in conllu_file:
             if line == '\n':
+                if args.eos:
+                    # add EOS
+                    end = max(sentence)
+                    sentence[end+1] = end
                 conllu.append(sentence)
                 sentence = None
                 sentid += 1
@@ -413,12 +420,13 @@ for sentence_index in range(sentences_count):
         #tree.draw()
         #tree.pretty_print(stream=phrasetrees)
         tree.pretty_print(stream=phrasetrees, sentence=tokens_list)
-        print(tree.pformat(margin=5, indent=5), file=phrasetrees)
+        tree.pretty_print(sentence=tokens_list)
+        #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
 
         if args.conllu != None:
-            # build phrasified dep tree
             conllu_tree = conllu[sentence_index]
+            # build phrasified dep tree
             pdtree = [Tree(tokens_list[i], [i]) for i in range(tokens_count)]
             # mapping child to head
             heads = dict()
@@ -443,9 +451,58 @@ for sentence_index in range(sentences_count):
                     # wordpiece prefix of a word: "to@@"
                     orphans.append(child)
 
+            assert(len(orphans) == 0), "tokens_count=" + str(tokens_count) +  " orphans=" + str(orphans)
+
             pdtree[root].pretty_print(sentence=tokens_list)
 
             # eval phrase tree
+            count_phrases = 0
+            count_good = 0
+            queue = deque()
+            queue.append(tree)
+            while queue:
+                count_phrases += 1
+                phrase = queue.popleft()
+                good = True
+                span = phrase.leaves()
+                start = min(span)
+                end = max(span)
+                external_root = None
+                for child in range(start, end+1):
+                    head = heads[child]
+                    if head < start or head > end:
+                        # dep head of this child is outside this phrase
+                        # the phrase can only have one external root
+                        if external_root == None:
+                            external_root = head
+                        else:
+                            if external_root != head:
+                                good = False
+                                break
+                    else:
+                        # dep head of this child is inside this phrase,
+                        # thus the whole dep subtree of this child must be
+                        # inside this phrase
+                        chspan = pdtree[child].leaves()
+                        chstart = min(chspan)
+                        chend = max(chspan)
+                        if chstart < start or chend > end:
+                            good = False
+                            break
+
+                print(start, tokens_list[start], '...', end, tokens_list[end],
+                        ':', good, file=sys.stderr)
+
+                if good:
+                    count_good += 1
+
+                # recurse
+                for subphrase in phrase:
+                    if type(subphrase) != int:
+                        queue.append(subphrase)
+
+            print(count_good, '/', count_phrases, '=', count_good/count_phrases)
+
     
     # draw heatmaps
     if args.visualizations != None:
