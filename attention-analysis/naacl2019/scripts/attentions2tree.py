@@ -152,7 +152,8 @@ def cky(phrase_weight, wordpieces):
     ctree = [[0 for i in range(size)] for j in range(size)]
     score = np.zeros((size, size))
     for i in range(size):
-        ctree[i][i] = wordpieces[i]
+        # ctree[i][i] = wordpieces[i]
+        ctree[i][i] = i
     for span in range(1, size):
         for pos in range(0, size):
             if (pos + span < size):
