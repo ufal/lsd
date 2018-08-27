@@ -478,6 +478,7 @@ for sentence_index in range(sentences_count):
                 start = min(span)
                 end = max(span)
                 external_root = None
+                external_root_children = 0
                 for child in range(start, end+1):
                     head = heads[child]
                     if head < start or head > end:
@@ -485,12 +486,20 @@ for sentence_index in range(sentences_count):
                         # the phrase can only have one external root
                         if external_root == None:
                             external_root = head
+                            external_root_children = 1
                         else:
-                            if external_root != head:
+                            if external_root == head:
+                                external_root_children += 1
+                            else:
                                 good = False
                                 break
-                    else:
+
+                for child in range(start, end+1):
+                    head = heads[child]
+                    require_full_subtree = external_root_children > 1 or (head >= start and head <= end)
+                    if require_full_subtree:
                         # dep head of this child is inside this phrase,
+                        # or it may be an external head which has multiple children,
                         # thus the whole dep subtree of this child must be
                         # inside this phrase
                         chspan = pdtree[child].leaves()
