@@ -125,7 +125,10 @@ def oritree(weights, wordpieces):
 def parse_subtree(i, j, phrase_weight, wordpieces):
     
     if (i == j):
-        return wordpieces[i]
+        #return wordpieces[i]
+        #return str(i) + ':' + wordpieces[i]
+        return i
+        #return Tree(wordpieces[i], [i])
     
     best_k = i
     maximum = 0
@@ -136,7 +139,7 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
             best_k = k
     subtree1 = parse_subtree(i, best_k, phrase_weight, wordpieces)
     subtree2 = parse_subtree(best_k + 1, j, phrase_weight, wordpieces)
-    return Tree('X', [subtree1, subtree2])
+    return Tree('X:'+str(round(maximum/(j-i+1),2)), [subtree1, subtree2])
 
 def phrasetree(vis, wordpieces, layer, aggreg, head):
     size = len(wordpieces)
@@ -363,7 +366,7 @@ for sentence_index in range(sentences_count):
         tree.draw()
         #tree.pretty_print(stream=phrasetrees)
         print(tree.pformat(margin=5, indent=5), file=phrasetrees)
-
+        #print(tree.pformat(margin=5, indent=5))
     
     # draw heatmaps
     if args.visualizations != None:
