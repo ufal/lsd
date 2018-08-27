@@ -145,6 +145,31 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
     subtree1 = parse_subtree(i, best_k, phrase_weight, wordpieces)
     subtree2 = parse_subtree(best_k + 1, j, phrase_weight, wordpieces)
     return Tree('X:'+str(round(maximum/(j-i+1),2)), [subtree1, subtree2])
+    
+def cky(phrase_weight, wordpieces):
+    # CKY on wordpieces
+    size = len(wordpieces)
+    ctree = [[0 for i in range(size)] for j in range(size)]
+    score = np.zeros((size, size))
+    for i in range(size):
+        ctree[i][i] = wordpieces[i]
+    for span in range(1, size):
+        for pos in range(0, size):
+            if (pos + span < size):
+                best_score = -1
+                best_variant = 0
+                for variant in range(1, span + 1):
+                    var_score = (  phrase_weight[pos][pos + span - variant] \
+                                 + score[pos][pos + span - variant] \
+                                 + phrase_weight[pos + span - variant + 1][pos + span] \
+                                 + score[pos + span - variant + 1][pos + span] \
+                                ) / 2
+                    if (best_score < var_score):
+                        best_score = var_score
+                        best_variant = variant
+                score[pos][pos + span] = best_score
+                ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
+    return ctree[0][size - 1]
 
 def phrasetree(vis, wordpieces, layer, aggreg, head):
     size = len(wordpieces)
@@ -185,7 +210,10 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
     #print(phrase_weight)
     #print(np.round(phrase_weight,1))
     # parse the tree recursively in top-down fashion
-    tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
+    #tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
+    # parse tree using CKY
+    tree = cky(phrase_weight, wordpieces)
+
     return(tree)
                         
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
