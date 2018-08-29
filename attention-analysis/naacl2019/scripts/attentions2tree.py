@@ -29,6 +29,8 @@ ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 ap.add_argument("-c", "--conllu",
         help="Eval against the given conllu faile")
+ap.add_argument("-b", "--baseline",
+        help="Eval baseline: rbr/lbr/rbin/lbin/rand")
 
 ap.add_argument("-l", "--layer", type=int, default=-1,
         help="Only use the specified layer; 0-based")
@@ -217,6 +219,42 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
 
     return(tree)
                         
+def baselinephrasetree(wordpieces, baselinetype):
+    tree = None
+    size = len(wordpieces)
+    if baselinetype == 'lbr':
+        tree = 0
+        for index in range(1, size):
+            tree = Tree('X', [tree, index])
+    elif baselinetype == 'rbr':
+        tree = size-1
+        # go from penultimate to 0th
+        for index in range(size-2, -1, -1):
+            tree = Tree('X', [index, tree])
+    elif baselinetype == 'lbin':
+        pieces = range(0, size)
+        while len(pieces) > 1:
+            newpieces = []
+            for i in range(0, len(pieces)-1, +2):
+                newpieces.append(Tree('X', [pieces[i], pieces[i+1]]))
+            if len(pieces)%2 == 1:
+                newpieces.append(pieces[-1])
+            pieces = newpieces
+        tree = pieces[0]
+    elif baselinetype == 'rbin':
+        pieces = range(size-1, -1, -1)
+        while len(pieces) > 1:
+            newpieces = []
+            for i in range(0, len(pieces)-1, +2):
+                newpieces.append(Tree('X', [pieces[i], pieces[i+1]]))
+            if len(pieces)%2 == 1:
+                newpieces.append(pieces[-1])
+            pieces = newpieces
+        tree = pieces[0]
+    else:
+        assert False, 'unknown baseline type ' + baselinetype
+    return tree
+
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
     Copied form:
@@ -450,7 +488,10 @@ for sentence_index in range(sentences_count):
 
     if phrasetrees:
         aggreg = 0 if args.noaggreg else 1
-        tree = phrasetree(vis, tokens_list, args.layer, aggreg, args.head)
+        if args.baseline != None:
+            tree = baselinephrasetree(tokens_list, args.baseline)
+        else:
+            tree = phrasetree(vis, tokens_list, args.layer, aggreg, args.head)
         #print(str(tree), file=phrasetrees)
         #for subtree in tree.subtrees():
         #    print(" ".join(subtree.leaves()), file=phrasetrees)
