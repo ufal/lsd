@@ -16,7 +16,7 @@
    viewBox="0 0 841 1189"
    version="1.1"
    id="svg8"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="slonlp2018.svg">
   <defs
      id="defs2" />
@@ -27,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="1390.8565"
-     inkscape:cy="1395.1527"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="860.03344"
+     inkscape:cy="910.88074"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1855"
-     inkscape:window-height="1056"
-     inkscape:window-x="65"
-     inkscape:window-y="24"
+     inkscape:window-width="1631"
+     inkscape:window-height="995"
+     inkscape:window-x="49"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      showguides="true" />
   <metadata
@@ -80,145 +80,141 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot10"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:10px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion12"><rect
            id="rect14"
            width="2988.5715"
            height="268.57144"
            x="137.14285"
            y="82.429832" /></flowRegion><flowPara
-         id="flowPara16" /></flowRoot>    <flowRoot
+         id="flowPara16"
+         style="font-size:10px;line-height:1.25"> </flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot18"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:66.66666667px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion20"><rect
            id="rect22"
            width="3068.5715"
            height="565.71429"
            x="51.42857"
            y="36.715542" /></flowRegion><flowPara
-         id="flowPara24" /></flowRoot>    <text
+         id="flowPara24"
+         style="font-size:66.66666412px;line-height:1.25"> </flowPara></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="27.516674"
        y="-859.50635"
-       id="text28"
-       sodipodi:linespacing="125%"><tspan
+       id="text28"><tspan
          sodipodi:role="line"
          id="tspan26"
          x="27.516674"
          y="-859.50635"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:22.57777786px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Extracting Syntactic Trees from NMT Encoder Self-Attentions</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:22.57777786px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Extracting Syntactic Trees from NMT Encoder Self-Attentions</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="277.07422"
        y="-830.37689"
-       id="text32"
-       sodipodi:linespacing="125%"><tspan
+       id="text32"><tspan
          sodipodi:role="line"
          id="tspan30"
          x="277.07422"
          y="-830.37689"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">David Mareček and Rudolf Rosa</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888741px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">David Mareček and Rudolf Rosa</tspan><tspan
          sodipodi:role="line"
          x="277.07422"
          y="-808.32831"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px"
-         id="tspan34" /></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888741px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px"
+         id="tspan34"> </tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="53.975002"
        y="-458.04523"
-       id="text38"
-       sodipodi:linespacing="125%"><tspan
+       id="text38"><tspan
          sodipodi:role="line"
          id="tspan36"
          x="53.975002"
          y="-458.04523"
-         style="stroke-width:0.26458332px">Transformer</tspan><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Transformer</tspan><tspan
          sodipodi:role="line"
          x="53.975002"
-         y="-435.99664"
-         style="stroke-width:0.26458332px"
-         id="tspan40" /><tspan
+         y="-435.99661"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan40"> </tspan><tspan
          sodipodi:role="line"
          x="53.975002"
          y="-413.948"
-         style="stroke-width:0.26458332px"
-         id="tspan42" /><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan42"> </tspan><tspan
          sodipodi:role="line"
          x="53.975002"
          y="-391.89941"
-         style="stroke-width:0.26458332px"
-         id="tspan44" /><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan44"> </tspan><tspan
          sodipodi:role="line"
          x="53.975002"
          y="-369.8508"
-         style="stroke-width:0.26458332px"
-         id="tspan46" /></text>
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan46"> </tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="-234.64761"
        y="-276.91901"
-       id="text50"
-       sodipodi:linespacing="125%"><tspan
+       id="text50"><tspan
          sodipodi:role="line"
          id="tspan48"
          x="-234.64761"
          y="-276.91901"
-         style="stroke-width:0.26458332px">Encoder Self-Attentions</tspan><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Encoder Self-Attentions</tspan><tspan
          sodipodi:role="line"
          x="-234.64761"
          y="-254.87039"
-         style="stroke-width:0.26458332px"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan470">- 16 attention heads on 6 layers =&gt; 64 attention matrices</tspan><tspan
          sodipodi:role="line"
          x="-234.64761"
-         y="-232.82178"
-         style="stroke-width:0.26458332px"
+         y="-232.82179"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan472">- normalization -&gt; distribution</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="-288.21582"
        y="-111.16288"
-       id="text54"
-       sodipodi:linespacing="125%"><tspan
+       id="text54"><tspan
          sodipodi:role="line"
          id="tspan52"
          x="-288.21582"
          y="-111.16288"
-         style="stroke-width:0.26458332px">Aggregation over Layers</tspan><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Aggregation over Layers</tspan><tspan
          sodipodi:role="line"
          x="-288.21582"
          y="-89.114273"
-         style="stroke-width:0.26458332px"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan474">- due to residual connection, one half of information is copied from previous layer</tspan><tspan
          sodipodi:role="line"
          x="-288.21582"
          y="-67.065659"
-         style="stroke-width:0.26458332px"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan476">- we aggregate the attentions through layers to get distribution of the source</tspan><tspan
          sodipodi:role="line"
          x="-288.21582"
-         y="-45.017056"
-         style="stroke-width:0.26458332px"
+         y="-45.017052"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan478"> wordpieces for each position in each layer</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="129.46944"
-       y="159.76949"
-       id="text62"
-       sodipodi:linespacing="125%"><tspan
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-213.70464"
+       y="104.17742"
+       id="text62"><tspan
          sodipodi:role="line"
          id="tspan60"
-         x="129.46944"
-         y="159.76949"
-         style="stroke-width:0.26458332px">Evaluation and Results</tspan></text>
+         x="-213.70464"
+         y="104.17742"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Evaluation and Results</tspan></text>
     <g
        style="fill-rule:evenodd"
        id="g338"
@@ -455,57 +451,57 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot340"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:66.66666667px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion342"><rect
            id="rect344"
            width="562.02301"
            height="928.21051"
            x="2914.2856"
            y="3008.144" /></flowRegion><flowPara
-         id="flowPara346" /></flowRoot>    <text
+         id="flowPara346"
+         style="font-size:66.66666412px;line-height:1.25"> </flowPara></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="7.3579345"
        y="-613.46906"
-       id="text350"
-       sodipodi:linespacing="125%"><tspan
+       id="text350"><tspan
          sodipodi:role="line"
          id="tspan348"
          x="7.3579345"
          y="-613.46906"
-         style="stroke-width:0.26458332px">Goals:</tspan><tspan
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Goals:</tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-600.56287"
-         style="stroke-width:0.26458332px"
+         y="-593.8031"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan452"><tspan
            style="font-size:8.46666718px"
            id="tspan3833">- use state-of-the art NMT system</tspan></tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-589.97949"
-         style="font-size:8.46666718px;stroke-width:0.26458332px"
+         y="-577.48712"
+         style="font-size:8.46666718px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan454">- extract and analyze encoder self-attentions</tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-579.39618"
-         style="font-size:8.46666718px;stroke-width:0.26458332px"
+         y="-566.90375"
+         style="font-size:8.46666718px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan458">- extract sentence structures based on the attention weights</tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-568.81287"
-         style="font-size:8.46666718px;stroke-width:0.26458332px"
+         y="-556.32043"
+         style="font-size:8.46666718px;line-height:1.25;stroke-width:0.26458332px"
          id="tspan460"> - compare to the manually annotated treebanks</tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-558.22949"
-         style="stroke-width:0.26458332px"
-         id="tspan456" /><tspan
+         y="-545.73712"
+         style="font-size:8.46666718px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan456"> </tspan><tspan
          sodipodi:role="line"
          x="7.3579345"
-         y="-547.64618"
-         style="stroke-width:0.26458332px"
-         id="tspan352" /></text>
+         y="-535.15375"
+         style="font-size:8.46666718px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan352"> </tspan></text>
     <g
        style="overflow:visible"
        id="g1706"
@@ -1814,37 +1810,36 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot1708"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:66.66666667px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion1710"><rect
            id="rect1712"
            width="858.61993"
            height="1873.5831"
            x="2760"
            y="1362.4298" /></flowRegion><flowPara
-         id="flowPara1714" /></flowRoot>    <text
+         id="flowPara1714"
+         style="font-size:66.66666412px;line-height:1.25"> </flowPara></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="268.38828"
        y="-778.16583"
-       id="text1718"
-       sodipodi:linespacing="125%"><tspan
+       id="text1718"><tspan
          sodipodi:role="line"
          id="tspan1716"
          x="268.38828"
          y="-778.16583"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888931px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">{marecek,rosa}@ufal.mff.cuni.cz</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888931px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">{marecek,rosa}@ufal.mff.cuni.cz</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="144.8687"
        y="-804.67456"
-       id="text1722"
-       sodipodi:linespacing="125%"><tspan
+       id="text1722"><tspan
          sodipodi:role="line"
          id="tspan1720"
          x="144.8687"
          y="-804.67456"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888931px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">Charles University, Institute of Formal and Applied Linguistics</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.63888931px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';stroke-width:0.26458332px">Charles University, Institute of Formal and Applied Linguistics</tspan></text>
     <image
        y="-619.40326"
        x="202.56377"
@@ -1857,25 +1852,25 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot462"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:66.66666667px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion464"><rect
            id="rect466"
            width="28.571428"
            height="265.71429"
            x="1074.2858"
            y="1331.0011" /></flowRegion><flowPara
-         id="flowPara468" /></flowRoot>    <text
+         id="flowPara468"
+         style="font-size:66.66666412px;line-height:1.25"> </flowPara></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="40.519047"
        y="249.27422"
-       id="text482"
-       sodipodi:linespacing="125%"><tspan
+       id="text482"><tspan
          sodipodi:role="line"
          id="tspan480"
          x="40.519047"
          y="249.27422"
-         style="stroke-width:0.26458332px">This work has been supported by the grant 18-02196S of the Czech Science Foundation</tspan></text>
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">This work has been supported by the grant 18-02196S of the Czech Science Foundation</tspan></text>
     <g
        id="g5330"
        transform="translate(-28.222222,65.314287)">
@@ -1945,15 +1940,15 @@
        width="180.19887" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="436.47733"
        y="125.64128"
-       id="text4376"
-       sodipodi:linespacing="125%"><tspan
+       id="text4376"><tspan
          sodipodi:role="line"
          id="tspan4378"
          x="436.47733"
-         y="125.64128"> Women would welcome child - care facilities at scientific institutions .</tspan></text>
+         y="125.64128"
+         style="font-size:11.28888893px;line-height:1.25"> Women would welcome child - care facilities at scientific institutions .</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.00000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.0999999;stroke-dasharray:none;stroke-opacity:1"
        d="m 502.75871,111.94284 0,-14.111109 42.33334,0 0,14.917479"
@@ -2011,57 +2006,59 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="445.79736"
        y="-647.15033"
-       id="text5262-3"
-       sodipodi:linespacing="125%"><tspan
+       id="text5262-3"><tspan
          sodipodi:role="line"
          id="tspan5264-6"
          x="445.79736"
-         y="-647.15033"><tspan
+         y="-647.15033"
+         style="font-size:11.28888893px;line-height:1.25"><tspan
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
            id="tspan5365">2. Extract self-attention weights</tspan></tspan><tspan
          sodipodi:role="line"
          x="445.79736"
          y="-633.03925"
-         id="tspan5367">16 heads x 6 layers = 64 matrices</tspan></text>
+         id="tspan5367"
+         style="font-size:11.28888893px;line-height:1.25">16 heads x 6 layers = 64 matrices</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="441.43881"
        y="-134.50786"
-       id="text5262-3-7"
-       sodipodi:linespacing="125%"><tspan
+       id="text5262-3-7"><tspan
          sodipodi:role="line"
          id="tspan5264-6-5"
          x="441.43881"
          y="-134.50786"
-         style="-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal">3. Compute score for each possible phrase</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.28888893px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'">3. Compute score for each possible phrase</tspan><tspan
          sodipodi:role="line"
          x="441.43881"
          y="-120.39674"
-         id="tspan5324">- we collect not-interputed sequences from all attention matrices</tspan><tspan
+         id="tspan5324"
+         style="font-size:11.28888893px;line-height:1.25">- we collect not-interputed sequences from all attention matrices</tspan><tspan
          sodipodi:role="line"
          x="441.43881"
-         y="-106.28563"
-         id="tspan5326">- score of the phrase is maximal sum such sequence</tspan></text>
+         y="-106.28564"
+         id="tspan5326"
+         style="font-size:11.28888893px;line-height:1.25">- score of the phrase is maximal sum such sequence</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="442.53888"
        y="-42.987225"
-       id="text5262-3-7-3"
-       sodipodi:linespacing="125%"><tspan
+       id="text5262-3-7-3"><tspan
          sodipodi:role="line"
          id="tspan5264-6-5-5"
          x="442.53888"
          y="-42.987225"
-         style="-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal">4. Use CKY algorithm to parse the sentence</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.28888893px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'">4. Use CKY algorithm to parse the sentence</tspan><tspan
          sodipodi:role="line"
          x="442.53888"
-         y="-28.87611"
-         id="tspan5328">- we find the phrase-tree with best scored phrases using dynamic programming</tspan></text>
+         y="-28.876114"
+         id="tspan5328"
+         style="font-size:11.28888893px;line-height:1.25">- we find the phrase-tree with best scored phrases using dynamic programming</tspan></text>
     <rect
        style="fill:#fff0b4;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4.0999999;stroke-dasharray:none;stroke-opacity:1"
        id="rect5338"
@@ -2071,38 +2068,38 @@
        y="-752.86664" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="445.10474"
        y="-738.31677"
-       id="text5262"
-       sodipodi:linespacing="125%"><tspan
+       id="text5262"><tspan
          sodipodi:role="line"
          id="tspan5264"
          x="445.10474"
          y="-738.31677"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.28888893px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'">1. Translate the sentence (e.g. from English to German)</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.28888893px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'">1. Translate the sentence (e.g. from English to German)</tspan><tspan
          sodipodi:role="line"
          x="445.10474"
-         y="-727.01874"
-         style="font-size:8.46666718px"
+         y="-726.70264"
+         style="font-size:8.46666718px;line-height:1.25"
          id="tspan5346">Women would welcome child - care facilities at scientific institutions .</tspan><tspan
          sodipodi:role="line"
          x="445.10474"
          y="-713.62231"
-         id="tspan5322"><tspan
+         id="tspan5322"
+         style="font-size:11.28888893px;line-height:1.25"><tspan
    style="font-size:8.46666718px"
    id="tspan5340">Frauen würden Kinderbetreuungs@@ einrichtungen in wissenschaftlichen Institutionen begrüßen </tspan>.</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="470.90793"
        y="-705.29205"
-       id="text5342"
-       sodipodi:linespacing="125%"><tspan
+       id="text5342"><tspan
          sodipodi:role="line"
          id="tspan5344"
          x="470.90793"
-         y="-705.29205" /></text>
+         y="-705.29205"
+         style="font-size:11.28888893px;line-height:1.25"> </tspan></text>
     <g
        transform="matrix(0.57579917,0,0,-0.57579917,64.442418,78.894195)"
        inkscape:label="attention"
@@ -2120,38 +2117,44 @@
         </g>
         <text
            id="text4617"
-           style="font-variant:normal;font-weight:normal;font-size:12px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           style="font-variant:normal;font-weight:normal;line-height:0%;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
            transform="matrix(1,0,0,-1,97.286961,73.082537)">
           <tspan
              id="tspan4619"
              sodipodi:role="line"
              y="0"
-             x="0 7.632 11.436">0.1</tspan>
+             x="0 7.632 11.436"
+             style="font-size:12px;line-height:1.25">0.1</tspan>
           <tspan
              id="tspan4621"
              sodipodi:role="line"
              y="1.71294"
-             x="282.85602 290.48801 294.29202">0.2</tspan>
+             x="282.85602 290.48801 294.29202"
+             style="font-size:12px;line-height:1.25">0.2</tspan>
           <tspan
              id="tspan4623"
              sodipodi:role="line"
              y="0.60981119"
-             x="91.999321 99.631317 103.43532">0.2</tspan>
+             x="91.999321 99.631317 103.43532"
+             style="font-size:12px;line-height:1.25">0.2</tspan>
           <tspan
              id="tspan4625"
              sodipodi:role="line"
              y="1.7138352"
-             x="374.85648 382.48846 386.29248">0.3</tspan>
+             x="374.85648 382.48846 386.29248"
+             style="font-size:12px;line-height:1.25">0.3</tspan>
           <tspan
              id="tspan4627"
              sodipodi:role="line"
              y="-0.0011208"
-             x="166.85625 174.48825 178.29225 185.92424">0.05</tspan>
+             x="166.85625 174.48825 178.29225 185.92424"
+             style="font-size:12px;line-height:1.25">0.05</tspan>
           <tspan
              id="tspan4629"
              sodipodi:role="line"
              y="0.60981357"
-             x="460.57074 468.20273 472.00671 479.63873">0.15</tspan>
+             x="460.57074 468.20273 472.00671 479.63873"
+             style="font-size:12px;line-height:1.25">0.15</tspan>
         </text>
         <g
            transform="matrix(1,0,0,-1,0,148.41559)"
@@ -2308,18 +2311,20 @@
         </g>
         <text
            id="text4699"
-           style="font-variant:normal;font-weight:normal;font-size:20px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           style="font-variant:normal;font-weight:normal;line-height:0%;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
            transform="matrix(1,0,0,-1,-1.884766,44.538004)">
           <tspan
              id="tspan4701"
              sodipodi:role="line"
              y="0"
-             x="0 5.54 17.780001 29.6 41.900002 50.119999 56.459999">layer 0</tspan>
+             x="0 5.54 17.780001 29.6 41.900002 50.119999 56.459999"
+             style="font-size:20px;line-height:1.25">layer 0</tspan>
           <tspan
              id="tspan4703"
              sodipodi:role="line"
              y="-80.506157"
-             x="0 5.54 17.780001 29.6 41.900002 50.119999 56.459999">layer 1</tspan>
+             x="0 5.54 17.780001 29.6 41.900002 50.119999 56.459999"
+             style="font-size:20px;line-height:1.25">layer 1</tspan>
         </text>
         <g
            transform="matrix(1,0,0,-1,0,148.41559)"
@@ -2332,23 +2337,25 @@
         </g>
         <text
            id="text4709"
-           style="font-variant:normal;font-weight:bold;font-size:12px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans-Bold;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           style="font-variant:normal;font-weight:bold;line-height:0%;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans-Bold;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
            transform="matrix(1,0,0,-1,303.572,84.472769)">
           <tspan
              id="tspan4711"
              sodipodi:role="line"
              y="0"
-             x="0 10.044">+1</tspan>
+             x="0 10.044"
+             style="font-size:12px;line-height:1.25">+1</tspan>
         </text>
         <text
            id="text4713"
-           style="font-variant:normal;font-weight:normal;font-size:18px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           style="font-variant:normal;font-weight:normal;line-height:0%;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
            transform="matrix(1,0,0,-1,95.000799,4.245124)">
           <tspan
              id="tspan4715"
              sodipodi:role="line"
              y="0"
-             x="0 11.016 20.375999 29.375999 103.68 114.696 123.696 175.158 182.196 193.26601 202.62601 214.02 219.006 226.062 235.062 286.47 292.23001 301.23001 364.04999 371.16 382.55399 393.62399 402.62399 454.03201 459.01801 464.004 475.39801 485.87399 494.87399">as_ a_ result_ ,_ the_ link_</tspan>
+             x="0 11.016 20.375999 29.375999 103.68 114.696 123.696 175.158 182.196 193.26601 202.62601 214.02 219.006 226.062 235.062 286.47 292.23001 301.23001 364.04999 371.16 382.55399 393.62399 402.62399 454.03201 459.01801 464.004 475.39801 485.87399 494.87399"
+             style="font-size:18px;line-height:1.25">as_ a_ result_ ,_ the_ link_</tspan>
         </text>
       </g>
     </g>
@@ -2356,24 +2363,26 @@
        id="g4702"
        transform="translate(24.190477,46.768254)">
       <text
-         sodipodi:linespacing="125%"
          id="text4626"
          y="-726.25714"
          x="193.52382"
-         style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            y="-726.25714"
            x="193.52382"
            id="tspan4628"
-           sodipodi:role="line">IS THERE ANY LANTENT SYNTAX </tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">IS THERE ANY LANTENT SYNTAX </tspan><tspan
            id="tspan4692"
            y="-712.14606"
            x="193.52382"
-           sodipodi:role="line">    LEARNED BY NEURAL</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">    LEARNED BY NEURAL</tspan><tspan
            id="tspan4694"
            y="-698.03491"
            x="193.52382"
-           sodipodi:role="line">        MACHINE TRANSLATION ???</tspan></text>
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">        MACHINE TRANSLATION ???</tspan></text>
       <g
          transform="matrix(1.0030631,0,0,1.0371498,144.49343,-730.69842)"
          id="g3">
@@ -2386,49 +2395,54 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="337.86035"
        y="-717.38733"
-       id="text4696"
-       sodipodi:linespacing="125%"><tspan
+       id="text4696"><tspan
          sodipodi:role="line"
          id="tspan4698"
          x="337.86035"
-         y="-717.38733" /><tspan
+         y="-717.38733"
+         style="font-size:11.28888893px;line-height:1.25"> </tspan><tspan
          sodipodi:role="line"
          x="337.86035"
          y="-703.27625"
-         id="tspan4700" /></text>
+         id="tspan4700"
+         style="font-size:11.28888893px;line-height:1.25"> </tspan></text>
     <g
        id="g4765"
        transform="translate(112.88889,-29.028572)">
       <text
-         sodipodi:linespacing="125%"
          id="text4626-6"
          y="-695.21271"
          x="-88.304718"
-         style="font-style:normal;font-weight:normal;font-size:11.28888893px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            y="-695.21271"
            x="-88.304718"
            id="tspan4628-7"
-           sodipodi:role="line">CURRENT BEST METHODS</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">CURRENT BEST METHODS</tspan><tspan
            id="tspan4753"
            y="-681.10162"
            x="-88.304718"
-           sodipodi:role="line"> FOR MACHINE TRANSLATION</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25"> FOR MACHINE TRANSLATION</tspan><tspan
            id="tspan4755"
            y="-666.99048"
            x="-88.304718"
-           sodipodi:role="line">  DO NOT USE ANY</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">  DO NOT USE ANY</tspan><tspan
            id="tspan4759"
            y="-652.87939"
            x="-88.304718"
-           sodipodi:role="line">   LINGUISTIC ANNOTATIONS</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25">   LINGUISTIC ANNOTATIONS</tspan><tspan
            id="tspan4694-3"
            y="-638.76825"
            x="-88.304718"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"
+           style="font-size:11.28888893px;line-height:1.25"> </tspan></text>
       <g
          transform="matrix(-0.79308406,0,0,1.4646874,104.66847,-698.21955)"
          id="g3-5">
@@ -2440,5 +2454,61 @@
            id="path5-6" />
       </g>
     </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="37.449482"
+       y="114.72483"
+       id="text350-3"><tspan
+         sodipodi:role="line"
+         id="tspan348-6"
+         x="37.449482"
+         y="114.72483"
+         style="font-size:17.63888741px;line-height:1.25;stroke-width:0.26458332px">Preliminary evaluation:</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="128.65817"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan452-7">- convert manually annotated Czech dependency trees (UD) to unlabelled phrases</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="139.24152"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan460-6">- compute the ratio of valid (non-overlapping) phrases</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="149.82484"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan4268">  - precision: check output phrases against manual</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="160.40819"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan4266">  - recall: check manual phrases against output (high: manual trees very flat)</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="170.99152"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan4274">- highest scoring baseline: right-aligned binary tree</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="181.57484"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan456-2">- compute on 1st  100 sentences from EN-&gt;FI translation</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="192.15819"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan4276">- baseline:   P=50.74%, R=81.60%</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="202.74152"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan4278">- extracted: P=50.99%, R=83.43%</tspan><tspan
+         sodipodi:role="line"
+         x="37.449482"
+         y="208.95103"
+         style="font-size:8.46666813px;line-height:1.25;stroke-width:0.26458332px"
+         id="tspan352-9" /></text>
   </g>
 </svg>
