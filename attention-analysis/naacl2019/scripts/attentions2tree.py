@@ -31,6 +31,8 @@ ap.add_argument("-c", "--conllu",
         help="Eval against the given conllu faile")
 ap.add_argument("-b", "--baseline",
         help="Eval baseline: rbr/lbr/rbin/lbin/rand")
+ap.add_argument("-r", "--reverse", action="store_true",
+        help="Reverse mode of evaluation")
 
 ap.add_argument("-l", "--layer", type=int, default=-1,
         help="Only use the specified layer; 0-based")
@@ -539,56 +541,101 @@ for sentence_index in range(sentences_count):
             count_phrases = 0
             count_good = 0
             queue = deque()
-            queue.append(tree)
-            while queue:
-                count_phrases += 1
-                phrase = queue.popleft()
-                good = True
-                span = phrase.leaves()
-                start = min(span)
-                end = max(span)
-                external_root = None
-                external_root_children = 0
-                for child in range(start, end+1):
-                    head = heads[child]
-                    if head < start or head > end:
-                        # dep head of this child is outside this phrase
-                        # the phrase can only have one external root
-                        if external_root == None:
-                            external_root = head
-                            external_root_children = 1
-                        else:
-                            if external_root == head:
-                                external_root_children += 1
+
+            if args.reverse:
+                # all gold spans
+                gold_spans = list()
+                queue.append(tree)
+                while queue:
+                    phrase = queue.popleft()
+                    span = phrase.leaves()
+                    start = min(span)
+                    end = max(span)
+                    gold_spans.append((start, end))
+                    for subphrase in phrase:
+                        if type(subphrase) != int:
+                            queue.append(subphrase)
+                
+                queue.append(pdtree)
+                while queue:
+                    count_phrases += 1
+                    phrase = queue.popleft()
+                    good = True
+                    span = phrase.leaves()
+                    start = min(span)
+                    end = max(span)
+
+                    for gold_span in gold_spans:
+                        gold_start = gold_span[0]
+                        gold_end = gold_span[1]
+                        if start < gold_end and gold_start < end:
+                            # they overlap
+                            if start < gold_start and end < gold_end:
+                                good = False
+                            if start > gold_start and end > gold_end:
+                                good = False
+
+
+                    if good:
+                        count_good += 1
+
+                    # recurse
+                    for subphrase in phrase:
+                        if type(subphrase) != int:
+                            queue.append(subphrase)
+
+            else:
+    
+                queue.append(tree)
+                while queue:
+                    count_phrases += 1
+                    phrase = queue.popleft()
+                    good = True
+                    span = phrase.leaves()
+                    start = min(span)
+                    end = max(span)
+                    external_root = None
+                    external_root_children = 0
+                    for child in range(start, end+1):
+                        head = heads[child]
+                        if head < start or head > end:
+                            # dep head of this child is outside this phrase
+                            # the phrase can only have one external root
+                            if external_root == None:
+                                external_root = head
+                                external_root_children = 1
                             else:
+                                if external_root == head:
+                                    external_root_children += 1
+                                else:
+                                    good = False
+                                    break
+    
+                    for child in range(start, end+1):
+                        head = heads[child]
+                        require_full_subtree = external_root_children > 1 or (head >= start and head <= end)
+                        if require_full_subtree:
+                            # dep head of this child is inside this phrase,
+                            # or it may be an external head which has multiple children,
+                            # thus the whole dep subtree of this child must be
+                            # inside this phrase
+                            chspan = pdtree[child].leaves()
+                            chstart = min(chspan)
+                            chend = max(chspan)
+                            if chstart < start or chend > end:
                                 good = False
                                 break
+    
+                    print(start, tokens_list[start], '...', end, tokens_list[end],
+                            ':', good, file=sys.stderr)
 
-                for child in range(start, end+1):
-                    head = heads[child]
-                    require_full_subtree = external_root_children > 1 or (head >= start and head <= end)
-                    if require_full_subtree:
-                        # dep head of this child is inside this phrase,
-                        # or it may be an external head which has multiple children,
-                        # thus the whole dep subtree of this child must be
-                        # inside this phrase
-                        chspan = pdtree[child].leaves()
-                        chstart = min(chspan)
-                        chend = max(chspan)
-                        if chstart < start or chend > end:
-                            good = False
-                            break
+                    if good:
+                        count_good += 1
 
-                print(start, tokens_list[start], '...', end, tokens_list[end],
-                        ':', good, file=sys.stderr)
-
-                if good:
-                    count_good += 1
-
-                # recurse
-                for subphrase in phrase:
-                    if type(subphrase) != int:
-                        queue.append(subphrase)
+                    # recurse
+                    for subphrase in phrase:
+                        if type(subphrase) != int:
+                            queue.append(subphrase)
 
             score = count_good/count_phrases
             print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
