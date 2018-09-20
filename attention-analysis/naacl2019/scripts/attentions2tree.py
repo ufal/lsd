@@ -42,6 +42,7 @@ ap.add_argument("-n", "--noaggreg", action="store_true",
         help="Do not aggregate the attentions over layers, just use one layer")
 args= ap.parse_args()
 
+
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces = list of tokens
 def deptree(weights, wordpieces):
@@ -143,6 +144,7 @@ def parse_subtree(i, j, phrase_weight, wordpieces):
     
 def cky(phrase_weight, wordpieces):
     # CKY on wordpieces
+    subtree_infl = 0.5
     size = len(wordpieces)
     ctree = [[0 for i in range(size)] for j in range(size)]
     score = np.zeros((size, size))
@@ -154,11 +156,8 @@ def cky(phrase_weight, wordpieces):
                 best_score = -1
                 best_variant = 0
                 for variant in range(1, span + 1):
-                    var_score = (  phrase_weight[pos][pos + span - variant] \
-                                 + score[pos][pos + span - variant] \
-                                 + phrase_weight[pos + span - variant + 1][pos + span] \
-                                 + score[pos + span - variant + 1][pos + span] \
-                                ) / 2
+                    var_score = (1 - subtree_infl) * (phrase_weight[pos][pos + span - variant] + phrase_weight[pos + span - variant + 1][pos + span] ) \
+                              + (subtree_infl)    * (score[pos][pos + span - variant] + score[pos + span - variant + 1][pos + span] )
                     if (best_score < var_score):
                         best_score = var_score
                         best_variant = variant
@@ -392,8 +391,8 @@ for sentence_index in range(sentences_count):
         #    print(" ".join(subtree.leaves()), file=phrasetrees)
         #print("", file=phrasetrees)
         tree.draw()
-        #tree.pretty_print(stream=phrasetrees)
-        print(tree.pformat(margin=5, indent=5), file=phrasetrees)
+        tree.pretty_print(stream=phrasetrees)
+        #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
     
     # draw heatmaps
