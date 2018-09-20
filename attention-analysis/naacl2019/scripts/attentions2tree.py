@@ -556,7 +556,7 @@ for sentence_index in range(sentences_count):
                         if type(subphrase) != int:
                             queue.append(subphrase)
                 
-                queue.append(pdtree)
+                queue.append(pdtree[root])
                 while queue:
                     count_phrases += 1
                     phrase = queue.popleft()
