@@ -34,6 +34,9 @@ ap.add_argument("-b", "--baseline",
 ap.add_argument("-r", "--reverse", action="store_true",
         help="Reverse mode of evaluation")
 
+ap.add_argument("-w", "--phraseweights",
+        help="Visualise weights of individual phrases")
+
 ap.add_argument("-l", "--layer", type=int, default=-1,
         help="Only use the specified layer; 0-based")
 ap.add_argument("-k", "--head", type=int, default=-1,
@@ -176,7 +179,7 @@ def cky(phrase_weight, wordpieces):
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
     return ctree[0][size - 1]
 
-def phrasetree(vis, wordpieces, layer, aggreg, head):
+def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
     size = len(wordpieces)
     layer_list = range(len(vis))
     if layer != -1:
@@ -206,16 +209,37 @@ def phrasetree(vis, wordpieces, layer, aggreg, head):
                             break
                         current_sum += value
                     if j >= i:
-                        pw = current_sum #/ (j - i + 1)
-                        if (phrase_weight[i][j] < pw):
-                            phrase_weight[i][j] = pw
-                        #phrase_weight[i][j] += pw
+                        pw = current_sum / (j - i + 1)
+                        #if (phrase_weight[i][j] < pw):
+                        #    phrase_weight[i][j] = pw
+                        phrase_weight[i][j] += pw
                     i = j + 2
+
+    # normalize phrase_weight, so that the mean on each diagonal is 0.5
+    for span in range(size):
+        factor = 0
+        count = 0
+        for i in range(size - span):
+            if (phrase_weight[i][i + span] > 0):
+                factor += phrase_weight[i][i + span]
+                count += 1
+        if (count > 0):
+            factor = factor / count * 2
+            for i in range(size - span):
+                if (factor != 0):
+                    phrase_weight[i][i + span] /= factor
 
     #print(phrase_weight)
     #print(np.round(phrase_weight,1))
     # parse the tree recursively in top-down fashion
     #tree = parse_subtree(0, size - 1, phrase_weight, wordpieces)
+    
+    if (args.phraseweights):
+        filename = args.phraseweights + "-s" + str(sentence_index) + ".png"
+        heatmap(phrase_weight, "", "", "", tokens_list, tokens_list)
+        plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
+        plt.close()
+    
     # parse tree using CKY
     tree = cky(phrase_weight, wordpieces)
 
@@ -307,6 +331,7 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     # resize 
     fig = plt.gcf()
     #fig.set_size_inches(cm2inch(40, 20))
+
 
 def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     filename = ''
@@ -493,7 +518,7 @@ for sentence_index in range(sentences_count):
         if args.baseline != None:
             tree = baselinephrasetree(tokens_list, args.baseline)
         else:
-            tree = phrasetree(vis, tokens_list, args.layer, aggreg, args.head)
+            tree = phrasetree(vis, tokens_list, args.layer, aggreg, args.head, sentence_index)
         #print(str(tree), file=phrasetrees)
         #for subtree in tree.subtrees():
         #    print(" ".join(subtree.leaves()), file=phrasetrees)
