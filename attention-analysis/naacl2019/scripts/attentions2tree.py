@@ -179,6 +179,14 @@ def cky(phrase_weight, wordpieces):
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
     return ctree[0][size - 1]
 
+def colmaxes(vis, wordpieces):
+    result = list();
+    for l in range(len(vis)):
+        for h in range(len(vis[l][0])):
+            argmax_in_row = np.argmax(vis[l][0][h] - np.diagflat(np.ones(size)), axis=1)
+            result.extend([wordpieces[i] for i in argmax_in_row])
+    return result
+
 def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
     size = len(wordpieces)
     layer_list = range(len(vis))
@@ -512,6 +520,10 @@ for sentence_index in range(sentences_count):
         aggreg = 0 if args.noaggreg else 1
         tree = oritree(vis[args.layer][aggreg][args.head], tokens_list)
         print(tree, file=oritrees)
+
+    if args.colmax:
+        colmaxes = colmaxes(vis, tokens_list)
+
 
     if phrasetrees:
         aggreg = 0 if args.noaggreg else 1
