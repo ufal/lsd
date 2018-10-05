@@ -27,6 +27,8 @@ ap.add_argument("-p", "--phrasetrees",
         help="Output phrase trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
+ap.add_argument("--colmax",
+        help="Output stats of how often words are looked at into this file")
 ap.add_argument("-c", "--conllu",
         help="Eval against the given conllu faile")
 ap.add_argument("-b", "--baseline",
@@ -46,8 +48,6 @@ ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
 
 #ap.add_argument("-V", "--verbose", action="store_true",
 #        help="Print more details")
-ap.add_argument("--colmax", action="store_true",
-        help="Stats of how often words are looked at")
 ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
@@ -447,6 +447,10 @@ if args.phrasetrees:
     phrasetrees = open(args.phrasetrees, 'w')
 else:
     phrasetrees = None
+if args.colmax:
+    colmaxfile = open(args.colmax, 'w')
+else:
+    colmaxfile = None
 
 # recursively aggregated -- attention over input tokens
 def wm_aggreg(this_layer, last_layer):
@@ -461,6 +465,8 @@ total_count_phrases = 0
 total_count_good = 0
 total_sum_scores = 0
 total_count_sentences = 0
+
+colmaxes_all = dict()
 
 # iterate over sentences
 for sentence_index in range(sentences_count):
@@ -538,12 +544,16 @@ for sentence_index in range(sentences_count):
         print(tree, file=oritrees)
 
     if args.colmax:
-        print("COLMAXES")
+        print("COLMAXES", file=colmaxfile)
         colmaxes_dict = colmaxes(vis, tokens_list)
         for w in tokens_list:
             c = 10 * colmaxes_dict[w]
-            print("{:4.1f} {}".format(c, w))
-        print("/COLMAXES")
+            print("{:4.1f} {}".format(c, w), file=colmaxfile)
+            if w in colmaxes_all:
+                ratio, count = colmaxes_all[w]
+                colmaxes_all[w] = (ratio+c, count+1)
+            else:
+                colmaxes_all[w] = (c, 1)
 
 
     if phrasetrees:
@@ -718,9 +728,20 @@ if total_count_sentences > 0:
     print('MacroAvg over sentences:', macroavg)
     print('Avg over phrases:', total_count_good, '/', total_count_phrases, avg)
 
+if args.colmax:
+    output = dict()
+    for w in colmaxes_all:
+        ratio, count = colmaxes_all[w]
+        if count > 3:
+            output[w] = ratio / count
+    # TODO sort according to ratio, print out
+    print("\n\nFINAL", file=colmaxfile)
+    for w in sorted(output, key=output.get):
+        print("{:4.1f} {}".format(output[w], w), file=colmaxfile)
+    colmaxfile.close()
+
 if deptrees:
     deptrees.close()
 if oritrees:
     oritrees.close()
-
 
