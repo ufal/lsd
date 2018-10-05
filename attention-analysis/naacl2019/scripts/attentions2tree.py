@@ -190,13 +190,14 @@ def colmaxes(vis, wordpieces):
     # record
     layers_count = len(vis)
     heads_count = len(vis[0][0])
+    tokens_count = len(wordpieces)
     for l in range(layers_count):
         for h in range(heads_count):
-            argmax_in_row = np.argmax(vis[l][0][h] - np.diagflat(np.ones(size)), axis=1)
+            argmax_in_row = np.argmax(vis[l][0][h] - np.diagflat(np.ones(tokens_count)), axis=1)
             for i in argmax_in_row:
                 result[wordpieces[i]] += 1
     # normalize
-    divisor = layers_count * heads_count * len(wordpieces)
+    divisor = layers_count * heads_count * tokens_count
     for w in wordpieces_counts:
         result[w] /= divisor * wordpieces_counts[w]
     # return
@@ -538,9 +539,9 @@ for sentence_index in range(sentences_count):
 
     if args.colmax:
         print("COLMAXES")
-        colmaxes = colmaxes(vis, tokens_list)
+        colmaxes_dict = colmaxes(vis, tokens_list)
         for w in tokens_list:
-            print(w, colmaxes[w])
+            print(w, colmaxes_dict[w])
         print("/COLMAXES")
 
 
