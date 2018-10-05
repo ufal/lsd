@@ -541,7 +541,8 @@ for sentence_index in range(sentences_count):
         print("COLMAXES")
         colmaxes_dict = colmaxes(vis, tokens_list)
         for w in tokens_list:
-            print("{:3.2f} {}".format(colmaxes_dict[w], w))
+            c = 10 * colmaxes_dict[w]
+            print("{:4.1f} {}".format(c, w))
         print("/COLMAXES")
 
 
