@@ -11,7 +11,7 @@ import random
 import math
 import subprocess
 import sys
-from collections import deque
+from collections import deque, Counter
 from scipy.sparse.csgraph import minimum_spanning_tree
 
 ap = argparse.ArgumentParser()
@@ -46,6 +46,8 @@ ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
 
 #ap.add_argument("-V", "--verbose", action="store_true",
 #        help="Print more details")
+ap.add_argument("--colmax", action="store_true",
+        help="Stats of how often words are looked at")
 ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
@@ -180,11 +182,24 @@ def cky(phrase_weight, wordpieces):
     return ctree[0][size - 1]
 
 def colmaxes(vis, wordpieces):
-    result = list();
-    for l in range(len(vis)):
-        for h in range(len(vis[l][0])):
+    # init
+    wordpieces_counts = Counter(wordpieces)
+    result = dict();
+    for w in wordpieces_counts:
+        result[w] = 0;
+    # record
+    layers_count = len(vis)
+    heads_count = len(vis[0][0])
+    for l in range(layers_count):
+        for h in range(heads_count):
             argmax_in_row = np.argmax(vis[l][0][h] - np.diagflat(np.ones(size)), axis=1)
-            result.extend([wordpieces[i] for i in argmax_in_row])
+            for i in argmax_in_row:
+                result[wordpieces[i]] += 1
+    # normalize
+    divisor = layers_count * heads_count * len(wordpieces)
+    for w in wordpieces_counts:
+        result[w] /= divisor * wordpieces_counts[w]
+    # return
     return result
 
 def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
@@ -522,7 +537,11 @@ for sentence_index in range(sentences_count):
         print(tree, file=oritrees)
 
     if args.colmax:
+        print("COLMAXES")
         colmaxes = colmaxes(vis, tokens_list)
+        for w in tokens_list:
+            print(w, colmaxes[w])
+        print("/COLMAXES")
 
 
     if phrasetrees:
