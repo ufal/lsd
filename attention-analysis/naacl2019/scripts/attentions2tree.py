@@ -197,7 +197,7 @@ def colmaxes(vis, wordpieces):
             for i in argmax_in_row:
                 result[wordpieces[i]] += 1
     # normalize
-    divisor = layers_count * heads_count * tokens_count
+    divisor = layers_count * heads_count
     for w in wordpieces_counts:
         result[w] /= divisor * wordpieces_counts[w]
     # return
@@ -541,7 +541,7 @@ for sentence_index in range(sentences_count):
         print("COLMAXES")
         colmaxes_dict = colmaxes(vis, tokens_list)
         for w in tokens_list:
-            print("{:6.2%} {}".format(colmaxes_dict[w], w))
+            print("{:3.2f} {}".format(colmaxes_dict[w], w))
         print("/COLMAXES")
 
 
