@@ -554,6 +554,9 @@ for sentence_index in range(sentences_count):
                 colmaxes_all[w] = (ratio+c, count+1)
             else:
                 colmaxes_all[w] = (c, 1)
+        print(file=colmaxfile)
+        for i in reversed(np.argsort(list(colmaxes_dict.values()))):
+            print("    " * i, i, tokens_list[i], file=colmaxfile)
 
 
     if phrasetrees:
