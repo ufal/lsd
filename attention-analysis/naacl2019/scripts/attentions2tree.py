@@ -31,6 +31,8 @@ ap.add_argument("--colmax",
         help="Output stats of how often words are looked at into this file")
 ap.add_argument("-c", "--conllu",
         help="Eval against the given conllu faile")
+ap.add_argument("-C", "--phrasesfile",
+        help="Eval against the given Staford phrases faile")
 ap.add_argument("-b", "--baseline",
         help="Eval baseline: rbr/lbr/rbin/lbin/rand")
 ap.add_argument("-r", "--reverse", action="store_true",
@@ -434,6 +436,66 @@ if args.conllu != None:
                     sentence[child] = head
                 # else special token -- continue
 
+def wsjlen(wordpiece):
+    if wordpiece in ['(', ')', '[', ']', '{', '}']:
+        # -RRB- et al.
+        result = 5
+    elif wordpiece.endswith('@@'):
+        # strip boundary mark
+        result = len(wordpiece) - 2
+    else:
+        result = len(wordpiece)
+    return result
+
+def brackets2tree(sentence_string, tokens_list):
+    # TODO dont forget EOS
+    sentence_string = sentence_string.replace(')', ' )')
+    wsj_tokens = sentence_string.split()
+    queue = [ Tree('TOOR', []) ]
+    cur_token = 0
+    skip_token = False
+    for wsj_token in wsj_tokens:
+        if wsj_token.startswith('('):
+            # start a new subphrase
+            p = Tree(wsj_token[1:], [])
+            queue[-1].append(p)
+            queue.append(p)
+        elif wsj_token == ')':
+            # end the current subphrase
+            queue.pop()
+        else:
+            # add token(s) into subphrase
+            if skip_token:
+                skip_token = False
+                pass
+            else:
+                l = 0
+                while l < len(wsj_token):
+                    queue[-1].append(cur_token)
+                    l += wsjlen(tokens_list[cur_token])
+                    cur_token += 1
+                if l > len(wsj_token):
+                    skip_token = True
+                if args.eos and cur_token+1 == len(tokens_list):
+                    # we have reached EOS
+                    queue[-1].append(cur_token)
+    assert len(queue) == 1
+    return queue[0]
+    
+# read in gold prase structure parse trees
+if args.phrasesfile != None:
+    gold_phrasetrees = list()
+    sent_id = 0
+    sentence_string = ''
+    with open(gold_phrasetrees) as infile:
+        for line in infile:
+            if line == '\n':
+                gold_phrasetrees.append(sentence_string)
+                sent_id += 1
+                sentence_string = ''
+            else:
+                sentence_string.append(line)
+
 # outputs
 if args.deptrees:
     deptrees = open(args.deptrees, 'w')
@@ -459,6 +521,52 @@ def wm_aggreg(this_layer, last_layer):
 # this layer and residual connection -- attention over positions
 def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
+
+
+def eval_phrase_tree(gold_tree, predicted_tree):
+    count_phrases = 0
+    count_good = 0
+    gold_spans = list()
+    queue.append(gold_tree)
+    while queue:
+        phrase = queue.popleft()
+        span = phrase.leaves()
+        start = min(span)
+        end = max(span)
+        gold_spans.append((start, end))
+        for subphrase in phrase:
+            if type(subphrase) != int:
+                queue.append(subphrase)
+    
+    queue.append(pdtree[root])
+    while queue:
+        count_phrases += 1
+        phrase = queue.popleft()
+        good = True
+        span = phrase.leaves()
+        start = min(span)
+        end = max(span)
+
+        for gold_span in gold_spans:
+            gold_start = gold_span[0]
+            gold_end = gold_span[1]
+            if start < gold_end and gold_start < end:
+                # they overlap
+                if start < gold_start and end < gold_end:
+                    good = False
+                if start > gold_start and end > gold_end:
+                    good = False
+
+
+        if good:
+            count_good += 1
+
+        # recurse
+        for subphrase in phrase:
+            if type(subphrase) != int:
+                queue.append(subphrase)
+    return (count_phrases, count_good)
+
 
 # eval
 total_count_phrases = 0
@@ -575,6 +683,22 @@ for sentence_index in range(sentences_count):
         tree.pretty_print(stream=sys.stderr, sentence=tokens_list)
         #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
+
+        if args.phrasesfile != None and not TRUNCATED:
+            gold_tree = brackets2tree(gold_phrasetrees[sentence_index],
+                    tokens_list)
+            gold_tree.pretty_print(sentence=tokens_list, stream=sys.stderr)
+        
+            if agrs.reversed:
+               count_phrases, count_good = eval_phrase_tree(tree, gold_tree)
+            else:
+               count_phrases, count_good = eval_phrase_tree(gold_tree, tree)
+            score = count_good/count_phrases
+            print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
+            total_count_sentences += 1
+            total_count_phrases += count_phrases
+            total_count_good += count_good
+            total_sum_scores += score
 
         # TODO how to eval truncated sentences?
         if args.conllu != None and not TRUNCATED:
