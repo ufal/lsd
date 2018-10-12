@@ -526,6 +526,7 @@ def wm_avg(this_layer, first_layer):
 def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
     count_phrases = 0
     count_good = 0
+    
     gold_spans = list()
     queue = deque()
     queue.append(gold_tree)
@@ -541,34 +542,30 @@ def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
             if type(subphrase) != int:
                 queue.append(subphrase)
     
+    queue = deque()
     queue.append(predicted_tree)
     while queue:
-        count_phrases += 1
         phrase = queue.popleft()
-        if len(phrase) == 1:
+        if len(phrase) > 1:
             # ignore trivial phrases
-            continue
-        good = True
-        span = phrase.leaves()
-        start = min(span)
-        end = max(span)
-
-        for gold_span in gold_spans:
-            gold_start = gold_span[0]
-            gold_end = gold_span[1]
-            if start <= gold_end and gold_start <= end:
-                # they overlap
-                if start < gold_start and end < gold_end:
-                    good = False
-                if start > gold_start and end > gold_end:
-                    good = False
-
-
-        if good:
-            count_good += 1
-        print(start, tokens_list[start], '...', end, tokens_list[end],
-                ':', good, file=sys.stderr)
-
+            count_phrases += 1
+            good = True
+            span = phrase.leaves()
+            start = min(span)
+            end = max(span)
+            for gold_span in gold_spans:
+                gold_start = gold_span[0]
+                gold_end = gold_span[1]
+                if start <= gold_end and gold_start <= end:
+                    # they overlap
+                    if start < gold_start and end < gold_end:
+                        good = False
+                    if start > gold_start and end > gold_end:
+                        good = False
+            if good:
+                count_good += 1
+            print(start, tokens_list[start], '...', end, tokens_list[end],
+                    ':', good, file=sys.stderr)
         # recurse
         for subphrase in phrase:
             if type(subphrase) != int:
