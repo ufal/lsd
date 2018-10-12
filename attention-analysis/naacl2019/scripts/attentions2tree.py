@@ -530,6 +530,32 @@ def wm_aggreg(this_layer, last_layer):
 def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
 
+def del_punct_from_phrase(phrase, tokens_list):
+    new_children = list()
+    for old_child in phrase:
+        if type(old_child) == int:
+            # terminal -- check to remove punct
+            if not ispunct(tokens_list[old_child]):
+                new_children.append(old_child)
+                # else remove
+        else:
+            # non-terminal -- recurse
+            new_child = del_punct_from_phrase(old_child, tokens_list)
+            if new_child != None:
+                new_children.append(new_child)
+                # else remove
+    
+    phrase.clear()
+    if len(new_children) >= 2:
+        phrase.extend(new_children)
+        return phrase
+    elif len(new_children) == 1:
+        return new_children[0]
+    else:
+        assert len(new_children) == 0
+        return None
+        
+
 # TODO
 # if args.nopunct
 # recursively go through each tree, delete int nodes that are punct
@@ -539,6 +565,12 @@ def wm_avg(this_layer, first_layer):
 def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
     count_phrases = 0
     count_good = 0
+
+    if args.nopunct:
+        gold_tree = del_punct_from_phrase(gold_tree, tokens_list)                
+        predicted_tree = del_punct_from_phrase(predicted_tree, tokens_list)                
+    if gold_tree == None or type(gold_tree) == int:
+        return (0, 0)
     
     gold_spans = list()
     queue = deque()
@@ -586,7 +618,7 @@ def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
     return (count_phrases, count_good)
 
 def ispunct(word):
-    return all(x in string.punctuation for x in word)
+    return all(x in string.punctuation for x in word) or word == 'EOS'
 
 # eval
 total_count_phrases = 0
@@ -726,12 +758,13 @@ for sentence_index in range(sentences_count):
             else:
                count_phrases, count_good = eval_phrase_tree(gold_tree, tree,
                        tokens_list)
-            score = count_good/count_phrases
-            print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
-            total_count_sentences += 1
-            total_count_phrases += count_phrases
-            total_count_good += count_good
-            total_sum_scores += score
+            if count_phrases > 0:
+                score = count_good/count_phrases
+                print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
+                total_count_sentences += 1
+                total_count_phrases += count_phrases
+                total_count_good += count_good
+                total_sum_scores += score
 
         # TODO how to eval truncated sentences?
         if args.conllu != None and not TRUNCATED:
