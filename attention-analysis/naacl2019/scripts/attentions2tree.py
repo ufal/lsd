@@ -462,7 +462,10 @@ def brackets2tree(sentence_string, tokens_list):
             queue.append(p)
         elif wsj_token == ')':
             # end the current subphrase
-            queue.pop()
+            p = queue.pop()
+            if len(p) == 0:
+                # remove empty phrase
+                queue[-1].pop()
         else:
             # add token(s) into subphrase
             if skip_token:
