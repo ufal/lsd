@@ -42,7 +42,9 @@ renice 10 $$ >&2
 scriptdir=`pwd`
 
 java -mx4500m -cp "$scriptdir/*:" edu.stanford.nlp.parser.lexparser.LexicalizedParser \
- -outputFormat "penn" edu/stanford/nlp/models/lexparser/englishFactored.ser.gz \
- intersect.en.tok.true.test > intersect.en.tok.true.test.parsed
+ -sentences newline -outputFormat "penn" \
+ edu/stanford/nlp/models/lexparser/englishFactored.ser.gz \
+ intersect.en.tok.true.test \
+ > intersect.en.tok.true.test.parsed
 
 
