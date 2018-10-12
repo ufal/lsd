@@ -13,6 +13,7 @@ import subprocess
 import sys
 from collections import deque, Counter
 from scipy.sparse.csgraph import minimum_spanning_tree
+import string
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-a", "--attentions", required=True,
@@ -58,6 +59,8 @@ ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
 ap.add_argument("-n", "--noaggreg", action="store_true",
         help="Do not aggregate the attentions over layers, just use one layer")
+ap.add_argument("-P", "--nopunct", action="store_true",
+        help="Remove punctuation before evaluation")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -527,7 +530,12 @@ def wm_aggreg(this_layer, last_layer):
 def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
 
-
+# TODO
+# if args.nopunct
+# recursively go through each tree, delete int nodes that are punct
+# recursively go through each tree, compress phrases with only 1 child, delete
+# empty phrases (need to do that bottom up; maybe can be done in one pass but
+# easier to think up in two)
 def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
     count_phrases = 0
     count_good = 0
@@ -577,6 +585,8 @@ def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
                 queue.append(subphrase)
     return (count_phrases, count_good)
 
+def ispunct(word):
+    return all(x in string.punctuation for x in word)
 
 # eval
 total_count_phrases = 0
@@ -599,7 +609,10 @@ for sentence_index in range(sentences_count):
     tokens_list = tokens_loaded[sentence_index]
     
     # check maxlen
-    words_list = ' '.join(tokens_list).replace('@@ ', '').split()
+    words = ' '.join(tokens_list).replace('@@ ', '')
+    if args.nopunct:
+        words = words.translate(str.maketrans("", "", string.punctuation))
+    words_list = words.split()
     if len(words_list) <= args.maxlen:
         print('Processing sentence', sentence_index, file=sys.stderr)
     else:
