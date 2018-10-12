@@ -480,19 +480,19 @@ def brackets2tree(sentence_string, tokens_list):
                     # we have reached EOS
                     queue[-1].append(cur_token)
     assert len(queue) == 1
-    return queue[0]
+    return queue[0][0]
     
 # read in gold prase structure parse trees
 if args.phrasesfile != None:
     gold_phrasetrees = list()
     sent_id = 0
-    sentence_string = ''
-    with open(gold_phrasetrees) as infile:
+    sentence_string = list()
+    with open(args.phrasesfile) as infile:
         for line in infile:
             if line == '\n':
-                gold_phrasetrees.append(sentence_string)
+                gold_phrasetrees.append(''.join(sentence_string))
                 sent_id += 1
-                sentence_string = ''
+                sentence_string = list()
             else:
                 sentence_string.append(line)
 
@@ -523,25 +523,31 @@ def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
 
 
-def eval_phrase_tree(gold_tree, predicted_tree):
+def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
     count_phrases = 0
     count_good = 0
     gold_spans = list()
+    queue = deque()
     queue.append(gold_tree)
     while queue:
         phrase = queue.popleft()
-        span = phrase.leaves()
-        start = min(span)
-        end = max(span)
-        gold_spans.append((start, end))
+        if len(phrase) > 1:
+            # ignore trivial phrases
+            span = phrase.leaves()
+            start = min(span)
+            end = max(span)
+            gold_spans.append((start, end))
         for subphrase in phrase:
             if type(subphrase) != int:
                 queue.append(subphrase)
     
-    queue.append(pdtree[root])
+    queue.append(predicted_tree)
     while queue:
         count_phrases += 1
         phrase = queue.popleft()
+        if len(phrase) == 1:
+            # ignore trivial phrases
+            continue
         good = True
         span = phrase.leaves()
         start = min(span)
@@ -550,7 +556,7 @@ def eval_phrase_tree(gold_tree, predicted_tree):
         for gold_span in gold_spans:
             gold_start = gold_span[0]
             gold_end = gold_span[1]
-            if start < gold_end and gold_start < end:
+            if start <= gold_end and gold_start <= end:
                 # they overlap
                 if start < gold_start and end < gold_end:
                     good = False
@@ -560,6 +566,8 @@ def eval_phrase_tree(gold_tree, predicted_tree):
 
         if good:
             count_good += 1
+        print(start, tokens_list[start], '...', end, tokens_list[end],
+                ':', good, file=sys.stderr)
 
         # recurse
         for subphrase in phrase:
@@ -689,10 +697,12 @@ for sentence_index in range(sentences_count):
                     tokens_list)
             gold_tree.pretty_print(sentence=tokens_list, stream=sys.stderr)
         
-            if agrs.reversed:
-               count_phrases, count_good = eval_phrase_tree(tree, gold_tree)
+            if args.reverse:
+               count_phrases, count_good = eval_phrase_tree(tree, gold_tree,
+                       tokens_list)
             else:
-               count_phrases, count_good = eval_phrase_tree(gold_tree, tree)
+               count_phrases, count_good = eval_phrase_tree(gold_tree, tree,
+                       tokens_list)
             score = count_good/count_phrases
             print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
             total_count_sentences += 1
