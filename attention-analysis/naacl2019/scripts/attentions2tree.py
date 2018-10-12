@@ -47,6 +47,8 @@ ap.add_argument("-k", "--head", type=int, default=-1,
         help="Only use the specified head from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
+ap.add_argument("-m", "--maxlen", type=int, default=1000,
+        help="Skip sentences longer than this many words. A word split into several wordpieces is counted as one word. EOS is not counted.")
 
 #ap.add_argument("-V", "--verbose", action="store_true",
 #        help="Print more details")
@@ -588,13 +590,21 @@ colmaxes_all = dict()
 for sentence_index in range(sentences_count):
     # option to only process selected sentences
     if args.sentences and sentence_index in args.sentences:
-        print('Processing sentence', sentence_index, file=sys.stderr)
+        pass
     else:
         continue
     
     sentence_id = 'arr_' + str(sentence_index)
     tokens_count = attentions_loaded[sentence_id].shape[2]
     tokens_list = tokens_loaded[sentence_index]
+    
+    # check maxlen
+    words_list = ' '.join(tokens_list).replace('@@ ', '').split()
+    if len(words_list) <= args.maxlen:
+        print('Processing sentence', sentence_index, file=sys.stderr)
+    else:
+        continue
+        
     if args.eos:
         tokens_list.append('EOS')
     # NOTE sentences truncated to 64 tokens
