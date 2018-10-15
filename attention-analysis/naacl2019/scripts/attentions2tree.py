@@ -191,8 +191,10 @@ def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
     # iterate over all layers
     for l in layer_list:
         for h in head_list:
-            # save a maximum value for each row, except the diagonal 
-            max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1)
+            # save a maximum value for each row, except the diagonal
+            max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1) # ORIGINAL
+            #vis[l][aggreg][h] -= 0.5 * np.diagflat(np.ones(size))                        # ALTERNATIVE
+            #max_in_row = np.max(vis[l][aggreg][h], axis=1)                               # ALTERNATIVE
             #print(np.round(vis[l][aggreg][h],1))
             #print(np.round(vis[l][aggreg][h] - np.diagflat(np.ones(size)),1))
             #print(np.round(max_in_row,1))
