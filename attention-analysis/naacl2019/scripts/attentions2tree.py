@@ -11,8 +11,9 @@ import random
 import math
 import subprocess
 import sys
-from collections import deque
+from collections import deque, Counter
 from scipy.sparse.csgraph import minimum_spanning_tree
+import string
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-a", "--attentions", required=True,
@@ -27,8 +28,12 @@ ap.add_argument("-p", "--phrasetrees",
         help="Output phrase trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
+ap.add_argument("--colmax",
+        help="Output stats of how often words are looked at into this file")
 ap.add_argument("-c", "--conllu",
         help="Eval against the given conllu faile")
+ap.add_argument("-C", "--phrasesfile",
+        help="Eval against the given Staford phrases faile")
 ap.add_argument("-b", "--baseline",
         help="Eval baseline: rbr/lbr/rbin/lbin/rand")
 ap.add_argument("-r", "--reverse", action="store_true",
@@ -43,6 +48,8 @@ ap.add_argument("-k", "--head", type=int, default=-1,
         help="Only use the specified head from the last layer; 0-based")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
+ap.add_argument("-m", "--maxlen", type=int, default=1000,
+        help="Skip sentences longer than this many words. A word split into several wordpieces is counted as one word. EOS is not counted.")
 
 #ap.add_argument("-V", "--verbose", action="store_true",
 #        help="Print more details")
@@ -52,6 +59,8 @@ ap.add_argument("-e", "--eos", action="store_true",
         help="Attentions contain EOS")
 ap.add_argument("-n", "--noaggreg", action="store_true",
         help="Do not aggregate the attentions over layers, just use one layer")
+ap.add_argument("-P", "--nopunct", action="store_true",
+        help="Remove punctuation before evaluation")
 args= ap.parse_args()
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
@@ -178,6 +187,28 @@ def cky(phrase_weight, wordpieces):
                 score[pos][pos + span] = best_score
                 ctree[pos][pos + span] = Tree('X', [ctree[pos][pos + span - best_variant], ctree[pos + span - best_variant + 1][pos + span]])
     return ctree[0][size - 1]
+
+def colmaxes(vis, wordpieces):
+    # init
+    wordpieces_counts = Counter(wordpieces)
+    result = dict();
+    for w in wordpieces_counts:
+        result[w] = 0;
+    # record
+    layers_count = len(vis)
+    heads_count = len(vis[0][0])
+    tokens_count = len(wordpieces)
+    for l in range(layers_count):
+        for h in range(heads_count):
+            argmax_in_row = np.argmax(vis[l][0][h] - np.diagflat(np.ones(tokens_count)), axis=1)
+            for i in argmax_in_row:
+                result[wordpieces[i]] += 1
+    # normalize
+    divisor = layers_count * heads_count
+    for w in wordpieces_counts:
+        result[w] /= divisor * wordpieces_counts[w]
+    # return
+    return result
 
 def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
     size = len(wordpieces)
@@ -412,6 +443,69 @@ if args.conllu != None:
                     sentence[child] = head
                 # else special token -- continue
 
+def wsjlen(wordpiece):
+    if wordpiece in ['(', ')', '[', ']', '{', '}']:
+        # -RRB- et al.
+        result = 5
+    elif wordpiece.endswith('@@'):
+        # strip boundary mark
+        result = len(wordpiece) - 2
+    else:
+        result = len(wordpiece)
+    return result
+
+def brackets2tree(sentence_string, tokens_list):
+    # TODO dont forget EOS
+    sentence_string = sentence_string.replace(')', ' )')
+    wsj_tokens = sentence_string.split()
+    queue = [ Tree('TOOR', []) ]
+    cur_token = 0
+    skip_token = False
+    for wsj_token in wsj_tokens:
+        if wsj_token.startswith('('):
+            # start a new subphrase
+            p = Tree(wsj_token[1:], [])
+            queue[-1].append(p)
+            queue.append(p)
+        elif wsj_token == ')':
+            # end the current subphrase
+            p = queue.pop()
+            if len(p) == 0:
+                # remove empty phrase
+                queue[-1].pop()
+        else:
+            # add token(s) into subphrase
+            if skip_token:
+                skip_token = False
+                pass
+            else:
+                l = 0
+                while l < len(wsj_token):
+                    queue[-1].append(cur_token)
+                    l += wsjlen(tokens_list[cur_token])
+                    cur_token += 1
+                if l > len(wsj_token):
+                    skip_token = True
+                if args.eos and cur_token+1 == len(tokens_list):
+                    # we have reached EOS
+                    queue[-1].append(cur_token)
+    assert len(queue) == 1
+    return queue[0][0]
+    
+# read in gold prase structure parse trees
+if args.phrasesfile != None:
+    gold_phrasetrees = list()
+    sent_id = 0
+    sentence_string = list()
+    with open(args.phrasesfile) as infile:
+        for line in infile:
+            if line == '\n':
+                gold_phrasetrees.append(''.join(sentence_string))
+                sent_id += 1
+                sentence_string = list()
+            else:
+                sentence_string.append(line)
+
 # outputs
 if args.deptrees:
     deptrees = open(args.deptrees, 'w')
@@ -425,6 +519,10 @@ if args.phrasetrees:
     phrasetrees = open(args.phrasetrees, 'w')
 else:
     phrasetrees = None
+if args.colmax:
+    colmaxfile = open(args.colmax, 'w')
+else:
+    colmaxfile = None
 
 # recursively aggregated -- attention over input tokens
 def wm_aggreg(this_layer, last_layer):
@@ -434,23 +532,126 @@ def wm_aggreg(this_layer, last_layer):
 def wm_avg(this_layer, first_layer):
     return (this_layer + first_layer) / 2
 
+def del_punct_from_phrase(phrase, tokens_list):
+    new_children = list()
+    for old_child in phrase:
+        if type(old_child) == int:
+            # terminal -- check to remove punct
+            if not ispunct(tokens_list[old_child]):
+                new_children.append(old_child)
+                # else remove
+        else:
+            # non-terminal -- recurse
+            new_child = del_punct_from_phrase(old_child, tokens_list)
+            if new_child != None:
+                new_children.append(new_child)
+                # else remove
+    
+    phrase.clear()
+    if len(new_children) >= 2:
+        phrase.extend(new_children)
+        return phrase
+    elif len(new_children) == 1:
+        return new_children[0]
+    else:
+        assert len(new_children) == 0
+        return None
+        
+
+# TODO
+# if args.nopunct
+# recursively go through each tree, delete int nodes that are punct
+# recursively go through each tree, compress phrases with only 1 child, delete
+# empty phrases (need to do that bottom up; maybe can be done in one pass but
+# easier to think up in two)
+def eval_phrase_tree(gold_tree, predicted_tree, tokens_list):
+    count_phrases = 0
+    count_good = 0
+
+    if args.nopunct:
+        gold_tree = del_punct_from_phrase(gold_tree, tokens_list)                
+        predicted_tree = del_punct_from_phrase(predicted_tree, tokens_list)                
+    if gold_tree == None or type(gold_tree) == int:
+        return (0, 0)
+    
+    gold_spans = list()
+    queue = deque()
+    queue.append(gold_tree)
+    while queue:
+        phrase = queue.popleft()
+        if len(phrase) > 1:
+            # ignore trivial phrases
+            span = phrase.leaves()
+            start = min(span)
+            end = max(span)
+            gold_spans.append((start, end))
+        for subphrase in phrase:
+            if type(subphrase) != int:
+                queue.append(subphrase)
+    
+    queue = deque()
+    queue.append(predicted_tree)
+    while queue:
+        phrase = queue.popleft()
+        if len(phrase) > 1:
+            # ignore trivial phrases
+            count_phrases += 1
+            good = True
+            span = phrase.leaves()
+            start = min(span)
+            end = max(span)
+            for gold_span in gold_spans:
+                gold_start = gold_span[0]
+                gold_end = gold_span[1]
+                if start <= gold_end and gold_start <= end:
+                    # they overlap
+                    if start < gold_start and end < gold_end:
+                        good = False
+                    if start > gold_start and end > gold_end:
+                        good = False
+            if good:
+                count_good += 1
+            print(start, tokens_list[start], '...', end, tokens_list[end],
+                    ':', good, file=sys.stderr)
+        # recurse
+        for subphrase in phrase:
+            if type(subphrase) != int:
+                queue.append(subphrase)
+    return (count_phrases, count_good)
+
+def ispunct(word):
+    return all(x in string.punctuation for x in word) or word == 'EOS'
+
 # eval
 total_count_phrases = 0
 total_count_good = 0
 total_sum_scores = 0
 total_count_sentences = 0
 
+colmaxes_all = dict()
+
 # iterate over sentences
 for sentence_index in range(sentences_count):
     # option to only process selected sentences
     if args.sentences and sentence_index in args.sentences:
-        print('Processing sentence', sentence_index, file=sys.stderr)
+        pass
     else:
         continue
     
     sentence_id = 'arr_' + str(sentence_index)
     tokens_count = attentions_loaded[sentence_id].shape[2]
     tokens_list = tokens_loaded[sentence_index]
+    
+    # check maxlen
+    words = ' '.join(tokens_list).replace('@@ ', '')
+    if args.nopunct:
+        words = words.translate(str.maketrans("", "", string.punctuation))
+    words_list = words.split()
+    if len(words_list) <= args.maxlen:
+        print('Processing sentence', sentence_index, file=sys.stderr)
+    else:
+        continue
+        
     if args.eos:
         tokens_list.append('EOS')
     # NOTE sentences truncated to 64 tokens
@@ -515,6 +716,22 @@ for sentence_index in range(sentences_count):
         tree = oritree(vis[args.layer][aggreg][args.head], tokens_list)
         print(tree, file=oritrees)
 
+    if args.colmax:
+        print("COLMAXES", file=colmaxfile)
+        colmaxes_dict = colmaxes(vis, tokens_list)
+        for w in tokens_list:
+            c = 10 * colmaxes_dict[w]
+            print("{:4.1f} {}".format(c, w), file=colmaxfile)
+            if w in colmaxes_all:
+                ratio, count = colmaxes_all[w]
+                colmaxes_all[w] = (ratio+c, count+1)
+            else:
+                colmaxes_all[w] = (c, 1)
+        print(file=colmaxfile)
+        for i in reversed(np.argsort(list(colmaxes_dict.values()))):
+            print("    " * i, i, tokens_list[i], file=colmaxfile)
+
+
     if phrasetrees:
         aggreg = 0 if args.noaggreg else 1
         if args.baseline != None:
@@ -531,6 +748,25 @@ for sentence_index in range(sentences_count):
         tree.pretty_print(stream=sys.stderr, sentence=tokens_list)
         #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
+
+        if args.phrasesfile != None and not TRUNCATED:
+            gold_tree = brackets2tree(gold_phrasetrees[sentence_index],
+                    tokens_list)
+            gold_tree.pretty_print(sentence=tokens_list, stream=sys.stderr)
+        
+            if args.reverse:
+               count_phrases, count_good = eval_phrase_tree(tree, gold_tree,
+                       tokens_list)
+            else:
+               count_phrases, count_good = eval_phrase_tree(gold_tree, tree,
+                       tokens_list)
+            if count_phrases > 0:
+                score = count_good/count_phrases
+                print(count_good, '/', count_phrases, '=', score, file=sys.stderr)
+                total_count_sentences += 1
+                total_count_phrases += count_phrases
+                total_count_good += count_good
+                total_sum_scores += score
 
         # TODO how to eval truncated sentences?
         if args.conllu != None and not TRUNCATED:
@@ -687,9 +923,20 @@ if total_count_sentences > 0:
     print('MacroAvg over sentences:', macroavg)
     print('Avg over phrases:', total_count_good, '/', total_count_phrases, avg)
 
+if args.colmax:
+    output = dict()
+    for w in colmaxes_all:
+        ratio, count = colmaxes_all[w]
+        if count > 3:
+            output[w] = ratio / count
+    # TODO sort according to ratio, print out
+    print("\n\nFINAL", file=colmaxfile)
+    for w in sorted(output, key=output.get):
+        print("{:4.1f} {}".format(output[w], w), file=colmaxfile)
+    colmaxfile.close()
+
 if deptrees:
     deptrees.close()
 if oritrees:
     oritrees.close()
-
 
