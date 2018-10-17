@@ -15,13 +15,13 @@ unset ytics
 unset border
 
 # should be from 0 to something above the max value
-set yrange [0:20]
+set yrange [0:16]
 # the 0.6 moves the labels a bit upwards so that there is no ugly gap
-set xtics nomirror scale 0 offset 0,0.6,0
+set xtics nomirror scale 0 offset 0,0.5,0
 # the 1.2 moves the label a bit upwards so that there is no ugly gap
-set xlabel "MLAS" offset 0,1.2,0 font "Helvetica Bold"
+set xlabel "MLAS" offset 0,1,0 font "Helvetica Bold"
 # output file name
 set output "mlas-LLL.svg"
 # "lc variable" makes it select the box color type according to the value of the column 2
 # $3+4 moves the labels somewhat upwards above the bars
-plot "mlas-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+4):4 with labels
+plot "mlas-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+1.5):4 with labels
