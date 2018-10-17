@@ -1,11 +1,11 @@
 #!/bin/bash
 
-t=las
+for t in las mlas blex
+do
 for l in all br bxr fo hsb hy kk kmr pcm th
 do
     echo $l
-    c=`grep $'\t2\t' las_$l.tsv|cut -f1`
-    sed -e s/LLL/$l/g -e s/CCC/$c/g LAS_LLL_CCC.gnuplot > las_$l.gnuplot
-    gnuplot < las_$l.gnuplot
+    sed s/LLL/$l/g LLL-$t.gnuplot > $t-$l.gnuplot
+    gnuplot < $t-$l.gnuplot
 done
-
+done
