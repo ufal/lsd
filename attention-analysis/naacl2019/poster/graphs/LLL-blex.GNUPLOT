@@ -24,4 +24,4 @@ set xlabel "BLEX" offset 0,1,0 font "Helvetica Bold"
 set output "blex-LLL.svg"
 # "lc variable" makes it select the box color type according to the value of the column 2
 # $3+4 moves the labels somewhat upwards above the bars
-plot "blex-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+3.5):4 with labels
+plot "blex-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+5):4 with labels

@@ -24,4 +24,4 @@ set xlabel "MLAS" offset 0,1,0 font "Helvetica Bold"
 set output "mlas-LLL.svg"
 # "lc variable" makes it select the box color type according to the value of the column 2
 # $3+4 moves the labels somewhat upwards above the bars
-plot "mlas-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+1.5):4 with labels
+plot "mlas-LLL.tsv" using 0:3:2:xtic(1) with boxes lc variable, "" using 0:($3+2.5):4 with labels
