@@ -1,7 +1,12 @@
 #!/bin/bash
 
+echo START
+
 for t in las mlas blex
 do
+echo
+echo $t
+echo
 for l in all br bxr fo hsb hy kk kmr pcm th
 do
     echo $l
@@ -9,3 +14,6 @@ do
     gnuplot < $t-$l.gnuplot
 done
 done
+
+echo
+echo DONE
