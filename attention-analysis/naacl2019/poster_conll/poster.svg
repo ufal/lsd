@@ -3438,9 +3438,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1349.3756"
-     inkscape:cy="2767.0135"
+     inkscape:zoom="0.25"
+     inkscape:cx="983.74452"
+     inkscape:cy="2625.8568"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -3461,7 +3461,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -3581,7 +3581,7 @@
     </g>
     <g
        id="g5138"
-       transform="matrix(0.02885161,0,0,0.02885161,393.94782,-58.276047)">
+       transform="matrix(0.02885161,0,0,0.02885161,373.74225,-85.96517)">
       <rect
          id="rect5121"
          height="600"
@@ -3782,84 +3782,84 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:85.33333588px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';text-align:center;text-anchor:middle">CUNI x-ling: Parsing under-resourced languages</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:85.33333588px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';text-align:center;text-anchor:middle"
          id="flowPara11138"> in CoNLL 2018 UD Shared Task</flowPara></flowRoot>    <rect
-       style="fill:none;fill-rule:evenodd;stroke:#30198f;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#30198f;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect60-36"
-       width="204.51788"
-       height="244.58177"
-       x="11.209546"
-       y="-777.86652"
+       width="205.10025"
+       height="274.07745"
+       x="5.9178796"
+       y="-782.62903"
        ry="11.339286"
        rx="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="19.352427"
-       y="-758.76306"
+       x="17.23576"
+       y="-763.52557"
        id="text545"><tspan
          sodipodi:role="line"
          id="tspan543"
-         x="19.352427"
-         y="-758.76306"
+         x="17.23576"
+         y="-763.52557"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Treebank translation</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#30198f;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect60-36-7"
-       width="228.25456"
-       height="76.985596"
-       x="239.88516"
-       y="-772.19684"
+       width="214.03583"
+       height="88.007294"
+       x="223.0206"
+       y="-782.72699"
        ry="11.339286"
        rx="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="245.98158"
-       y="-753.57422"
+       x="233.47874"
+       y="-761.80609"
        id="text545-5"><tspan
          sodipodi:role="line"
          id="tspan543-3"
-         x="245.98158"
-         y="-753.57422"
+         x="233.47874"
+         y="-761.80609"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Pretrained embeddings</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#30198f;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect60-36-5"
-       width="204.51788"
-       height="244.58177"
-       x="460.62326"
-       y="-769.92896"
+       width="230.43791"
+       height="276.23233"
+       x="449.14114"
+       y="-782.341"
        ry="11.339286"
        rx="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="467.25424"
-       y="-756.11719"
+       x="454.38181"
+       y="-762.89001"
        id="text545-6"><tspan
          sodipodi:role="line"
          id="tspan543-2"
-         x="467.25424"
-         y="-756.11719"
+         x="454.38181"
+         y="-762.89001"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Combining multiple parsers</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#30198f;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect60-36-9"
-       width="200.28455"
-       height="117.58179"
-       x="240.79233"
-       y="-654.26831"
+       width="213.6781"
+       height="177.78337"
+       x="222.96021"
+       y="-684.95087"
        ry="11.339286"
        rx="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="242.87973"
-       y="-634.30933"
+       x="231.78281"
+       y="-666.26941"
        id="text545-1"><tspan
          sodipodi:role="line"
          id="tspan543-27"
-         x="242.87973"
-         y="-634.30933"
+         x="231.78281"
+         y="-666.26941"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">UniMorph morphology</tspan></text>
     <g
        id="g6856"
@@ -3958,458 +3958,447 @@
          style="stroke-width:0.63988066" />
     </text>
     <g
-       id="g18359"
-       transform="matrix(1.2019671,0,0,1.2019671,-1.8341984,152.96922)">
+       id="g7488"
+       transform="translate(-5.2384827,19.457222)">
       <g
-         id="g4"
-         transform="matrix(0.63988063,0,0,0.63988063,14.877934,-707.02359)"
-         class="_2nS8a">
-        <g
-           id="g6"
-           class="_R_cI5">
-          <line
-             id="line8"
-             style="stroke:#555555;stroke-width:2"
-             y2="35.5"
-             x2="40.5"
-             y1="4.5"
-             x1="16.5"
-             class="_1fwq5" />
-          <line
-             id="line10"
-             style="stroke:#555555;stroke-width:2"
-             y2="95.296875"
-             x2="28.5"
-             y1="35.5"
-             x1="40.5"
-             class="_1fwq5" />
-          <line
-             id="line12"
-             style="stroke:#555555;stroke-width:2"
-             y2="95.296875"
-             x2="81.5"
-             y1="35.5"
-             x1="40.5"
-             class="_1fwq5" />
-          <line
-             id="line14"
-             style="stroke:#555555;stroke-width:2"
-             y2="155.09375"
-             x2="52.5"
-             y1="95.296875"
-             x1="81.5"
-             class="_1fwq5" />
-        </g>
-        <g
-           id="g16"
-           class="_3criC">
-          <g
-             transform="translate(12)"
-             id="w0"
-             class="_19NMQ">
-            <circle
-               id="circle19"
-               style="fill:#ff6666;stroke:#555555;stroke-width:1"
-               cy="4.5"
-               cx="4.5"
-               r="3.5" />
-            <rect
-               id="rect21"
-               height="16"
-               width="37.671875"
-               style="fill:#ffffff;fill-opacity:0.9"
-               y="9"
-               x="0" />
-            <text
-               id="text23"
-               style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-               dy="22"
-               dx="1">
-              <tspan
-                 id="tspan25"
-                 x="1">&lt;root&gt;</tspan>
-              <tspan
-                 id="tspan27"
-                 x="1"
-                 dy="14.4" />
-              <tspan
-                 id="tspan29"
-                 x="1"
-                 dy="14.4" />
-            </text>
-          </g>
-          <g
-             transform="translate(24,90.796875)"
-             id="w1"
-             class="_19NMQ">
-            <circle
-               id="circle32"
-               style="fill:#ff6666;stroke:#555555;stroke-width:1"
-               cy="4.5"
-               cx="4.5"
-               r="3.5" />
-            <rect
-               id="rect34"
-               height="44.796875"
-               width="37"
-               style="fill:#ffffff;fill-opacity:0.9"
-               y="9"
-               x="0" />
-            <text
-               id="text36"
-               style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-               dy="22"
-               dx="1">
-              <tspan
-                 id="tspan38"
-                 x="1">I</tspan>
-              <tspan
-                 style="fill:#00008b"
-                 id="tspan40"
-                 x="1"
-                 dy="14.4">nsubj</tspan>
-              <tspan
-                 style="fill:#004048"
-                 id="tspan42"
-                 x="1"
-                 dy="14.4">PRON</tspan>
-            </text>
-          </g>
-          <g
-             transform="translate(36,31)"
-             id="w2"
-             class="_19NMQ">
-            <circle
-               id="circle45"
-               style="fill:#ff6666;stroke:#555555;stroke-width:1"
-               cy="4.5"
-               cx="4.5"
-               r="3.5" />
-            <rect
-               id="rect47"
-               height="44.796875"
-               width="35.671875"
-               style="fill:#ffffff;fill-opacity:0.9"
-               y="9"
-               x="0" />
-            <text
-               id="text49"
-               style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-               dy="22"
-               dx="1">
-              <tspan
-                 id="tspan51"
-                 x="1">go</tspan>
-              <tspan
-                 style="fill:#00008b"
-                 id="tspan53"
-                 x="1"
-                 dy="14.4">root</tspan>
-              <tspan
-                 style="fill:#004048"
-                 id="tspan55"
-                 x="1"
-                 dy="14.4">VERB</tspan>
-            </text>
-          </g>
-          <g
-             transform="translate(48,150.59375)"
-             id="w3"
-             class="_19NMQ">
-            <circle
-               id="circle58"
-               style="fill:#ff6666;stroke:#555555;stroke-width:1"
-               cy="4.5"
-               cx="4.5"
-               r="3.5" />
-            <rect
-               id="rect60-09"
-               height="44.796875"
-               width="28.671875"
-               style="fill:#ffffff;fill-opacity:0.9"
-               y="9"
-               x="0" />
-            <text
-               id="text62"
-               style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-               dy="22"
-               dx="1">
-              <tspan
-                 id="tspan64"
-                 x="1">by</tspan>
-              <tspan
-                 style="fill:#00008b"
-                 id="tspan66"
-                 x="1"
-                 dy="14.4">case</tspan>
-              <tspan
-                 style="fill:#004048"
-                 id="tspan68"
-                 x="1"
-                 dy="14.4">ADP</tspan>
-            </text>
-          </g>
-          <g
-             transform="translate(77,90.796875)"
-             id="w4"
-             class="_19NMQ">
-            <circle
-               id="circle71"
-               style="fill:#ff6666;stroke:#555555;stroke-width:1"
-               cy="4.5"
-               cx="4.5"
-               r="3.5" />
-            <text
-               id="text75"
-               style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-               dy="22"
-               dx="1">
-              <tspan
-                 id="tspan77"
-                 x="1">train</tspan>
-              <tspan
-                 style="fill:#00008b"
-                 id="tspan79"
-                 x="1"
-                 dy="14.4">obl</tspan>
-              <tspan
-                 style="fill:#004048"
-                 id="tspan81"
-                 x="1"
-                 dy="14.4">NOUN</tspan>
-            </text>
-          </g>
-        </g>
+         transform="matrix(0.76911547,0,0,0.76911547,16.048589,-696.84987)"
+         class="_R_cI5"
+         id="g6">
+        <line
+           class="_1fwq5"
+           x1="16.5"
+           y1="4.5"
+           x2="40.5"
+           y2="35.5"
+           style="stroke:#555555;stroke-width:2"
+           id="line8" />
+        <line
+           class="_1fwq5"
+           x1="40.5"
+           y1="35.5"
+           x2="28.5"
+           y2="95.296875"
+           style="stroke:#555555;stroke-width:2"
+           id="line10" />
+        <line
+           class="_1fwq5"
+           x1="40.5"
+           y1="35.5"
+           x2="81.5"
+           y2="95.296875"
+           style="stroke:#555555;stroke-width:2"
+           id="line12" />
+        <line
+           class="_1fwq5"
+           x1="81.5"
+           y1="95.296875"
+           x2="52.5"
+           y2="155.09375"
+           style="stroke:#555555;stroke-width:2"
+           id="line14" />
       </g>
       <g
-         transform="matrix(0.02267294,0,0,0.02267294,-335.87361,-1030.8291)"
-         id="g731"
-         class="Graphic">
-        <g
-           id="id35">
-          <path
-             style="fill:#6295d6;stroke:none"
-             inkscape:connector-curvature="0"
-             id="path734"
-             d="m 19669,16941 -375,-334 -1,230 h -827 v 205 h 826 v 231 z" />
-        </g>
-      </g>
-      <g
-         transform="translate(-38.686594,-4.7479096)"
-         id="g18274">
-        <g
-           id="g6-6"
-           class="_R_cI5"
-           transform="matrix(0.63988063,0,0,0.63988063,139.45752,-702.81319)">
-          <line
-             id="line8-9"
-             style="stroke:#555555;stroke-width:2"
-             y2="35.5"
-             x2="40.5"
-             y1="4.5"
-             x1="16.5"
-             class="_1fwq5" />
-          <line
-             id="line10-4"
-             style="stroke:#555555;stroke-width:2"
-             y2="95.296875"
-             x2="28.5"
-             y1="35.5"
-             x1="40.5"
-             class="_1fwq5" />
-          <line
-             id="line12-4"
-             style="stroke:#555555;stroke-width:2"
-             y2="95.296875"
-             x2="81.5"
-             y1="35.5"
-             x1="40.5"
-             class="_1fwq5" />
-          <line
-             id="line14-9"
-             style="stroke:#555555;stroke-width:2"
-             y2="155.09375"
-             x2="52.5"
-             y1="95.296875"
-             x1="81.5"
-             class="_1fwq5" />
-        </g>
+         transform="matrix(0.76911547,0,0,0.76911547,16.048589,-696.84987)"
+         class="_3criC"
+         id="g16">
         <g
            class="_19NMQ"
-           id="w0-6"
-           transform="matrix(0.63988063,0,0,0.63988063,147.13609,-702.81319)">
+           id="w0"
+           transform="translate(12)">
           <circle
              r="3.5"
              cx="4.5"
              cy="4.5"
              style="fill:#ff6666;stroke:#555555;stroke-width:1"
-             id="circle19-3" />
+             id="circle19" />
           <rect
              x="0"
              y="9"
              style="fill:#ffffff;fill-opacity:0.9"
              width="37.671875"
              height="16"
-             id="rect21-4" />
+             id="rect21" />
           <text
              dx="1"
              dy="22"
              style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-             id="text23-2">
+             id="text23">
             <tspan
                x="1"
-               id="tspan25-9">&lt;root&gt;</tspan>
-            <tspan
-               dy="14.4"
-               x="1"
-               id="tspan27-9" />
+               id="tspan25">&lt;root&gt;</tspan>
             <tspan
                dy="14.4"
                x="1"
-               id="tspan29-0" />
+               id="tspan27" />
+            <tspan
+               dy="14.4"
+               x="1"
+               id="tspan29" />
           </text>
         </g>
         <g
            class="_19NMQ"
-           id="w1-7"
-           transform="matrix(0.63988063,0,0,0.63988063,154.81466,-644.71403)">
+           id="w1"
+           transform="translate(24,90.796875)">
           <circle
              r="3.5"
              cx="4.5"
              cy="4.5"
              style="fill:#ff6666;stroke:#555555;stroke-width:1"
-             id="circle32-6" />
+             id="circle32" />
           <rect
              x="0"
              y="9"
              style="fill:#ffffff;fill-opacity:0.9"
              width="37"
              height="44.796875"
-             id="rect34-3" />
+             id="rect34" />
           <text
              dx="1"
              dy="22"
              style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-             id="text36-3">
+             id="text36">
             <tspan
                x="1"
-               id="tspan38-1">Ich</tspan>
+               id="tspan38">I</tspan>
             <tspan
-               style="fill:#00008b"
                dy="14.4"
                x="1"
-               id="tspan40-8">nsubj</tspan>
+               id="tspan40"
+               style="fill:#00008b">nsubj</tspan>
             <tspan
-               style="fill:#004048"
                dy="14.4"
                x="1"
-               id="tspan42-8">PRON</tspan>
+               id="tspan42"
+               style="fill:#004048">PRON</tspan>
           </text>
         </g>
         <g
            class="_19NMQ"
-           id="w2-3"
-           transform="matrix(0.63988063,0,0,0.63988063,162.49322,-682.97689)">
+           id="w2"
+           transform="translate(36,31)">
           <circle
              r="3.5"
              cx="4.5"
              cy="4.5"
              style="fill:#ff6666;stroke:#555555;stroke-width:1"
-             id="circle45-0" />
+             id="circle45" />
           <rect
              x="0"
              y="9"
              style="fill:#ffffff;fill-opacity:0.9"
              width="35.671875"
              height="44.796875"
-             id="rect47-3" />
+             id="rect47" />
           <text
+             dx="1"
+             dy="22"
              style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
-             id="text49-3"
-             x="-0.45633608"
-             y="21.166115">
+             id="text49">
             <tspan
-               x="0.54366392"
-               id="tspan51-6">fahren</tspan>
+               x="1"
+               id="tspan51">go</tspan>
             <tspan
-               style="fill:#00008b"
                dy="14.4"
-               x="0.54366392"
-               id="tspan53-7">root</tspan>
+               x="1"
+               id="tspan53"
+               style="fill:#00008b">root</tspan>
             <tspan
-               style="fill:#004048"
                dy="14.4"
-               x="0.54366392"
-               id="tspan55-1">VERB</tspan>
+               x="1"
+               id="tspan55"
+               style="fill:#004048">VERB</tspan>
           </text>
         </g>
+        <g
+           class="_19NMQ"
+           id="w3"
+           transform="translate(48,150.59375)">
+          <circle
+             r="3.5"
+             cx="4.5"
+             cy="4.5"
+             style="fill:#ff6666;stroke:#555555;stroke-width:1"
+             id="circle58" />
+          <rect
+             x="0"
+             y="9"
+             style="fill:#ffffff;fill-opacity:0.9"
+             width="28.671875"
+             height="44.796875"
+             id="rect60-09" />
+          <text
+             dx="1"
+             dy="22"
+             style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
+             id="text62">
+            <tspan
+               x="1"
+               id="tspan64">by</tspan>
+            <tspan
+               dy="14.4"
+               x="1"
+               id="tspan66"
+               style="fill:#00008b">case</tspan>
+            <tspan
+               dy="14.4"
+               x="1"
+               id="tspan68"
+               style="fill:#004048">ADP</tspan>
+          </text>
+        </g>
+        <g
+           class="_19NMQ"
+           id="w4"
+           transform="translate(77,90.796875)">
+          <circle
+             r="3.5"
+             cx="4.5"
+             cy="4.5"
+             style="fill:#ff6666;stroke:#555555;stroke-width:1"
+             id="circle71" />
+          <text
+             dx="1"
+             dy="22"
+             style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
+             id="text75">
+            <tspan
+               x="1"
+               id="tspan77">train</tspan>
+            <tspan
+               dy="14.4"
+               x="1"
+               id="tspan79"
+               style="fill:#00008b">obl</tspan>
+            <tspan
+               dy="14.4"
+               x="1"
+               id="tspan81"
+               style="fill:#004048">NOUN</tspan>
+          </text>
+        </g>
+      </g>
+      <g
+         transform="matrix(0.02725213,0,0,0.02725213,-405.54323,-1086.0534)"
+         id="id35">
+        <path
+           d="m 19669,16941 -375,-334 -1,230 h -827 v 205 h 826 v 231 z"
+           id="path734"
+           inkscape:connector-curvature="0"
+           style="fill:#6295d6;stroke:none" />
+      </g>
+      <g
+         transform="matrix(0.76911547,0,0,0.76911547,119.28914,-697.49594)"
+         class="_R_cI5"
+         id="g6-6">
+        <line
+           class="_1fwq5"
+           x1="16.5"
+           y1="4.5"
+           x2="40.5"
+           y2="35.5"
+           style="stroke:#555555;stroke-width:2"
+           id="line8-9" />
+        <line
+           class="_1fwq5"
+           x1="40.5"
+           y1="35.5"
+           x2="28.5"
+           y2="95.296875"
+           style="stroke:#555555;stroke-width:2"
+           id="line10-4" />
+        <line
+           class="_1fwq5"
+           x1="40.5"
+           y1="35.5"
+           x2="81.5"
+           y2="95.296875"
+           style="stroke:#555555;stroke-width:2"
+           id="line12-4" />
+        <line
+           class="_1fwq5"
+           x1="81.5"
+           y1="95.296875"
+           x2="52.5"
+           y2="155.09375"
+           style="stroke:#555555;stroke-width:2"
+           id="line14-9" />
+      </g>
+      <g
+         transform="matrix(0.76911547,0,0,0.76911547,128.51853,-697.49594)"
+         id="w0-6"
+         class="_19NMQ">
         <circle
-           id="circle58-0"
-           style="fill:#ff6666;stroke:#555555;stroke-width:0.63988066"
-           cy="-603.57172"
-           cx="173.05125"
-           r="2.2395823" />
+           id="circle19-3"
+           style="fill:#ff6666;stroke:#555555;stroke-width:1"
+           cy="4.5"
+           cx="4.5"
+           r="3.5" />
         <rect
-           id="rect60-8"
-           height="28.664652"
-           width="18.346577"
-           style="fill:#ffffff;fill-opacity:0.9;stroke-width:0.63988066"
-           y="-600.69226"
-           x="170.17178" />
+           id="rect21-4"
+           height="16"
+           width="37.671875"
+           style="fill:#ffffff;fill-opacity:0.9"
+           y="9"
+           x="0" />
         <text
-           y="-592.37378"
-           id="text3222"
-           style="font-size:7.67856741px;line-height:0%;font-family:Arial;text-anchor:start;stroke-width:0.63988066"
-           x="170.17178">
+           id="text23-2"
+           style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
+           dy="22"
+           dx="1">
           <tspan
-             id="tspan3224"
-             x="170.81168"
-             style="stroke-width:0.63988066">von</tspan>
+             id="tspan25-9"
+             x="1">&lt;root&gt;</tspan>
           <tspan
-             id="tspan66-7"
-             x="170.81168"
-             dy="9.2142811"
-             style="fill:#00008b;stroke-width:0.63988066">case</tspan>
+             id="tspan27-9"
+             x="1"
+             dy="14.4" />
           <tspan
-             id="tspan68-7"
-             x="170.81168"
-             dy="9.2142811"
-             style="fill:#004048;stroke-width:0.63988066">ADP</tspan>
-        </text>
-        <circle
-           id="circle71-7"
-           style="fill:#ff6666;stroke:#555555;stroke-width:0.63988066"
-           cy="-641.83459"
-           cx="191.60779"
-           r="2.2395823" />
-        <rect
-           id="rect73-9"
-           height="28.664652"
-           width="24.095505"
-           style="fill:#ffffff;fill-opacity:0.9;stroke-width:0.63988066"
-           y="-638.95508"
-           x="188.72833" />
-        <text
-           id="text3205"
-           style="font-size:7.67856741px;line-height:0%;font-family:Arial;text-anchor:start;stroke-width:0.63988066"
-           x="188.72833"
-           y="-630.63666">
-          <tspan
-             id="tspan3207"
-             x="189.36821"
-             style="stroke-width:0.63988066">Zug</tspan>
-          <tspan
-             id="tspan79-3"
-             x="189.36821"
-             dy="9.2142811"
-             style="fill:#00008b;stroke-width:0.63988066">obl</tspan>
-          <tspan
-             id="tspan81-5"
-             x="189.36821"
-             dy="9.2142811"
-             style="fill:#004048;stroke-width:0.63988066">NOUN</tspan>
+             id="tspan29-0"
+             x="1"
+             dy="14.4" />
         </text>
       </g>
+      <g
+         transform="matrix(0.76911547,0,0,0.76911547,137.74792,-627.66266)"
+         id="w1-7"
+         class="_19NMQ">
+        <circle
+           id="circle32-6"
+           style="fill:#ff6666;stroke:#555555;stroke-width:1"
+           cy="4.5"
+           cx="4.5"
+           r="3.5" />
+        <rect
+           id="rect34-3"
+           height="44.796875"
+           width="37"
+           style="fill:#ffffff;fill-opacity:0.9"
+           y="9"
+           x="0" />
+        <text
+           id="text36-3"
+           style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start"
+           dy="22"
+           dx="1">
+          <tspan
+             id="tspan38-1"
+             x="1">Ich</tspan>
+          <tspan
+             id="tspan40-8"
+             x="1"
+             dy="14.4"
+             style="fill:#00008b">nsubj</tspan>
+          <tspan
+             id="tspan42-8"
+             x="1"
+             dy="14.4"
+             style="fill:#004048">PRON</tspan>
+        </text>
+      </g>
+      <g
+         transform="matrix(0.76911547,0,0,0.76911547,146.97729,-673.65336)"
+         id="w2-3"
+         class="_19NMQ">
+        <circle
+           id="circle45-0"
+           style="fill:#ff6666;stroke:#555555;stroke-width:1"
+           cy="4.5"
+           cx="4.5"
+           r="3.5" />
+        <rect
+           id="rect47-3"
+           height="44.796875"
+           width="35.671875"
+           style="fill:#ffffff;fill-opacity:0.9"
+           y="9"
+           x="0" />
+        <text
+           y="21.166115"
+           x="-0.45633608"
+           id="text49-3"
+           style="font-size:12px;line-height:0%;font-family:Arial;text-anchor:start">
+          <tspan
+             id="tspan51-6"
+             x="0.54366392">fahren</tspan>
+          <tspan
+             id="tspan53-7"
+             x="0.54366392"
+             dy="14.4"
+             style="fill:#00008b">root</tspan>
+          <tspan
+             id="tspan55-1"
+             x="0.54366392"
+             dy="14.4"
+             style="fill:#004048">VERB</tspan>
+        </text>
+      </g>
+      <circle
+         r="2.6919043"
+         cx="159.66771"
+         cy="-578.21094"
+         style="fill:#ff6666;stroke:#555555;stroke-width:0.76911551"
+         id="circle58-0" />
+      <rect
+         x="156.20668"
+         y="-574.74994"
+         style="fill:#ffffff;fill-opacity:0.9;stroke-width:0.76911551"
+         width="22.051981"
+         height="34.453968"
+         id="rect60-8" />
+      <text
+         x="156.20668"
+         style="font-size:9.22938538px;line-height:0%;font-family:Arial;text-anchor:start;stroke-width:0.76911551"
+         id="text3222"
+         y="-564.7514">
+        <tspan
+           style="stroke-width:0.76911551"
+           x="156.9758"
+           id="tspan3224">von</tspan>
+        <tspan
+           style="fill:#00008b;stroke-width:0.76911551"
+           dy="11.075263"
+           x="156.9758"
+           id="tspan66-7">case</tspan>
+        <tspan
+           style="fill:#004048;stroke-width:0.76911551"
+           dy="11.075263"
+           x="156.9758"
+           id="tspan68-7">ADP</tspan>
+      </text>
+      <circle
+         r="2.6919043"
+         cx="181.97205"
+         cy="-624.20166"
+         style="fill:#ff6666;stroke:#555555;stroke-width:0.76911551"
+         id="circle71-7" />
+      <rect
+         x="178.51103"
+         y="-620.7406"
+         style="fill:#ffffff;fill-opacity:0.9;stroke-width:0.76911551"
+         width="28.962004"
+         height="34.453968"
+         id="rect73-9" />
+      <text
+         y="-610.74213"
+         x="178.51103"
+         style="font-size:9.22938538px;line-height:0%;font-family:Arial;text-anchor:start;stroke-width:0.76911551"
+         id="text3205">
+        <tspan
+           style="stroke-width:0.76911551"
+           x="179.28015"
+           id="tspan3207">Zug</tspan>
+        <tspan
+           style="fill:#00008b;stroke-width:0.76911551"
+           dy="11.075263"
+           x="179.28015"
+           id="tspan79-3">obl</tspan>
+        <tspan
+           style="fill:#004048;stroke-width:0.76911551"
+           dy="11.075263"
+           x="179.28015"
+           id="tspan81-5">NOUN</tspan>
+      </text>
     </g>
     <g
        style="fill-rule:evenodd;stroke-width:28.22200012;stroke-linejoin:round"
@@ -11098,7 +11087,7 @@
        xml:space="preserve"
        id="flowRoot13629"
        style="font-style:normal;font-weight:normal;font-size:66.66666412px;line-height:33.33333206px;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-1.8066433,-867.47676)"><flowRegion
+       transform="matrix(0.26458333,0,0,0.26458333,-2.8649766,-868.00593)"><flowRegion
          id="flowRegion13631"
          style="line-height:33.33333206px"><rect
            id="rect13633"
@@ -11111,21 +11100,21 @@
          id="flowPara13643">word-alignment (FastAlign) on OpenSubtitles2018 (Opus)</flowPara><flowPara
          style="font-size:37.33333206px;line-height:33.33333206px"
          id="flowPara13641">each word is translated by the target that was most frequently aligned to it</flowPara></flowRoot>    <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,228.9132,-865.91851)"
+       transform="matrix(0.26458333,0,0,0.26458333,213.50773,-866.10009)"
        xml:space="preserve"
        id="flowRoot13629-2"
        style="font-style:normal;font-weight:normal;font-size:66.66666412px;line-height:33.33333206px;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion13631-5"
          style="line-height:33.33333206px"><rect
            id="rect13633-4"
-           width="700"
-           height="319.99997"
+           width="773.53912"
+           height="288.88727"
            x="80"
            y="433.85828"
            style="line-height:33.33333206px" /></flowRegion><flowPara
          style="font-size:37.33333206px;line-height:33.33333206px"
          id="flowPara13641-9">When the UDPipe parser is trained, we use pretrained word-embeddings by Bojanovski et al. (2016) on Wikiperdia texts</flowPara></flowRoot>    <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,446.50207,-864.76754)"
+       transform="matrix(0.26458333,0,0,0.26458333,436.97707,-865.82587)"
        xml:space="preserve"
        id="flowRoot13629-2-9"
        style="font-style:normal;font-weight:normal;font-size:66.66666412px;line-height:33.33333206px;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -11143,7 +11132,7 @@
          id="flowPara13700">run maximum spanning tree</flowPara></flowRoot>    <g
        style="fill-rule:evenodd;stroke-width:28.22200012;stroke-linejoin:round"
        id="g18039"
-       transform="matrix(0.00691114,0,0,0.00691114,462.59699,-726.31829)">
+       transform="matrix(0.00773093,0,0,0.00773093,451.67665,-675.27928)">
       <g
          id="g16917">
         <g
@@ -12969,28 +12958,36 @@
        xml:space="preserve"
        id="flowRoot18361"
        style="font-style:normal;font-weight:normal;font-size:21.33333397px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-447.67496,-742.77501)"><flowRegion
+       transform="matrix(0.26458333,0,0,0.26458333,-461.7653,-776.67016)"><flowRegion
          id="flowRegion18363"
          style="fill:#000000"><rect
            id="rect18365"
-           width="719.82672"
-           height="338.45035"
+           width="715.32153"
+           height="623.3595"
            x="2625.7144"
            y="436.71542"
            style="fill:#000000" /></flowRegion><flowPara
-         id="flowPara18367">Universal morpology annotation (Sylak-Glassman, 2016)</flowPara><flowPara
-         id="flowPara18369">different features form UD</flowPara><flowPara
-         id="flowPara18375">mapping table e.g.</flowPara><flowPara
-         id="flowPara18373">1 -&gt; Preson=1</flowPara><flowPara
-         id="flowPara18377">SG -&gt; Number=Sg</flowPara><flowPara
-         id="flowPara18379">COND -&gt; Mood=Cnd</flowPara><flowPara
-         id="flowPara18381">ACC -&gt; Cas=Acc</flowPara><flowPara
-         id="flowPara18385">PRF -&gt; Aspect=Perf</flowPara><flowPara
+         id="flowPara18367"
+         style="font-size:37.33333206px;line-height:123.00000191%">Universal morpology annotation (Sylak-Glassman, 2016)</flowPara><flowPara
+         id="flowPara18369"
+         style="font-size:37.33333206px;line-height:123.00000191%">different features form UD</flowPara><flowPara
+         id="flowPara18375"
+         style="font-size:37.33333206px;line-height:123.00000191%">mapping table e.g.</flowPara><flowPara
+         id="flowPara18373"
+         style="font-size:37.33333206px;line-height:123.00000191%">1 -&gt; Preson=1</flowPara><flowPara
+         id="flowPara18377"
+         style="font-size:37.33333206px;line-height:123.00000191%">SG -&gt; Number=Sg</flowPara><flowPara
+         id="flowPara18379"
+         style="font-size:37.33333206px;line-height:123.00000191%">COND -&gt; Mood=Cnd</flowPara><flowPara
+         id="flowPara18381"
+         style="font-size:37.33333206px;line-height:123.00000191%">ACC -&gt; Cas=Acc</flowPara><flowPara
+         id="flowPara18385"
+         style="font-size:37.33333206px;line-height:123.00000191%">PRF -&gt; Aspect=Perf</flowPara><flowPara
          id="flowPara18371"
-         style="fill:#000000">ADJ -&gt; POS = ADJ</flowPara><flowPara
-         style="fill:#000000"
+         style="font-size:37.33333206px;line-height:123.00000191%;fill:#000000">ADJ -&gt; POS = ADJ</flowPara><flowPara
+         style="font-size:37.33333206px;line-height:123.00000191%;fill:#000000"
          id="flowPara18395">post-correction</flowPara><flowPara
-         style="fill:#000000"
+         style="font-size:37.33333206px;fill:#000000"
          id="flowPara18397">if the word is found in unimorph, chnage its tag, lemma and features</flowPara><flowPara
          style="fill:#000000"
          id="flowPara18391" /><flowPara
@@ -13000,31 +12997,41 @@
        xml:space="preserve"
        id="flowRoot18503"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:100%;font-family:'Bitstream Vera Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-242.3917,-604.86121)"><flowRegion
+       transform="matrix(0.26458333,0,0,0.26458333,-271.84345,-674.68005)"><flowRegion
          id="flowRegion18505"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:100%;font-family:'Bitstream Vera Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"><rect
            id="rect18507"
-           width="484.89435"
-           height="504.98557"
+           width="680.89441"
+           height="518.9856"
            x="1101.0663"
            y="1396.7306"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:100%;font-family:'Bitstream Vera Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /></flowRegion><flowPara
          id="flowPara18509"
-         style="font-size:32px;line-height:100%">A bai shu giv mai broda</flowPara><flowPara
+         style="font-size:32px;line-height:100%" /><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;line-height:100%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
+         id="flowPara6858">Wiki:</flowPara><flowPara
+         style="font-size:32px;line-height:100%"
+         id="flowPara6860">A bai shu giv mai broda</flowPara><flowPara
          id="flowPara18513"
-         style="font-size:32px;line-height:100%">I bought shoes that I gave to my brother</flowPara><flowPara
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:100%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Italic'">[I bought shoes that I gave to my brother]</flowPara><flowPara
          id="flowPara18517"
          style="font-size:32px;line-height:100%" /><flowPara
          id="flowPara18519"
-         style="font-size:32px;line-height:100%">Jisos Kraist wey dem born for David and Abraham famili, na em stori bi dis.</flowPara><flowPara
+         style="font-size:32px;line-height:100%" /><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;line-height:100%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
+         id="flowPara6864">Bible:</flowPara><flowPara
+         style="font-size:32px;line-height:100%"
+         id="flowPara6862">Jisos Kraist wey dem born for David and Abraham famili, na em stori bi dis.</flowPara><flowPara
          style="font-size:32px;line-height:100%"
          id="flowPara18523" /><flowPara
          style="font-size:32px;line-height:100%"
-         id="flowPara18525">Jisos Kraist which they born for David and Abraham family, is em story by this.</flowPara><flowPara
+         id="flowPara18525" /><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;line-height:100%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
+         id="flowPara18529"></flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;line-height:100%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
+         id="flowPara6870">jw.org:</flowPara><flowPara
          style="font-size:32px;line-height:100%"
-         id="flowPara18527" /><flowPara
-         style="font-size:32px;line-height:100%"
-         id="flowPara18529">We come from different different place and we dey speek different different  language.</flowPara><flowPara
+         id="flowPara6866">We come from different different place and we dey speek different different  language.</flowPara><flowPara
          style="font-size:32px;line-height:100%"
          id="flowPara18521" /></flowRoot>    <flowRoot
        xml:space="preserve"
@@ -13145,60 +13152,60 @@
          id="flowPara2620" /></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444447px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="186.27202"
-       y="-71.431488"
+       x="161.57632"
+       y="-96.12719"
        id="text2624-3"><tspan
          sodipodi:role="line"
          id="tspan2622-6"
-         x="186.27202"
-         y="-71.431488"
+         x="161.57632"
+         y="-96.12719"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
    id="tspan12219">1.</tspan> translate French treebank into Breton</tspan><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-64.375931"
+         x="161.57632"
+         y="-89.071632"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2626-7" /><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-57.279034"
+         x="161.57632"
+         y="-81.974739"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2628-5"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
    id="tspan12221">2.</tspan> train pseudo-Breton tagger and parser </tspan><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-50.223476"
+         x="161.57632"
+         y="-74.919182"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2630-3" /><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-43.126579"
+         x="161.57632"
+         y="-67.822281"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2632-5"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
    id="tspan12227">3. </tspan>apply French tokenizer</tspan><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-36.071022"
+         x="161.57632"
+         y="-60.766727"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2634-6" /><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-28.974129"
+         x="161.57632"
+         y="-53.669834"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2640-1"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
    id="tspan12223">4. </tspan>apply pseudo-Breton tagger and parser</tspan><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-21.918573"
+         x="161.57632"
+         y="-46.614277"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2690" /><tspan
          sodipodi:role="line"
-         x="186.27202"
-         y="-14.821676"
+         x="161.57632"
+         y="-39.51738"
          style="font-size:9.87777805px;line-height:50%;stroke-width:0.26458332px"
          id="tspan2688"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold'"
@@ -13222,7 +13229,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#3b9729;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 423.46172,-83.924786 -417.6253092,0"
+       d="M 424.95842,-114.60733 H 7.3331202"
        id="path4917"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -13258,7 +13265,7 @@
     </g>
     <g
        id="g5670"
-       transform="matrix(0.91243377,0,0,0.91243377,0.58670299,23.195909)">
+       transform="matrix(0.91243377,0,0,0.91243377,2.0834123,-4.493214)">
       <g
          transform="matrix(0.03618233,0,0,0.03618233,17.198002,-106.50993)"
          id="g5601">
@@ -13415,17 +13422,17 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="71.138878"
-       y="-56.553318"
+       x="72.63559"
+       y="-84.242439"
        id="text4650-0"><tspan
          sodipodi:role="line"
          id="tspan4648-6"
-         x="71.138878"
-         y="-56.553318"
+         x="72.63559"
+         y="-84.242439"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Breton</tspan></text>
     <g
        id="g13939"
-       transform="translate(82.319014,20.205576)">
+       transform="translate(75.583822,-6.7351923)">
       <g
          transform="matrix(0.33072916,0,0,0.33072916,181.71685,-199.562)"
          id="gnuplot_canvas-626">
@@ -13609,7 +13616,7 @@
                id="g6131">
               <polygon
                  style="fill:#bebebe"
-                 points="37.2,184 76.2,184 76.2,132.3 37.2,132.3 "
+                 points="76.2,132.3 37.2,132.3 37.2,184 76.2,184 "
                  id="polygon6129" />
             </g>
             <path
@@ -13622,7 +13629,7 @@
                id="g6137">
               <polygon
                  style="fill:#bebebe"
-                 points="80.4,184 119.4,184 119.4,137.3 80.4,137.3 "
+                 points="119.4,137.3 80.4,137.3 80.4,184 119.4,184 "
                  id="polygon6135" />
             </g>
             <path
@@ -13635,7 +13642,7 @@
                id="g6143">
               <polygon
                  style="fill:#bebebe"
-                 points="123.6,184 162.6,184 162.6,139.1 123.6,139.1 "
+                 points="162.6,139.1 123.6,139.1 123.6,184 162.6,184 "
                  id="polygon6141" />
             </g>
             <path
@@ -13648,7 +13655,7 @@
                id="g6149">
               <polygon
                  style="fill:#0000ff"
-                 points="166.8,184 205.8,184 205.8,139.2 166.8,139.2 "
+                 points="205.8,139.2 166.8,139.2 166.8,184 205.8,184 "
                  id="polygon6147" />
             </g>
             <path
@@ -13885,7 +13892,7 @@
                id="g6337">
               <polygon
                  style="fill:#0000ff"
-                 points="37.2,184 76.2,184 76.2,105.8 37.2,105.8 "
+                 points="76.2,105.8 37.2,105.8 37.2,184 76.2,184 "
                  id="polygon6335" />
             </g>
             <path
@@ -13898,7 +13905,7 @@
                id="g6343">
               <polygon
                  style="fill:#bebebe"
-                 points="80.4,184 119.4,184 119.4,120.3 80.4,120.3 "
+                 points="119.4,120.3 80.4,120.3 80.4,184 119.4,184 "
                  id="polygon6341" />
             </g>
             <path
@@ -13911,7 +13918,7 @@
                id="g6349">
               <polygon
                  style="fill:#bebebe"
-                 points="123.6,184 162.6,184 162.6,123.5 123.6,123.5 "
+                 points="162.6,123.5 123.6,123.5 123.6,184 162.6,184 "
                  id="polygon6347" />
             </g>
             <path
@@ -13924,7 +13931,7 @@
                id="g6355">
               <polygon
                  style="fill:#bebebe"
-                 points="166.8,184 205.8,184 205.8,130.8 166.8,130.8 "
+                 points="205.8,130.8 166.8,130.8 166.8,184 205.8,184 "
                  id="polygon6353" />
             </g>
             <path
@@ -14161,7 +14168,7 @@
                id="g6543">
               <polygon
                  style="fill:#0000ff"
-                 points="37.2,57 37.2,184 76.2,184 76.2,57 "
+                 points="76.2,184 76.2,57 37.2,57 37.2,184 "
                  id="polygon6541" />
             </g>
             <path
@@ -14174,7 +14181,7 @@
                id="g6549">
               <polygon
                  style="fill:#bebebe"
-                 points="80.4,72.1 80.4,184 119.4,184 119.4,72.1 "
+                 points="119.4,184 119.4,72.1 80.4,72.1 80.4,184 "
                  id="polygon6547" />
             </g>
             <path
@@ -14187,7 +14194,7 @@
                id="g6555">
               <polygon
                  style="fill:#bebebe"
-                 points="123.6,73.1 123.6,184 162.6,184 162.6,73.1 "
+                 points="162.6,184 162.6,73.1 123.6,73.1 123.6,184 "
                  id="polygon6553" />
             </g>
             <path
@@ -14200,7 +14207,7 @@
                id="g6561">
               <polygon
                  style="fill:#bebebe"
-                 points="166.8,87.5 166.8,184 205.8,184 205.8,87.5 "
+                 points="205.8,184 205.8,87.5 166.8,87.5 166.8,184 "
                  id="polygon6559" />
             </g>
             <path
@@ -14256,1653 +14263,1661 @@
       </g>
     </g>
     <g
-       id="gnuplot_canvas-90"
-       transform="matrix(0.32146874,0,0,0.32146875,688.09751,-41.248403)">
-      <rect
-         id="rect7096"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs7112">
-        <circle
-           r="0.5"
-           id="circle7224"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path7226"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path7228"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path7230"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
+       id="g7238"
+       transform="matrix(1.0400326,0,0,1.0400326,-28.555406,1.4273905)">
+      <g
+         transform="matrix(0.32146874,0,0,0.32146875,688.09751,-41.248403)"
+         id="gnuplot_canvas-90">
         <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7232"
-           style="stroke:currentColor;stroke-width:0.133" />
+           style="fill:none"
+           x="0"
+           y="0"
+           width="250"
+           height="250"
+           id="rect7096" />
+        <defs
+           id="defs7112">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle7224"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7226"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7228"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7230"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect7232"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect7234"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle7236"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-656"
+             id="use7238" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7240"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-9"
+             id="use7242" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-9"
+             id="use7244"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-12"
+             id="use7246" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-76"
+             id="use7248"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-908"
+             id="use7250" />
+        </defs>
+        <g
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7114" />
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7144">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path7116" />
+          <g
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7120">
+            <text
+               id="text7118">1</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 99.8,184 h 0.01"
+             id="path7122" />
+          <g
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7126">
+            <text
+               id="text7124">2</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 143.1,184 h 0.01"
+             id="path7128" />
+          <g
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7132">
+            <text
+               id="text7130">3</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 186.3,184 h 0.01"
+             id="path7134" />
+          <g
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7138">
+            <text
+               id="text7136">4</text>
+          </g>
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7142">
+            <text
+               id="text7140">MLAS</text>
+          </g>
+        </g>
+        <g
+           id="gnuplot_plot_1-5">
+          <title
+             id="title7146">gnuplot_plot_1</title>
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7172">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7150">
+              <polygon
+                 style="fill:#0000ff"
+                 points="37.2,122.6 37.2,184 76.2,184 76.2,122.6 "
+                 id="polygon7148" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 122.7 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path7152" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7156">
+              <polygon
+                 style="fill:#bebebe"
+                 points="80.4,162.3 80.4,184 119.4,184 119.4,162.3 "
+                 id="polygon7154" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 80.4,184 v -21.6 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7158" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7162">
+              <polygon
+                 style="fill:#bebebe"
+                 points="123.6,167.7 123.6,184 162.6,184 162.6,167.7 "
+                 id="polygon7160" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -16.2 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7164" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7168">
+              <polygon
+                 style="fill:#bebebe"
+                 points="166.8,182 166.8,184 205.8,184 205.8,182 "
+                 id="polygon7166" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -1.9 h 38.9 v 1.9 z m 0,0 h 0.01"
+               id="path7170" />
+          </g>
+        </g>
+        <g
+           id="gnuplot_plot_2-09">
+          <title
+             id="title7175">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7177" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7195">
+            <g
+               transform="translate(56.6,105.9)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7181">
+              <text
+                 id="text7179">6.29</text>
+            </g>
+            <g
+               transform="translate(99.8,145.5)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7185">
+              <text
+                 id="text7183" />
+            </g>
+            <g
+               transform="translate(143.1,151)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7189">
+              <text
+                 id="text7187" />
+            </g>
+            <g
+               transform="translate(186.3,165.2)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7193">
+              <text
+                 id="text7191" />
+            </g>
+          </g>
+        </g>
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7198" />
+      </g>
+      <g
+         transform="matrix(0.32146874,0,0,0.32146875,619.83501,-41.248403)"
+         id="gnuplot_canvas-63">
         <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7234"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle7236"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7238"
-           xlink:href="#gpPt5-656"
-           style="fill:currentColor;stroke:none"
+           style="fill:none"
            x="0"
            y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path7240"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7242"
-           xlink:href="#gpPt7-9"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use7244"
-           xlink:href="#gpPt7-9"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7246"
-           xlink:href="#gpPt9-12"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use7248"
-           xlink:href="#gpPt3-76"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7250"
-           xlink:href="#gpPt11-908"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g7114"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g7144"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path7116"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           width="250"
+           height="250"
+           id="rect7302" />
+        <defs
+           id="defs7318">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle7430"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7432"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7434"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7436"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect7438"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect7440"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle7442"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-30"
+             id="use7444" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7446"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-44"
+             id="use7448" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-44"
+             id="use7450"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-31"
+             id="use7452" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-81"
+             id="use7454"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-96"
+             id="use7456" />
+        </defs>
         <g
-           id="g7120"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text7118">1</text>
-        </g>
-        <path
-           id="path7122"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7320" />
         <g
-           id="g7126"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text7124">2</text>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7350">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path7322" />
+          <g
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7326">
+            <text
+               id="text7324">1</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 99.8,184 h 0.01"
+             id="path7328" />
+          <g
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7332">
+            <text
+               id="text7330">2</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 143.1,184 h 0.01"
+             id="path7334" />
+          <g
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7338">
+            <text
+               id="text7336">3</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 186.3,184 h 0.01"
+             id="path7340" />
+          <g
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7344">
+            <text
+               id="text7342">4</text>
+          </g>
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7348">
+            <text
+               id="text7346">LAS</text>
+          </g>
         </g>
-        <path
-           id="path7128"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7132"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text7130">3</text>
+           id="gnuplot_plot_1-7">
+          <title
+             id="title7352">gnuplot_plot_1</title>
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7378">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7356">
+              <polygon
+                 style="fill:#0000ff"
+                 points="76.2,148.3 37.2,148.3 37.2,184 76.2,184 "
+                 id="polygon7354" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 148.4 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path7358" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7362">
+              <polygon
+                 style="fill:#bebebe"
+                 points="119.4,166 80.4,166 80.4,184 119.4,184 "
+                 id="polygon7360" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 80.4,184 v -17.9 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7364" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7368">
+              <polygon
+                 style="fill:#bebebe"
+                 points="162.6,171.3 123.6,171.3 123.6,184 162.6,184 "
+                 id="polygon7366" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -12.6 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7370" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7374">
+              <polygon
+                 style="fill:#bebebe"
+                 points="205.8,181.9 166.8,181.9 166.8,184 205.8,184 "
+                 id="polygon7372" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -2 h 38.9 v 2 z m 0,0 h 0.01"
+               id="path7376" />
+          </g>
         </g>
-        <path
-           id="path7134"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7138"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text7136">4</text>
+           id="gnuplot_plot_2-85">
+          <title
+             id="title7381">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7383" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7401">
+            <g
+               transform="translate(56.6,132.5)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7387">
+              <text
+                 id="text7385">13.70</text>
+            </g>
+            <g
+               transform="translate(99.8,150.3)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7391">
+              <text
+                 id="text7389" />
+            </g>
+            <g
+               transform="translate(143.1,155.5)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7395">
+              <text
+                 id="text7393" />
+            </g>
+            <g
+               transform="translate(186.3,166.1)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7399">
+              <text
+                 id="text7397" />
+            </g>
+          </g>
         </g>
         <g
-           id="g7142"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text7140">MLAS</text>
-        </g>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7404" />
       </g>
       <g
-         id="gnuplot_plot_1-5">
-        <title
-           id="title7146">gnuplot_plot_1</title>
+         transform="matrix(0.32146874,0,0,0.32146875,756.36001,-41.248403)"
+         id="gnuplot_canvas-74">
+        <rect
+           style="fill:none"
+           x="0"
+           y="0"
+           width="250"
+           height="250"
+           id="rect7508" />
+        <defs
+           id="defs7524">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle7636"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7639"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7641"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7643"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect7645"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect7647"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle7649"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-64"
+             id="use7651" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path7653"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-38"
+             id="use7655" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-38"
+             id="use7657"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-04"
+             id="use7659" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-1"
+             id="use7661"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-89"
+             id="use7663" />
+        </defs>
         <g
-           id="g7172"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7526" />
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7556">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path7528" />
           <g
-             id="g7150"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7148"
-               points="37.2,122.6 37.2,184 76.2,184 76.2,122.6 "
-               style="fill:#0000ff" />
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7532">
+            <text
+               id="text7530">1</text>
           </g>
           <path
-             id="path7152"
-             d="M 37.2,184 V 122.7 H 76.1 V 184 Z m 0,0 h 0.01"
+             style="stroke:#000000"
              inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
+             d="m 99.8,184 h 0.01"
+             id="path7534" />
           <g
-             id="g7156"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7154"
-               points="80.4,162.3 80.4,184 119.4,184 119.4,162.3 "
-               style="fill:#bebebe" />
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7538">
+            <text
+               id="text7536">2</text>
           </g>
           <path
-             id="path7158"
-             d="m 80.4,184 v -21.6 h 38.9 V 184 Z m 0,0 h 0.01"
+             style="stroke:#000000"
              inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
+             d="m 143.1,184 h 0.01"
+             id="path7540" />
           <g
-             id="g7162"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7160"
-               points="123.6,167.7 123.6,184 162.6,184 162.6,167.7 "
-               style="fill:#bebebe" />
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7544">
+            <text
+               id="text7542">3</text>
           </g>
           <path
-             id="path7164"
-             d="m 123.6,184 v -16.2 h 38.9 V 184 Z m 0,0 h 0.01"
+             style="stroke:#000000"
              inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
+             d="m 186.3,184 h 0.01"
+             id="path7546" />
           <g
-             id="g7168"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7166"
-               points="166.8,182 166.8,184 205.8,184 205.8,182 "
-               style="fill:#bebebe" />
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7550">
+            <text
+               id="text7548">4</text>
           </g>
-          <path
-             id="path7170"
-             d="m 166.8,184 v -1.9 h 38.9 v 1.9 z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g7554">
+            <text
+               id="text7552">BLEX</text>
+          </g>
         </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-09">
-        <title
-           id="title7175">gnuplot_plot_2</title>
         <g
-           id="g7177"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g7195"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
+           id="gnuplot_plot_1-64">
+          <title
+             id="title7558">gnuplot_plot_1</title>
           <g
-             id="g7181"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(56.6,105.9)">
-            <text
-               id="text7179">6.29</text>
-          </g>
-          <g
-             id="g7185"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,145.5)">
-            <text
-               id="text7183" />
-          </g>
-          <g
-             id="g7189"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,151)">
-            <text
-               id="text7187" />
-          </g>
-          <g
-             id="g7193"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,165.2)">
-            <text
-               id="text7191" />
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7584">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7562">
+              <polygon
+                 style="fill:#0000ff"
+                 points="37.2,131.4 37.2,184 76.2,184 76.2,131.4 "
+                 id="polygon7560" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 131.5 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path7564-3" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7568">
+              <polygon
+                 style="fill:#bebebe"
+                 points="80.4,166.8 80.4,184 119.4,184 119.4,166.8 "
+                 id="polygon7566" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 80.4,184 v -17.1 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7570-0" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7574">
+              <polygon
+                 style="fill:#bebebe"
+                 points="123.6,168.6 123.6,184 162.6,184 162.6,168.6 "
+                 id="polygon7572" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -15.3 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path7576" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g7580">
+              <polygon
+                 style="fill:#bebebe"
+                 points="166.8,181.1 166.8,184 205.8,184 205.8,181.1 "
+                 id="polygon7578" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -2.8 h 38.9 v 2.8 z m 0,0 h 0.01"
+               id="path7582" />
           </g>
         </g>
+        <g
+           id="gnuplot_plot_2-30">
+          <title
+             id="title7587">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7589" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g7607">
+            <g
+               transform="translate(56.6,114.7)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7593">
+              <text
+                 id="text7591">10.77</text>
+            </g>
+            <g
+               transform="translate(99.8,150)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7597">
+              <text
+                 id="text7595" />
+            </g>
+            <g
+               transform="translate(143.1,151.8)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7601">
+              <text
+                 id="text7599" />
+            </g>
+            <g
+               transform="translate(186.3,164.4)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g7605">
+              <text
+                 id="text7603" />
+            </g>
+          </g>
+        </g>
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g7610" />
       </g>
-      <g
-         id="g7198"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
     </g>
     <g
-       id="gnuplot_canvas-63"
-       transform="matrix(0.32146874,0,0,0.32146875,619.83501,-41.248403)">
-      <rect
-         id="rect7302"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs7318">
-        <circle
-           r="0.5"
-           id="circle7430"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path7432"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path7434"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path7436"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
+       id="g7053"
+       transform="matrix(1.0895499,0,0,1.0895499,168.42508,-7.8379356)">
+      <g
+         transform="matrix(0.3175,0,0,0.3175,77.17968,-31.091278)"
+         id="gnuplot_canvas-92">
         <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7438"
-           style="stroke:currentColor;stroke-width:0.133" />
+           style="fill:none"
+           x="0"
+           y="0"
+           width="250"
+           height="250"
+           id="rect8459" />
+        <defs
+           id="defs8475">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle8583"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8585"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8587"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8589"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect8591"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect8593"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle8595"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-47"
+             id="use8597" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8599"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-5"
+             id="use8601" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-5"
+             id="use8603"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-28"
+             id="use8605" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-9"
+             id="use8607"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-80"
+             id="use8609" />
+        </defs>
+        <g
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8477" />
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8507">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path8479" />
+          <g
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8483">
+            <text
+               id="text8481">1</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 99.8,184 h 0.01"
+             id="path8485" />
+          <g
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8489">
+            <text
+               id="text8487">2</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 143.1,184 h 0.01"
+             id="path8491" />
+          <g
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8495">
+            <text
+               id="text8493">3</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 186.3,184 h 0.01"
+             id="path8497" />
+          <g
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8501">
+            <text
+               id="text8499">4</text>
+          </g>
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8505">
+            <text
+               id="text8503">MLAS</text>
+          </g>
+        </g>
+        <g
+           id="gnuplot_plot_1-51">
+          <title
+             id="title8509">gnuplot_plot_1</title>
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8535">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8513">
+              <polygon
+                 style="fill:#bebebe"
+                 points="76.2,48.4 37.2,48.4 37.2,184 76.2,184 "
+                 id="polygon8511" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 48.5 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path8515" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8519">
+              <polygon
+                 style="fill:#bebebe"
+                 points="119.4,72.1 80.4,72.1 80.4,184 119.4,184 "
+                 id="polygon8517" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="M 80.4,184 V 72.2 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8521" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8525">
+              <polygon
+                 style="fill:#bebebe"
+                 points="162.6,143.5 123.6,143.5 123.6,184 162.6,184 "
+                 id="polygon8523" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -40.4 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8527" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8531">
+              <polygon
+                 style="fill:#0000ff"
+                 points="205.8,154.7 166.8,154.7 166.8,184 205.8,184 "
+                 id="polygon8529" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -29.2 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8533" />
+          </g>
+        </g>
+        <g
+           id="gnuplot_plot_2-1">
+          <title
+             id="title8538">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8540" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8554">
+            <g
+               transform="translate(99.8,55.4)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8544">
+              <text
+                 id="text8542" />
+            </g>
+            <g
+               transform="translate(143.1,126.7)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8548">
+              <text
+                 id="text8546" />
+            </g>
+            <g
+               transform="translate(186.3,137.9)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8552">
+              <text
+                 id="text8550">3.00</text>
+            </g>
+          </g>
+        </g>
+        <g
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8557" />
+      </g>
+      <g
+         transform="matrix(0.3175,0,0,0.3175,5.6624026,-31.091278)"
+         id="gnuplot_canvas-08">
         <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7440"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle7442"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7444"
-           xlink:href="#gpPt5-30"
-           style="fill:currentColor;stroke:none"
+           style="fill:none"
            x="0"
            y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path7446"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7448"
-           xlink:href="#gpPt7-44"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use7450"
-           xlink:href="#gpPt7-44"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7452"
-           xlink:href="#gpPt9-31"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use7454"
-           xlink:href="#gpPt3-81"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7456"
-           xlink:href="#gpPt11-96"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g7320"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g7350"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path7322"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           width="250"
+           height="250"
+           id="rect8659" />
+        <defs
+           id="defs8675">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle8787"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8789"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8791"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8793"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect8795"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect8797"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle8799"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-72"
+             id="use8801" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8803"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-62"
+             id="use8805" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-62"
+             id="use8807"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-08"
+             id="use8809" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-2"
+             id="use8811"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-11"
+             id="use8813" />
+        </defs>
         <g
-           id="g7326"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text7324">1</text>
-        </g>
-        <path
-           id="path7328"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8677" />
         <g
-           id="g7332"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text7330">2</text>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8707">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path8679" />
+          <g
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8683">
+            <text
+               id="text8681">1</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 99.8,184 h 0.01"
+             id="path8685" />
+          <g
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8689">
+            <text
+               id="text8687">2</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 143.1,184 h 0.01"
+             id="path8691" />
+          <g
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8695">
+            <text
+               id="text8693">3</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 186.3,184 h 0.01"
+             id="path8697" />
+          <g
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8701">
+            <text
+               id="text8699">4</text>
+          </g>
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8705">
+            <text
+               id="text8703">LAS</text>
+          </g>
         </g>
-        <path
-           id="path7334"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7338"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text7336">3</text>
+           id="gnuplot_plot_1-40">
+          <title
+             id="title8709">gnuplot_plot_1</title>
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8735">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8713">
+              <polygon
+                 style="fill:#bebebe"
+                 points="37.2,184 76.2,184 76.2,83.5 37.2,83.5 "
+                 id="polygon8711" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 83.6 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path8715" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8719">
+              <polygon
+                 style="fill:#bebebe"
+                 points="80.4,184 119.4,184 119.4,96.5 80.4,96.5 "
+                 id="polygon8717" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="M 80.4,184 V 96.6 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8721" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8725">
+              <polygon
+                 style="fill:#bebebe"
+                 points="123.6,184 162.6,184 162.6,101.2 123.6,101.2 "
+                 id="polygon8723" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -82.7 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8727" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8731">
+              <polygon
+                 style="fill:#0000ff"
+                 points="166.8,184 205.8,184 205.8,114.1 166.8,114.1 "
+                 id="polygon8729" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -69.8 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8733" />
+          </g>
         </g>
-        <path
-           id="path7340"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7344"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text7342">4</text>
+           id="gnuplot_plot_2-39">
+          <title
+             id="title8738">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8740" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8758">
+            <g
+               transform="translate(56.6,67.7)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8744">
+              <text
+                 id="text8742" />
+            </g>
+            <g
+               transform="translate(99.8,80.8)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8748">
+              <text
+                 id="text8746" />
+            </g>
+            <g
+               transform="translate(143.1,85.4)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8752">
+              <text
+                 id="text8750" />
+            </g>
+            <g
+               transform="translate(186.3,98.3)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8756">
+              <text
+                 id="text8754">26.88</text>
+            </g>
+          </g>
         </g>
         <g
-           id="g7348"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text7346">LAS</text>
-        </g>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8761" />
       </g>
       <g
-         id="gnuplot_plot_1-7">
-        <title
-           id="title7352">gnuplot_plot_1</title>
-        <g
-           id="g7378"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g7356"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7354"
-               points="76.2,148.3 37.2,148.3 37.2,184 76.2,184 "
-               style="fill:#0000ff" />
-          </g>
-          <path
-             id="path7358"
-             d="M 37.2,184 V 148.4 H 76.1 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
-          <g
-             id="g7362"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7360"
-               points="119.4,166 80.4,166 80.4,184 119.4,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7364"
-             d="m 80.4,184 v -17.9 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g7368"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7366"
-               points="162.6,171.3 123.6,171.3 123.6,184 162.6,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7370"
-             d="m 123.6,184 v -12.6 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g7374"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7372"
-               points="205.8,181.9 166.8,181.9 166.8,184 205.8,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7376"
-             d="m 166.8,184 v -2 h 38.9 v 2 z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-85">
-        <title
-           id="title7381">gnuplot_plot_2</title>
-        <g
-           id="g7383"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g7401"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g7387"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(56.6,132.5)">
-            <text
-               id="text7385">13.70</text>
-          </g>
-          <g
-             id="g7391"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,150.3)">
-            <text
-               id="text7389" />
-          </g>
-          <g
-             id="g7395"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,155.5)">
-            <text
-               id="text7393" />
-          </g>
-          <g
-             id="g7399"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,166.1)">
-            <text
-               id="text7397" />
-          </g>
-        </g>
-      </g>
-      <g
-         id="g7404"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-    </g>
-    <g
-       id="gnuplot_canvas-74"
-       transform="matrix(0.32146874,0,0,0.32146875,756.36001,-41.248403)">
-      <rect
-         id="rect7508"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs7524">
-        <circle
-           r="0.5"
-           id="circle7636"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path7639"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path7641"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path7643"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
+         transform="matrix(0.3175,0,0,0.3175,148.69696,-31.091278)"
+         id="gnuplot_canvas-19">
         <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7645"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect7647"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle7649"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7651"
-           xlink:href="#gpPt5-64"
-           style="fill:currentColor;stroke:none"
+           style="fill:none"
            x="0"
            y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path7653"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use7655"
-           xlink:href="#gpPt7-38"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use7657"
-           xlink:href="#gpPt7-38"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7659"
-           xlink:href="#gpPt9-04"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use7661"
-           xlink:href="#gpPt3-1"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use7663"
-           xlink:href="#gpPt11-89"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g7526"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g7556"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path7528"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           width="250"
+           height="250"
+           id="rect8865" />
+        <defs
+           id="defs8881">
+          <circle
+             style="stroke-width:0.5"
+             cy="0"
+             cx="0"
+             id="circle8993"
+             r="0.5" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8995"
+             d="M -1,0 H 1 M 0,-1 v 2" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8997"
+             d="M -1,-1 1,1 M 1,-1 -1,1" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path8999"
+             d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2" />
+          <rect
+             style="stroke:currentColor;stroke-width:0.133"
+             id="rect9001"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <rect
+             style="fill:currentColor;stroke:currentColor;stroke-width:0.133"
+             id="rect9003"
+             x="-1"
+             y="-1"
+             width="2"
+             height="2" />
+          <circle
+             style="stroke:currentColor;stroke-width:0.133"
+             id="circle9005"
+             cx="0"
+             cy="0"
+             r="1" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt5-04"
+             id="use9007" />
+          <path
+             style="stroke:currentColor;stroke-width:0.133"
+             inkscape:connector-curvature="0"
+             id="path9009"
+             d="m 0,-1.33 -1.33,2 h 2.66 z" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt7-67"
+             id="use9011" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt7-67"
+             id="use9013"
+             transform="scale(-1)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt9-98"
+             id="use9015" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="stroke:currentColor"
+             xlink:href="#gpPt3-566"
+             id="use9017"
+             transform="rotate(45)" />
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:currentColor;stroke:none"
+             xlink:href="#gpPt11-82"
+             id="use9019" />
+        </defs>
         <g
-           id="g7532"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text7530">1</text>
-        </g>
-        <path
-           id="path7534"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
+           style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8883" />
         <g
-           id="g7538"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text7536">2</text>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8913">
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 56.6,184 h 0.01"
+             id="path8885" />
+          <g
+             transform="translate(56.6,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8889">
+            <text
+               id="text8887">1</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 99.8,184 h 0.01"
+             id="path8891" />
+          <g
+             transform="translate(99.8,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8895">
+            <text
+               id="text8893">2</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 143.1,184 h 0.01"
+             id="path8897" />
+          <g
+             transform="translate(143.1,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8901">
+            <text
+               id="text8899">3</text>
+          </g>
+          <path
+             style="stroke:#000000"
+             inkscape:connector-curvature="0"
+             d="m 186.3,184 h 0.01"
+             id="path8903" />
+          <g
+             transform="translate(186.3,206.5)"
+             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8907">
+            <text
+               id="text8905">4</text>
+          </g>
+          <g
+             transform="translate(121.4,236.5)"
+             style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+             id="g8911">
+            <text
+               id="text8909">BLEX</text>
+          </g>
         </g>
-        <path
-           id="path7540"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7544"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text7542">3</text>
+           id="gnuplot_plot_1-60">
+          <title
+             id="title8915">gnuplot_plot_1</title>
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8941">
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8919">
+              <polygon
+                 style="fill:#bebebe"
+                 points="76.2,83.1 37.2,83.1 37.2,184 76.2,184 "
+                 id="polygon8917" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="M 37.2,184 V 83.2 H 76.1 V 184 Z m 0,0 h 0.01"
+               id="path8921" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8925">
+              <polygon
+                 style="fill:#bebebe"
+                 points="119.4,108.6 80.4,108.6 80.4,184 119.4,184 "
+                 id="polygon8923" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 80.4,184 v -75.3 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8927" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8931">
+              <polygon
+                 style="fill:#bebebe"
+                 points="162.6,119 123.6,119 123.6,184 162.6,184 "
+                 id="polygon8929" />
+            </g>
+            <path
+               style="stroke:#bebebe"
+               inkscape:connector-curvature="0"
+               d="m 123.6,184 v -64.9 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8933" />
+            <g
+               style="stroke:none;shape-rendering:crispEdges"
+               id="g8937">
+              <polygon
+                 style="fill:#0000ff"
+                 points="205.8,128.4 166.8,128.4 166.8,184 205.8,184 "
+                 id="polygon8935" />
+            </g>
+            <path
+               style="stroke:#0000ff"
+               inkscape:connector-curvature="0"
+               d="m 166.8,184 v -55.5 h 38.9 V 184 Z m 0,0 h 0.01"
+               id="path8939" />
+          </g>
         </g>
-        <path
-           id="path7546"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
         <g
-           id="g7550"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text7548">4</text>
+           id="gnuplot_plot_2-27">
+          <title
+             id="title8944">gnuplot_plot_2</title>
+          <g
+             style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8946" />
+          <g
+             style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+             id="g8964">
+            <g
+               transform="translate(56.6,66.3)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8950">
+              <text
+                 id="text8948" />
+            </g>
+            <g
+               transform="translate(99.8,91.8)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8954">
+              <text
+                 id="text8952" />
+            </g>
+            <g
+               transform="translate(143.1,102.2)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8958">
+              <text
+                 id="text8956" />
+            </g>
+            <g
+               transform="translate(186.3,111.6)"
+               style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
+               id="g8962">
+              <text
+                 id="text8960">11.39</text>
+            </g>
+          </g>
         </g>
         <g
-           id="g7554"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text7552">BLEX</text>
-        </g>
+           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
+           id="g8967" />
       </g>
-      <g
-         id="gnuplot_plot_1-64">
-        <title
-           id="title7558">gnuplot_plot_1</title>
-        <g
-           id="g7584"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g7562"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7560"
-               points="37.2,131.4 37.2,184 76.2,184 76.2,131.4 "
-               style="fill:#0000ff" />
-          </g>
-          <path
-             id="path7564-3"
-             d="M 37.2,184 V 131.5 H 76.1 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
-          <g
-             id="g7568"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7566"
-               points="80.4,166.8 80.4,184 119.4,184 119.4,166.8 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7570-0"
-             d="m 80.4,184 v -17.1 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g7574"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7572"
-               points="123.6,168.6 123.6,184 162.6,184 162.6,168.6 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7576"
-             d="m 123.6,184 v -15.3 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g7580"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon7578"
-               points="166.8,181.1 166.8,184 205.8,184 205.8,181.1 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path7582"
-             d="m 166.8,184 v -2.8 h 38.9 v 2.8 z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-30">
-        <title
-           id="title7587">gnuplot_plot_2</title>
-        <g
-           id="g7589"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g7607"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g7593"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(56.6,114.7)">
-            <text
-               id="text7591">10.77</text>
-          </g>
-          <g
-             id="g7597"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,150)">
-            <text
-               id="text7595" />
-          </g>
-          <g
-             id="g7601"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,151.8)">
-            <text
-               id="text7599" />
-          </g>
-          <g
-             id="g7605"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,164.4)">
-            <text
-               id="text7603" />
-          </g>
-        </g>
-      </g>
-      <g
-         id="g7610"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-    </g>
-    <g
-       id="gnuplot_canvas-92"
-       transform="matrix(0.3175,0,0,0.3175,77.17968,-31.091278)">
-      <rect
-         id="rect8459"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs8475">
-        <circle
-           r="0.5"
-           id="circle8583"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path8585"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path8587"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path8589"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect8591"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect8593"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle8595"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use8597"
-           xlink:href="#gpPt5-47"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path8599"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use8601"
-           xlink:href="#gpPt7-5"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use8603"
-           xlink:href="#gpPt7-5"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use8605"
-           xlink:href="#gpPt9-28"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use8607"
-           xlink:href="#gpPt3-9"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use8609"
-           xlink:href="#gpPt11-80"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g8477"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g8507"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path8479"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8483"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text8481">1</text>
-        </g>
-        <path
-           id="path8485"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8489"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text8487">2</text>
-        </g>
-        <path
-           id="path8491"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8495"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text8493">3</text>
-        </g>
-        <path
-           id="path8497"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8501"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text8499">4</text>
-        </g>
-        <g
-           id="g8505"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text8503">MLAS</text>
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_1-51">
-        <title
-           id="title8509">gnuplot_plot_1</title>
-        <g
-           id="g8535"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8513"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8511"
-               points="37.2,48.4 37.2,184 76.2,184 76.2,48.4 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8515"
-             d="M 37.2,184 V 48.5 H 76.1 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8519"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8517"
-               points="80.4,72.1 80.4,184 119.4,184 119.4,72.1 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8521"
-             d="M 80.4,184 V 72.2 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8525"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8523"
-               points="123.6,143.5 123.6,184 162.6,184 162.6,143.5 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8527"
-             d="m 123.6,184 v -40.4 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8531"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8529"
-               points="166.8,154.7 166.8,184 205.8,184 205.8,154.7 "
-               style="fill:#0000ff" />
-          </g>
-          <path
-             id="path8533"
-             d="m 166.8,184 v -29.2 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-1">
-        <title
-           id="title8538">gnuplot_plot_2</title>
-        <g
-           id="g8540"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g8554"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8544"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,55.4)">
-            <text
-               id="text8542" />
-          </g>
-          <g
-             id="g8548"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,126.7)">
-            <text
-               id="text8546" />
-          </g>
-          <g
-             id="g8552"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,137.9)">
-            <text
-               id="text8550">3.00</text>
-          </g>
-        </g>
-      </g>
-      <g
-         id="g8557"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-    </g>
-    <g
-       id="gnuplot_canvas-08"
-       transform="matrix(0.3175,0,0,0.3175,5.6624026,-31.091278)">
-      <rect
-         id="rect8659"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs8675">
-        <circle
-           r="0.5"
-           id="circle8787"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path8789"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path8791"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path8793"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect8795"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect8797"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle8799"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use8801"
-           xlink:href="#gpPt5-72"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path8803"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use8805"
-           xlink:href="#gpPt7-62"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use8807"
-           xlink:href="#gpPt7-62"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use8809"
-           xlink:href="#gpPt9-08"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use8811"
-           xlink:href="#gpPt3-2"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use8813"
-           xlink:href="#gpPt11-11"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g8677"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g8707"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path8679"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8683"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text8681">1</text>
-        </g>
-        <path
-           id="path8685"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8689"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text8687">2</text>
-        </g>
-        <path
-           id="path8691"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8695"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text8693">3</text>
-        </g>
-        <path
-           id="path8697"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8701"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text8699">4</text>
-        </g>
-        <g
-           id="g8705"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text8703">LAS</text>
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_1-40">
-        <title
-           id="title8709">gnuplot_plot_1</title>
-        <g
-           id="g8735"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8713"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8711"
-               points="76.2,184 76.2,83.5 37.2,83.5 37.2,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8715"
-             d="M 37.2,184 V 83.6 H 76.1 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8719"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8717"
-               points="119.4,184 119.4,96.5 80.4,96.5 80.4,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8721"
-             d="M 80.4,184 V 96.6 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8725"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8723"
-               points="162.6,184 162.6,101.2 123.6,101.2 123.6,184 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8727"
-             d="m 123.6,184 v -82.7 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8731"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8729"
-               points="205.8,184 205.8,114.1 166.8,114.1 166.8,184 "
-               style="fill:#0000ff" />
-          </g>
-          <path
-             id="path8733"
-             d="m 166.8,184 v -69.8 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-39">
-        <title
-           id="title8738">gnuplot_plot_2</title>
-        <g
-           id="g8740"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g8758"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8744"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(56.6,67.7)">
-            <text
-               id="text8742" />
-          </g>
-          <g
-             id="g8748"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,80.8)">
-            <text
-               id="text8746" />
-          </g>
-          <g
-             id="g8752"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,85.4)">
-            <text
-               id="text8750" />
-          </g>
-          <g
-             id="g8756"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,98.3)">
-            <text
-               id="text8754">26.88</text>
-          </g>
-        </g>
-      </g>
-      <g
-         id="g8761"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-    </g>
-    <g
-       id="gnuplot_canvas-19"
-       transform="matrix(0.3175,0,0,0.3175,148.69696,-31.091278)">
-      <rect
-         id="rect8865"
-         height="250"
-         width="250"
-         y="0"
-         x="0"
-         style="fill:none" />
-      <defs
-         id="defs8881">
-        <circle
-           r="0.5"
-           id="circle8993"
-           cx="0"
-           cy="0"
-           style="stroke-width:0.5" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2"
-           id="path8995"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,-1 1,1 M 1,-1 -1,1"
-           id="path8997"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <path
-           d="M -1,0 H 1 M 0,-1 v 2 m -1,-2 2,2 m -2,0 2,-2"
-           id="path8999"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect9001"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <rect
-           height="2"
-           width="2"
-           y="-1"
-           x="-1"
-           id="rect9003"
-           style="fill:currentColor;stroke:currentColor;stroke-width:0.133" />
-        <circle
-           r="1"
-           cy="0"
-           cx="0"
-           id="circle9005"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use9007"
-           xlink:href="#gpPt5-04"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <path
-           d="m 0,-1.33 -1.33,2 h 2.66 z"
-           id="path9009"
-           inkscape:connector-curvature="0"
-           style="stroke:currentColor;stroke-width:0.133" />
-        <use
-           id="use9011"
-           xlink:href="#gpPt7-67"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="scale(-1)"
-           id="use9013"
-           xlink:href="#gpPt7-67"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use9015"
-           xlink:href="#gpPt9-98"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           transform="rotate(45)"
-           id="use9017"
-           xlink:href="#gpPt3-566"
-           style="stroke:currentColor"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-        <use
-           id="use9019"
-           xlink:href="#gpPt11-82"
-           style="fill:currentColor;stroke:none"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%" />
-      </defs>
-      <g
-         id="g8883"
-         style="color:#ffffff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-      <g
-         id="g8913"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-        <path
-           id="path8885"
-           d="m 56.6,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8889"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(56.6,206.5)">
-          <text
-             id="text8887">1</text>
-        </g>
-        <path
-           id="path8891"
-           d="m 99.8,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8895"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(99.8,206.5)">
-          <text
-             id="text8893">2</text>
-        </g>
-        <path
-           id="path8897"
-           d="m 143.1,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8901"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(143.1,206.5)">
-          <text
-             id="text8899">3</text>
-        </g>
-        <path
-           id="path8903"
-           d="m 186.3,184 h 0.01"
-           inkscape:connector-curvature="0"
-           style="stroke:#000000" />
-        <g
-           id="g8907"
-           style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(186.3,206.5)">
-          <text
-             id="text8905">4</text>
-        </g>
-        <g
-           id="g8911"
-           style="font-weight:bold;font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-           transform="translate(121.4,236.5)">
-          <text
-             id="text8909">BLEX</text>
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_1-60">
-        <title
-           id="title8915">gnuplot_plot_1</title>
-        <g
-           id="g8941"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8919"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8917"
-               points="37.2,83.1 37.2,184 76.2,184 76.2,83.1 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8921"
-             d="M 37.2,184 V 83.2 H 76.1 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8925"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8923"
-               points="80.4,108.6 80.4,184 119.4,184 119.4,108.6 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8927"
-             d="m 80.4,184 v -75.3 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8931"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8929"
-               points="123.6,119 123.6,184 162.6,184 162.6,119 "
-               style="fill:#bebebe" />
-          </g>
-          <path
-             id="path8933"
-             d="m 123.6,184 v -64.9 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#bebebe" />
-          <g
-             id="g8937"
-             style="stroke:none;shape-rendering:crispEdges">
-            <polygon
-               id="polygon8935"
-               points="166.8,128.4 166.8,184 205.8,184 205.8,128.4 "
-               style="fill:#0000ff" />
-          </g>
-          <path
-             id="path8939"
-             d="m 166.8,184 v -55.5 h 38.9 V 184 Z m 0,0 h 0.01"
-             inkscape:connector-curvature="0"
-             style="stroke:#0000ff" />
-        </g>
-      </g>
-      <g
-         id="gnuplot_plot_2-27">
-        <title
-           id="title8944">gnuplot_plot_2</title>
-        <g
-           id="g8946"
-           style="color:#008000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
-        <g
-           id="g8964"
-           style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter">
-          <g
-             id="g8950"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(56.6,66.3)">
-            <text
-               id="text8948" />
-          </g>
-          <g
-             id="g8954"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(99.8,91.8)">
-            <text
-               id="text8952" />
-          </g>
-          <g
-             id="g8958"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(143.1,102.2)">
-            <text
-               id="text8956" />
-          </g>
-          <g
-             id="g8962"
-             style="font-size:26.66666603px;font-family:Helvetica;text-anchor:middle;fill:#000000;stroke:none"
-             transform="translate(186.3,111.6)">
-            <text
-               id="text8960">11.39</text>
-          </g>
-        </g>
-      </g>
-      <g
-         id="g8967"
-         style="color:#000000;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter" />
     </g>
     <g
        id="g5180"
@@ -16739,26 +16754,36 @@
     <rect
        style="fill:#fed8d1;fill-opacity:1;fill-rule:evenodd;stroke:#902014;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect60-36-90"
-       width="122.42938"
-       height="262.96826"
-       x="711.59943"
-       y="-768.26587"
+       width="146.37672"
+       height="277.18704"
+       x="687.6521"
+       y="-782.48462"
        ry="11.339286"
        rx="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:125%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="717.78986"
-       y="-746.54767"
+       style="font-style:normal;font-weight:normal;font-size:17.63888741px;line-height:87.5%;font-family:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="696.08759"
+       y="-763.01147"
        id="text545-3"><tspan
          sodipodi:role="line"
          id="tspan543-33"
-         x="717.78986"
-         y="-746.54767"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Results on 9 low-resource languages</tspan></text>
+         x="696.08759"
+         y="-763.01147"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;line-height:87.5%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px">Overall results</tspan><tspan
+         sodipodi:role="line"
+         x="696.08759"
+         y="-747.57745"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;line-height:87.5%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px"
+         id="tspan7240">on low-resource</tspan><tspan
+         sodipodi:role="line"
+         x="696.08759"
+         y="-732.14343"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.11111069px;line-height:87.5%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';stroke-width:0.26458332px"
+         id="tspan7243">languages</tspan></text>
     <g
        id="gnuplot_canvas-73"
-       transform="matrix(0.43656249,0,0,0.43656249,712.29263,-692.64907)">
+       transform="matrix(0.43656249,0,0,0.43656249,707.10929,-681.54546)">
       <rect
          id="rect10524"
          height="250"
@@ -17034,7 +17059,7 @@
     </g>
     <g
        id="gnuplot_canvas-54"
-       transform="matrix(0.43656249,0,0,0.4365625,711.59942,-765.11637)">
+       transform="matrix(0.43656249,0,0,0.4365625,707.10929,-749.40092)">
       <rect
          id="rect10730"
          height="250"
@@ -17215,7 +17240,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10782"
-               points="37.2,184 76.2,184 76.2,111.4 37.2,111.4 "
+               points="76.2,111.4 37.2,111.4 37.2,184 76.2,184 "
                style="fill:#0000ff" />
           </g>
           <path
@@ -17228,7 +17253,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10788"
-               points="80.4,184 119.4,184 119.4,116.7 80.4,116.7 "
+               points="119.4,116.7 80.4,116.7 80.4,184 119.4,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17241,7 +17266,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10794"
-               points="123.6,184 162.6,184 162.6,121.8 123.6,121.8 "
+               points="162.6,121.8 123.6,121.8 123.6,184 162.6,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17254,7 +17279,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10800"
-               points="166.8,184 205.8,184 205.8,121.9 166.8,121.9 "
+               points="205.8,121.9 166.8,121.9 166.8,184 205.8,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17310,7 +17335,7 @@
     </g>
     <g
        id="gnuplot_canvas-20"
-       transform="matrix(0.43656249,0,0,0.4365625,711.59942,-614.43824)">
+       transform="matrix(0.43656249,0,0,0.4365625,707.10929,-613.68989)">
       <rect
          id="rect10936"
          height="250"
@@ -17491,7 +17516,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10988"
-               points="76.2,184 76.2,115.8 37.2,115.8 37.2,184 "
+               points="76.2,115.8 37.2,115.8 37.2,184 76.2,184 "
                style="fill:#0000ff" />
           </g>
           <path
@@ -17504,7 +17529,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon10994"
-               points="119.4,184 119.4,128.4 80.4,128.4 80.4,184 "
+               points="119.4,128.4 80.4,128.4 80.4,184 119.4,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17517,7 +17542,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon11000"
-               points="162.6,184 162.6,130.4 123.6,130.4 123.6,184 "
+               points="162.6,130.4 123.6,130.4 123.6,184 162.6,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17530,7 +17555,7 @@
              style="stroke:none;shape-rendering:crispEdges">
             <polygon
                id="polygon11006"
-               points="205.8,184 205.8,132.7 166.8,132.7 166.8,184 "
+               points="205.8,132.7 166.8,132.7 166.8,184 205.8,184 "
                style="fill:#bebebe" />
           </g>
           <path
@@ -17621,7 +17646,7 @@
     <g
        style="fill-rule:evenodd"
        id="g11442"
-       transform="matrix(0.00267256,0,0,0.00267256,762.8465,-879.31443)">
+       transform="matrix(0.00267256,0,0,0.00267256,761.78817,-880.37276)">
       <g
          style="visibility:visible"
          id="Výchozí"
@@ -17852,7 +17877,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.32664283,0,0,-0.32664283,-7.8080027,-785.55647)"
+       transform="matrix(0.32664283,0,0,-0.32664283,-2.516336,-779.20647)"
        inkscape:label="logo_cuni"
        id="g11490">
       <g
