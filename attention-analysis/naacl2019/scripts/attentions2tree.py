@@ -933,8 +933,9 @@ for sentence_index in range(sentences_count):
 if total_count_sentences > 0:
     macroavg = total_sum_scores / total_count_sentences
     avg = total_count_good / total_count_phrases
-    print('MacroAvg over sentences:', macroavg)
-    print('Avg over phrases:', total_count_good, '/', total_count_phrases, avg)
+    #print('MacroAvg over sentences:', macroavg)
+    print(avg)
+    #print('Avg over phrases:', total_count_good, '/', total_count_phrases, avg)
 
 if args.colmax:
     output = dict()
