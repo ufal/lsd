@@ -1,20 +1,34 @@
 #!/bin/bash
 
-c=$1
+b=$1
+c=none
+
+while [ $b != $c ]
+do
+
+c=$b
 s=,$c,
 
+l=$(echo $c
 for r in ${c//,/ }
 do
     k=${s/,$r,/,}
-    qsub run.shc ${k:1:-1}
+    echo ${k:1:-1}
+done)
+
+for n in $l
+do
+    qsub run.shc $n
+done > /dev/null
+
+qsub -hold_jid run.shc -sync y -o /dev/null -e /dev/null -b y true > /dev/null
+
+b=$(for n in $l
+do
+    echo $(cat results/$n) $n
+done | sort -n | tail -n 1 | cut -d' ' -f2)
+
+echo $(cat results/$b) $b
+
 done
-
-qsub -hold_jid run.shc -sync y -b y echo "DONE"  
-
-for r in ${c//,/ }
-do
-    k=${s/,$r,/,}
-    n=${k:1:-1}
-    echo `cat results/$n` $n
-done | sort -n
 
