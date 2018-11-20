@@ -1,6 +1,7 @@
 #!/bin/bash
 
-b=$1
+N=$1
+b=$2
 c=none
 
 mkdir -p results
@@ -26,11 +27,11 @@ done)
 # run
 for n in $l
 do
-    qsub run.shc $n
+    qsub -N $N-run run.shc $n
 done > /dev/null
 
 # wait
-qsub -hold_jid run.shc -sync y -o /dev/null -e /dev/null -b y true > /dev/null
+qsub -hold_jid $N-run -sync y -o /dev/null -e /dev/null -b y true > /dev/null
 
 # top score and setup
 t=$(for n in $l
