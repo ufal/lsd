@@ -39,5 +39,11 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-../scripts/attentions2tree.py -a attentions.npz -t source.txt -n -e -C ../entest.stanford -p /dev/null -K $1 2> /dev/null -s $(seq 100) > results/$1
+function md5 () {
+    echo $1 | md5sum | cut -d' ' -f1
+}
+
+m=$(md5 $1)
+
+../scripts/attentions2tree.py -a attentions.npz -t source.txt -n -e -C ../entest.stanford -p /dev/null -K $1 2> /dev/null -s $(seq 100) > results/$m
 
