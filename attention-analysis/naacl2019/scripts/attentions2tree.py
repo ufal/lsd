@@ -11,7 +11,7 @@ import random
 import math
 import subprocess
 import sys
-from collections import deque, Counter
+from collections import deque, Counter, defaultdict
 from scipy.sparse.csgraph import minimum_spanning_tree
 import string
 
@@ -46,6 +46,8 @@ ap.add_argument("-l", "--layer", type=int, default=-1,
         help="Only use the specified layer; 0-based")
 ap.add_argument("-k", "--head", type=int, default=-1,
         help="Only use the specified head from the last layer; 0-based")
+ap.add_argument("-K", "--heads", type=str,
+        help="layer-head,layer-head,... use only these (0-based)")
 ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4,5,6],
         help="Only use the specified sentences; 0-based")
 ap.add_argument("-m", "--maxlen", type=int, default=1000,
@@ -62,6 +64,13 @@ ap.add_argument("-n", "--noaggreg", action="store_true",
 ap.add_argument("-P", "--nopunct", action="store_true",
         help="Remove punctuation before evaluation")
 args= ap.parse_args()
+
+layerheads = None
+if args.heads:
+    layerheads = defaultdict(list)
+    for lh in args.heads.split(','):
+        layer, head = lh.split('-')
+        layerheads[int(layer)].append(int(head))
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces = list of tokens
@@ -215,12 +224,16 @@ def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
     layer_list = range(len(vis))
     if layer != -1:
         layer_list = [layer]
+    if layerheads:
+        layer_list = list(layerheads.keys())
     head_list = range(len(vis[layer][0]))
     if head != -1:
         head_list = [head]
     phrase_weight = np.zeros((size, size))
     # iterate over all layers
     for l in layer_list:
+        if layerheads != None:
+            head_list = layerheads[l]
         for h in head_list:
             # save a maximum value for each row, except the diagonal
             max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1) # ORIGINAL
