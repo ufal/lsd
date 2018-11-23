@@ -22,7 +22,7 @@ len=128
 lang=French
 tlp=edu.stanford.nlp.parser.lexparser.FrenchTreebankParserParams
 lang_opts="-frenchFactored -encoding UTF-8"
-grammar=frenchFactored.ser.gz
+grammar=edu/stanford/nlp/models/lexparser/frenchFactored.ser.gz
 
 # Setting classpath
 scriptdir=/net/projects/LSD/attention-analysis/naacl2019/stanford-parser-full-2018-02-27
@@ -34,6 +34,6 @@ CLASSPATH="$CLASSPATH":"$scriptdir/*"
 # Run the Stanford parser
 java -Xmx"$mem" -cp "$CLASSPATH" edu.stanford.nlp.parser.lexparser.LexicalizedParser -maxLength "$len" \
 -tLPP "$tlp" $lang_opts $parse_opts -writeOutputFiles \
--sentences newline -outputFormat "penn" \
+-encoding UTF-8 -sentences newline -outputFormat "penn" \
 -outputFormatOptions "removeTopBracket,includePunctuationDependencies" -loadFromSerializedFile $grammar $*
 

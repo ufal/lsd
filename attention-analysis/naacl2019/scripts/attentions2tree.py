@@ -69,8 +69,9 @@ layerheads = None
 if args.heads:
     layerheads = defaultdict(list)
     for lh in args.heads.split(','):
-        layer, head = lh.split('-')
-        layerheads[int(layer)].append(int(head))
+        if lh != '':
+            layer, head = lh.split('-')
+            layerheads[int(layer)].append(int(head))
 
 # weights[i][j] = word_mixture[6][i][j] = attention weight
 # wordpieces = list of tokens
