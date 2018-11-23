@@ -39,7 +39,7 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-scriptdir=`pwd`
+scriptdir=/net/projects/LSD/attention-analysis/naacl2019/stanford-parser-full-2018-02-27
 
 java -mx4500m -cp "$scriptdir/*:" edu.stanford.nlp.parser.lexparser.LexicalizedParser \
  -sentences newline -outputFormat "penn" \
