@@ -469,12 +469,11 @@ def wsjlen(wordpiece):
     return result
 
 def brackets2tree(sentence_string, tokens_list):
-    # TODO dont forget EOS
     sentence_string = sentence_string.replace(')', ' )')
     wsj_tokens = sentence_string.split()
     queue = [ Tree('TOOR', []) ]
     cur_token = 0
-    skip_token = False
+    skip_len = 0
     for wsj_token in wsj_tokens:
         if wsj_token.startswith('('):
             # start a new subphrase
@@ -488,18 +487,19 @@ def brackets2tree(sentence_string, tokens_list):
                 # remove empty phrase
                 queue[-1].pop()
         else:
+            #print('WSJ', wsj_token, file=sys.stderr)
             # add token(s) into subphrase
-            if skip_token:
-                skip_token = False
-                pass
+            if skip_len > 0:
+                skip_len -= len(wsj_token)
             else:
                 l = 0
                 while l < len(wsj_token):
+                    #print('APP', tokens_list[cur_token], file=sys.stderr)
                     queue[-1].append(cur_token)
                     l += wsjlen(tokens_list[cur_token])
                     cur_token += 1
                 if l > len(wsj_token):
-                    skip_token = True
+                    skip_len = l - len(wsj_token)
                 if args.eos and cur_token+1 == len(tokens_list):
                     # we have reached EOS
                     queue[-1].append(cur_token)
