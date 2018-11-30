@@ -44,7 +44,7 @@ scriptdir=/net/projects/LSD/attention-analysis/naacl2019/stanford-parser-full-20
 java -mx4500m -cp "$scriptdir/*:" edu.stanford.nlp.parser.lexparser.LexicalizedParser \
  -sentences newline -outputFormat "penn" \
  edu/stanford/nlp/models/lexparser/englishFactored.ser.gz \
- intersect.en.tok.true.test \
- > intersect.en.tok.true.test.parsed
+ intersect.en.out.test \
+ > intersect.en.out.test.stp
 
 
