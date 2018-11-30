@@ -11,7 +11,7 @@
 #
 
 # Memory limit
-mem=5g
+mem=20g
 
 #Maximum length of the sentences to parse
 len=128
