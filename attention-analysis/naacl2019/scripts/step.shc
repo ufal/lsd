@@ -63,7 +63,7 @@ then
     # n-1 steps
     STEPS=$(echo $H | grep -o , | wc -l)
     # first run the full setup
-    qsub -N $N-run run.shc $T $b
+    qsub -N $N-run scripts/run.shc $T $b
     # wait
     qsub -hold_jid $N-run -sync y -j y -o /dev/null -b y true > /dev/null
     # print output
@@ -102,7 +102,7 @@ fi
 # run
 for n in $l
 do
-    qsub -N $N-run run.shc $T $n
+    qsub -N $N-run scripts/run.shc $T $n
 done > /dev/null
 
 # wait
