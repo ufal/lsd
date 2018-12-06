@@ -1,0 +1,124 @@
+#!/bin/bash
+#
+# SGE CONFIGURATION
+#
+# !!! Memory limit
+#$ -hard
+#$ -l mem_free=1g
+#$ -l act_mem_free=1g
+#$ -l h_vmem=1g
+#
+# Run in this directory
+#$ -cwd
+#
+# Use bash
+#$ -S /bin/bash
+#
+# Export environment variables
+#$ -V
+#
+# Logs
+#$ -o /home/rosa/logs
+#$ -e /home/rosa/logs
+# Do not merge stderr with stdout
+#$ -j n
+#
+# run in troja or ms (but not gpu)
+# -q '(troja*|ms*)'
+#$ -q 'cpu-*.q'
+#
+# send mail: b started, e ended, a aborted or rescheduled, s suspended
+#$ -M rosa@ufal.mff.cuni.cz
+#  -m beas
+#
+# 1 thread
+#$ -pe smp 1
+
+# Print each command to STDERR before executing (expanded), prefixed by "+ "
+set -o xtrace
+
+renice 10 $$ >&2
+
+# use headsearch.sh to run this
+
+st=$1
+# remove/add
+d=$2
+T=$3
+H=$4
+
+N=$st-$d
+
+mkdir -p results
+
+function md5 () {
+    echo $1 | md5sum | cut -d' ' -f1
+}
+
+# init
+if [ $d = "remove" ]
+then
+    # start by full
+    b=$H
+    # n-1 steps
+    STEPS=$(echo $H | grep -o , | wc -l)
+    # first run the full setup
+    qsub -N $N-run scripts/run.shc $T $b
+    # wait
+    qsub -hold_jid $N-run -sync y -j y -o /dev/null -b y true > /dev/null
+    # print output
+    m=$(md5 $b)
+    echo $(cat results/$m) $b
+else
+    # start by empty
+    b=""
+    # n steps
+    STEPS=$(echo $H, | grep -o , | wc -l)
+fi
+
+for i in $(seq $STEPS)
+do
+
+if [ $d = "remove" ]
+then
+    # try removing each head
+    l=$(for r in ${b//,/ }
+    do
+        s=,$b,
+        k=${s/,$r,/,}
+        echo ${k:1:-1}
+    done)
+else
+    # try adding each head (if not already added)
+    l=$(for r in ${H//,/ }
+    do
+        if ! echo ,$b, | grep ,$r, > /dev/null
+        then
+            echo "$b,$r"
+        fi
+    done)
+fi
+
+# run
+for n in $l
+do
+    qsub -N $N-run scripts/run.shc $T $n
+done > /dev/null
+
+# wait
+qsub -hold_jid $N-run -sync y -o /dev/null -e /dev/null -b y true > /dev/null
+
+# top score and setup
+t=$(for n in $l
+do
+    m=$(md5 $n)
+    echo $(cat results/$m) $n
+done | sort -n | tail -n 1)
+
+echo $t
+
+# best setup
+b=${t#* }
+
+done
+

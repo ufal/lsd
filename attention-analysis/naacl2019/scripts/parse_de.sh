@@ -14,7 +14,7 @@
 mem=5g
 
 #Maximum length of the sentences to parse
-len=128
+len=140
 
 # Language-specific configuration
 

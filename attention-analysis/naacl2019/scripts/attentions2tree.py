@@ -55,6 +55,8 @@ ap.add_argument("-m", "--maxlen", type=int, default=1000,
 
 #ap.add_argument("-V", "--verbose", action="store_true",
 #        help="Print more details")
+ap.add_argument("-B", "--balustradeness", action="store_true",
+        help="Compute how much balustrady each head is")
 ap.add_argument("-D", "--sentences_as_dirs", action="store_true",
         help="Store images into separate directories for each sentence")
 ap.add_argument("-e", "--eos", action="store_true",
@@ -458,6 +460,10 @@ if args.conllu != None:
                     sentence[child] = head
                 # else special token -- continue
 
+if args.balustradeness:
+    balustradeness = [ [0 for head in range(heads_count)]
+            for layer in range(layers_count) ]
+
 def wsjlen(wordpiece):
     if wordpiece in ['(', ')', '[', ']', '{', '}']:
         # -RRB- et al.
@@ -716,6 +722,17 @@ for sentence_index in range(sentences_count):
            #print("WM")
            #print(word_mixture[-1])
 
+    if args.balustradeness:
+        for layer in range(layers_count):
+            for head in range(heads_count):
+                b = 0
+                for column in range(tokens_count):
+                    for row in range(tokens_count-1):
+                        b += vis[layer][0][head][row][column] * vis[layer][0][head][row+1][column]
+                balustradeness[layer][head] += b/tokens_count
+                #balustradeness[layer][head] += b/tokens_count/(tokens_count-1)
+                #balustradeness[layer][head] = b
+
     # compute trees
     if deptrees:
         # print("Deptrees disabled!", file=sys.stderr)
@@ -950,6 +967,13 @@ if args.colmax:
     for w in sorted(output, key=output.get):
         print("{:4.1f} {}".format(output[w], w), file=colmaxfile)
     colmaxfile.close()
+
+if args.balustradeness:
+    for layer in range(layers_count):
+        for head in range(heads_count):
+            #b = -math.log(balustradeness[layer][head] / sentences_count)
+            b = balustradeness[layer][head] / len(args.sentences)
+            print('balustradeness of layer', layer, 'head', head, 'is', b)
 
 if deptrees:
     deptrees.close()
