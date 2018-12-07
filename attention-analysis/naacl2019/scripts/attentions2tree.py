@@ -28,6 +28,8 @@ ap.add_argument("-p", "--phrasetrees",
         help="Output phrase trees into this file")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
+ap.add_argument("-f", "--format", default="png",
+        help="Output visualisation as this format (pdf, png, maybe other options)")
 ap.add_argument("--colmax",
         help="Output stats of how often words are looked at into this file")
 ap.add_argument("-c", "--conllu",
@@ -385,11 +387,12 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
 
 def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     filename = ''
-    if args.sentences_as_dirs:
-        filename += "s" + str(sentence_index) + "/"
     filename += args.visualizations
-    if not args.sentences_as_dirs:
-        filename += "s" + str(sentence_index) + '-'
+    filename += "s" + str(sentence_index)
+    if args.sentences_as_dirs:
+        filename += "/"
+    else:
+        filename += "-"
     if aggreg == 0:
         filename += 'n-'
     if head == -1:
@@ -397,10 +400,10 @@ def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     else:
         filename += 'k' + str(head) + '-'
     filename += 'l' + str(layer)
-    filename += '.pdf'
+    filename += '.' + args.format
 
     heatmap(vis[layer][aggreg][head], "", "", "", tokens_list, tokens_list)
-    plt.savefig(filename, dpi=200, format='pdf', bbox_inches='tight')
+    plt.savefig(filename, dpi=200, format=args.format, bbox_inches='tight')
     plt.close()
 
 # map 1-based word-based conllu token IDs
@@ -944,11 +947,11 @@ for sentence_index in range(sentences_count):
     # draw heatmaps
     if args.visualizations != None:
         for layer in range(layers_count):
-            write_heatmap(tokens_list, sentence_index, vis, layer, 0)
-            write_heatmap(tokens_list, sentence_index, vis, layer, 1)
+            #write_heatmap(tokens_list, sentence_index, vis, layer, 0)
+            #write_heatmap(tokens_list, sentence_index, vis, layer, 1)
             for head in range(heads_count):
                 write_heatmap(tokens_list, sentence_index, vis, layer, 0, head)
-                write_heatmap(tokens_list, sentence_index, vis, layer, 1, head)
+                #write_heatmap(tokens_list, sentence_index, vis, layer, 1, head)
 
 if total_count_sentences > 0:
     macroavg = total_sum_scores / total_count_sentences
