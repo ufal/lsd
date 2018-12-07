@@ -730,7 +730,7 @@ for sentence_index in range(sentences_count):
                 for column in range(tokens_count):
                     for row in range(tokens_count-1):
                         b += vis[layer][0][head][row][column] * vis[layer][0][head][row+1][column]
-                balustradeness[layer][head] += b/(tokens_count+1)*4
+                balustradeness[layer][head] += b/(tokens_count+1)
                 #balustradeness[layer][head] += b/tokens_count/(tokens_count-1)
                 #balustradeness[layer][head] = b
 
