@@ -30,6 +30,8 @@ ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 ap.add_argument("-f", "--format", default="png",
         help="Output visualisation as this format (pdf, png, maybe other options)")
+ap.add_argument("-F", "--fontsize", default=8, type=int,
+        help="Fontsize for heatmap; 8 is good for png. 10 is good for PDF it seems")
 ap.add_argument("--colmax",
         help="Output stats of how often words are looked at into this file")
 ap.add_argument("-c", "--conllu",
@@ -347,8 +349,8 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     ax.set_xticks(np.arange(AUC.shape[1]) + 0.5, minor=False)
     
     # set tick labels
-    xfont = {'family': 'serif', 'weight': 'normal', 'size': 10, 'rotation' : 'vertical'}
-    yfont = {'family': 'serif', 'weight': 'normal', 'size': 10}
+    xfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize, 'rotation' : 'vertical'}
+    yfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize}
     #ax.set_xticklabels(np.arange(1,AUC.shape[1]+1), minor=False)
     ax.set_xticklabels(xticklabels, minor=False, fontdict=xfont)
     ax.set_yticklabels(yticklabels, minor=False, fontdict=yfont)
