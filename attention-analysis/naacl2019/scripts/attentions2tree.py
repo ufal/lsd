@@ -241,7 +241,7 @@ def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
         for h in head_list:
             # save a maximum value for each row, except the diagonal
             #max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1) # ORIGINAL
-            vis[l][aggreg][h] -= 0.5 * np.diagflat(np.ones(size))                        # ALTERNATIVE
+            #vis[l][aggreg][h] -= 0.5 * np.diagflat(np.ones(size))                        # ALTERNATIVE
             max_in_row = np.max(vis[l][aggreg][h], axis=1)                               # ALTERNATIVE
             #print(np.round(vis[l][aggreg][h],1))
             #print(np.round(vis[l][aggreg][h] - np.diagflat(np.ones(size)),1))
@@ -711,7 +711,8 @@ for sentence_index in range(sentences_count):
         # next layer = avg of this layer and prev layer
         # TODO add head weights from ff matrices
         vis.append([
-                [wm_avg(m, word_mixture[0]) for m in layer_deps],
+                #[wm_avg(m, word_mixture[0]) for m in layer_deps],
+                layer_deps,
                 [wm_aggreg(m, word_mixture[layer]) for m in layer_deps],
                 ])
         word_mixture.append( wm_aggreg(layer_matrix, word_mixture[layer]) )
