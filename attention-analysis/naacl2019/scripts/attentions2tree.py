@@ -182,6 +182,7 @@ def cky(phrase_weight, wordpieces):
     for i in range(size):
         # ctree[i][i] = wordpieces[i]
         ctree[i][i] = i
+        score[i][i] = 0.5
     for span in range(1, size):
         for pos in range(0, size):
             if (pos + span < size):
@@ -192,7 +193,7 @@ def cky(phrase_weight, wordpieces):
                                  + score[pos][pos + span - variant] \
                                  + phrase_weight[pos + span - variant + 1][pos + span] \
                                  + score[pos + span - variant + 1][pos + span] \
-                                ) / 2
+                                ) / 4 
                     if (best_score < var_score):
                         best_score = var_score
                         best_variant = variant
@@ -239,9 +240,9 @@ def phrasetree(vis, wordpieces, layer, aggreg, head, sentence_index):
             head_list = layerheads[l]
         for h in head_list:
             # save a maximum value for each row, except the diagonal
-            max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1) # ORIGINAL
+            #max_in_row = np.max(vis[l][aggreg][h] - np.diagflat(np.ones(size)), axis=1) # ORIGINAL
             #vis[l][aggreg][h] -= 0.5 * np.diagflat(np.ones(size))                        # ALTERNATIVE
-            #max_in_row = np.max(vis[l][aggreg][h], axis=1)                               # ALTERNATIVE
+            max_in_row = np.max(vis[l][aggreg][h], axis=1)                               # ALTERNATIVE
             #print(np.round(vis[l][aggreg][h],1))
             #print(np.round(vis[l][aggreg][h] - np.diagflat(np.ones(size)),1))
             #print(np.round(max_in_row,1))
@@ -344,8 +345,8 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     ax.set_xticks(np.arange(AUC.shape[1]) + 0.5, minor=False)
     
     # set tick labels
-    xfont = {'family': 'serif', 'weight': 'normal', 'size': 8, 'rotation' : 'vertical'}
-    yfont = {'family': 'serif', 'weight': 'normal', 'size': 8}
+    xfont = {'family': 'serif', 'weight': 'normal', 'size': 10, 'rotation' : 'vertical'}
+    yfont = {'family': 'serif', 'weight': 'normal', 'size': 10}
     #ax.set_xticklabels(np.arange(1,AUC.shape[1]+1), minor=False)
     ax.set_xticklabels(xticklabels, minor=False, fontdict=xfont)
     ax.set_yticklabels(yticklabels, minor=False, fontdict=yfont)
@@ -396,10 +397,10 @@ def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     else:
         filename += 'k' + str(head) + '-'
     filename += 'l' + str(layer)
-    filename += '.png'
+    filename += '.pdf'
 
     heatmap(vis[layer][aggreg][head], "", "", "", tokens_list, tokens_list)
-    plt.savefig(filename, dpi=200, format='png', bbox_inches='tight')
+    plt.savefig(filename, dpi=200, format='pdf', bbox_inches='tight')
     plt.close()
 
 # map 1-based word-based conllu token IDs
@@ -710,7 +711,8 @@ for sentence_index in range(sentences_count):
         # next layer = avg of this layer and prev layer
         # TODO add head weights from ff matrices
         vis.append([
-                [wm_avg(m, word_mixture[0]) for m in layer_deps],
+                #[wm_avg(m, word_mixture[0]) for m in layer_deps],
+                layer_deps,
                 [wm_aggreg(m, word_mixture[layer]) for m in layer_deps],
                 ])
         word_mixture.append( wm_aggreg(layer_matrix, word_mixture[layer]) )
