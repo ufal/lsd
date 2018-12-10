@@ -26,6 +26,8 @@ ap.add_argument("-o", "--oritrees",
         help="Output oriented dep trees into this file")
 ap.add_argument("-p", "--phrasetrees",
         help="Output phrase trees into this file")
+ap.add_argument("--tikz", action="store_true",
+        help="Output Tikz trees")
 ap.add_argument("-v", "--visualizations",
         help="Output heatmap prefix")
 ap.add_argument("-f", "--format", default="png",
@@ -162,9 +164,11 @@ def oritree(weights, wordpieces):
 def parse_subtree(i, j, phrase_weight, wordpieces):
     
     if (i == j):
-        #return wordpieces[i]
+        if args.tikz:
+            return wordpieces[i]
         #return str(i) + ':' + wordpieces[i]
-        return i
+        else:
+            return i
         #return Tree(wordpieces[i], [i])
     
     best_k = i
@@ -184,8 +188,10 @@ def cky(phrase_weight, wordpieces):
     ctree = [[0 for i in range(size)] for j in range(size)]
     score = np.zeros((size, size))
     for i in range(size):
-        # ctree[i][i] = wordpieces[i]
-        ctree[i][i] = i
+        if args.tikz:
+            ctree[i][i] = wordpieces[i]
+        else:
+            ctree[i][i] = i
         score[i][i] = 0.5
     for span in range(1, size):
         for pos in range(0, size):
@@ -782,8 +788,13 @@ for sentence_index in range(sentences_count):
         #print("", file=phrasetrees)
         #tree.draw()
         #tree.pretty_print(stream=phrasetrees)
-        tree.pretty_print(stream=phrasetrees, sentence=tokens_list)
-        tree.pretty_print(stream=sys.stderr, sentence=tokens_list)
+        if args.tikz:
+            t = str(tree)
+            t = t.replace('(', '[').replace(')', ' ]').replace('X', '.X')
+            print(t, file=phrasetrees)
+        else:
+            tree.pretty_print(stream=phrasetrees, sentence=tokens_list)
+            tree.pretty_print(stream=sys.stderr, sentence=tokens_list)
         #print(tree.pformat(margin=5, indent=5), file=phrasetrees)
         #print(tree.pformat(margin=5, indent=5))
 
