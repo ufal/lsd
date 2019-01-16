@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Licence: CC-BY 3.0
+# Authors: David Mareček <marecek@ufal.mff.cuni.cz>, Rudolf Rosa <rosa@ufal.mff.cuni.cz>
+
 import numpy as np
 import codecs
 import argparse
