@@ -358,8 +358,19 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     xfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize, 'rotation' : 'vertical'}
     yfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize}
     #ax.set_xticklabels(np.arange(1,AUC.shape[1]+1), minor=False)
-    ax.set_xticklabels(xticklabels, minor=False, fontdict=xfont)
-    ax.set_yticklabels(yticklabels, minor=False, fontdict=yfont)
+    
+    no_x_ticks = list()
+    for t in xticklabels:
+        no_x_ticks.append('')
+    
+    no_y_ticks = list()
+    for t in yticklabels:
+        no_y_ticks.append('')
+    
+    #ax.set_xticklabels(xticklabels, minor=False, fontdict=xfont)
+    #ax.set_yticklabels(yticklabels, minor=False, fontdict=yfont)
+    ax.set_xticklabels(no_x_ticks, minor=False, fontdict=xfont)
+    ax.set_yticklabels(no_y_ticks, minor=False, fontdict=yfont)
     
     # set title and x/y labels
     plt.title(title)
@@ -379,7 +390,7 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
         t.tick2On = False
 
     # Add color bar
-    plt.colorbar(c)
+    #plt.colorbar(c)
 
     # Add text in each cell 
     #show_values(c)
@@ -389,8 +400,8 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     ax.xaxis.tick_top()
 
     # resize 
-    fig = plt.gcf()
-    #fig.set_size_inches(cm2inch(40, 20))
+    #fig = plt.gcf()
+    fig.set_size_inches(20, 20)
 
 
 def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
@@ -410,7 +421,9 @@ def write_heatmap(tokens_list, sentence_index, vis, layer, aggreg, head=-1):
     filename += 'l' + str(layer)
     filename += '.' + args.format
 
+
     heatmap(vis[layer][aggreg][head], "", "", "", tokens_list, tokens_list)
+
     plt.savefig(filename, dpi=200, format=args.format, bbox_inches='tight')
     plt.close()
 

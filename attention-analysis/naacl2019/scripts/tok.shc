@@ -39,7 +39,9 @@ set -o xtrace
 
 renice 10 $$ >&2
 
+DATADIR=/net/projects/LSD/naacl2019-data/europarl
+
 export CLASSPATH=stanford-parser.jar
-java edu.stanford.nlp.process.PTBTokenizer -preserveLines < intersect.en.tok.true.test > intersect.en.tok.true.test.stanfordtok
+java edu.stanford.nlp.process.PTBTokenizer -preserveLines < $DATADIR/intersect.en.out > $DATADIR/intersect.en.tokS
 
 

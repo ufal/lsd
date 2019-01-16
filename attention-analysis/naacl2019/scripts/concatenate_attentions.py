@@ -12,7 +12,7 @@ for filename in input_files:
     x = np.load(filename)
     layers = list()
     for l in range(6):
-        att = x["encoder/layer_" + str(l) + "/self_attention/add:0"]
+        att = x["encoder/layer_" + str(l) + "/self_attention/energies:0"]
         layers.append(att)
     all_layers = np.concatenate(layers, axis=0)
     attentions.append(all_layers)
