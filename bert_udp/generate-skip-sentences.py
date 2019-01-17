@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 
 import sys
+import re
 
-for line in sys.stdin:
-    line = line.rstrip('\n')
-    tokens = line.split(' ')
-    print('#sentence: ' + line)
+def generate(tokens):
+    sentence = " ".join(tokens)
+    print('#sentence: ' + sentence)
     
     c = 0        
     for i in range(len(tokens)):
@@ -24,5 +24,21 @@ for line in sys.stdin:
                     print(str(c) + '\t' + tokens[i] + '\t_\t_\t_\t_\t_\t_\t_\t_')
                     c += 1
             print()
+
+tokens = list() 
+
+for line in sys.stdin:
+    line = line.rstrip('\n')
+    if re.match('^#', line):
+        tokens = []
+    elif re.match('^[0-9]', line):
+        items = line.split('\t')
+        tokens.append(items[1])
+    elif len(tokens) > 0:
+        generate(tokens)
+
+if len(tokens) > 0:
+    generate(tokens)
+
 
 
