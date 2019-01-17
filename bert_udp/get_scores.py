@@ -1,11 +1,13 @@
 import numpy as np
 import math
 import re
+import sys
+from scipy.spatial import distance
 
-e_file = np.load('skip-sentences.npz')
-e_keys  = e_file.keys()
+e_file = np.load(sys.argv[2])
+e_keys = list(e_file.keys())
 
-w_file = open('skip-sentences.conllu', 'r')
+w_file = open(sys.argv[1], 'r')
 tokens = list()
 full_sent_emb = None
 
@@ -15,6 +17,7 @@ for line in w_file:
         print(line)
         tokens = line.split(" ")
         tokens.pop(0)
+        length = len(tokens)
         key = e_keys.pop(0)
         full_sent_emb = e_file[key]
     elif re.match('#skipped: ', line):
@@ -25,12 +28,14 @@ for line in w_file:
         i2 = 0
         for i in range(len(tokens)):
             if str(i) not in skipped:
-                dist = 0
-                for j in range(len(full_sent_emb[i])):
-                    dist += (e_file[key][i2][j] - full_sent_emb[i][j])**2  
-                avg += math.sqrt(dist)
+                #dist = 0
+                #for j in range(len(full_sent_emb[i])):
+                #    dist += (e_file[key][i2][j] - full_sent_emb[i][j])**2  
+                #avg += math.sqrt(dist)
+                avg += distance.euclidean(e_file[key][i2], full_sent_emb[i])
                 i2 += 1
         avg /= len(e_file[key])
         print(" ".join(skipped), end='\t')
         print(" ".join(map(lambda x: tokens[int(x)], skipped)), end='\t')
         print(str(avg))
+
