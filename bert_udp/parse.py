@@ -68,35 +68,33 @@ def find_roots_and_deps(bracket):
 
 for line in sys.stdin:
     line = line.rstrip('\n')
-    if re.match('#sentence: ', line):
+    if re.match('^#sentence: ', line):
         print(line)
         tokens = line.split(" ")
         tokens.pop(0)
-    else:
+        score = {}
+    elif re.match('^[0-9]', line):
         items = line.split('\t')
         skipped = items[0].split(" ")
         score[skipped[0] + '-' + str(int(skipped[-1]) + 1)] = float(items[2])
-
-for pair in sorted(score, key=score.__getitem__):
-    cr = False
-    for bracket in brackets.keys():
-        if crossing(pair, bracket):
-            cr = True
-            break
-    if not cr:
-        #print("TRY PAIR: " + pair)
-        brackets[pair] = 1
-        # try to build dependency tree
+    elif line == '':
+        brackets = {}
+        for pair in sorted(score, key=score.__getitem__):
+            cr = False
+            for bracket in brackets.keys():
+                if crossing(pair, bracket):
+                    cr = True
+                    break
+            if not cr:
+                #print("TRY PAIR: " + pair)
+                brackets[pair] = 1
+                # try to build dependency tree
+                tree = [-1 for i in range(len(tokens))]
+                r = find_roots_and_deps("0-"+str(len(tokens)))
+                if r == -1:
+                    del brackets[pair]
         tree = [-1 for i in range(len(tokens))]
         r = find_roots_and_deps("0-"+str(len(tokens)))
-        if r == -1:
-            del brackets[pair]
-
-#print("BUILD TREE")
-
-tree = [-1 for i in range(len(tokens))]
-r = find_roots_and_deps("0-"+str(len(tokens)))
-for i in range(len(tokens)):
-    print(str(i) + '\t' + tokens[i] + '\t' + str(tree[i]))
-
-
+        for i in range(len(tokens)):
+            print(str(i + 1) + '\t' + tokens[i] + '\t_\t_\t_\t_\t' + str(tree[i] + 1))
+        print()
