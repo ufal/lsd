@@ -36,6 +36,7 @@ for line in sys.stdin:
         tokens.append(items[1])
     elif len(tokens) > 0:
         generate(tokens)
+        tokens = []
 
 if len(tokens) > 0:
     generate(tokens)

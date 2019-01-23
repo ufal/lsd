@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import math
 import re
@@ -34,7 +36,7 @@ def find_roots_and_deps(bracket):
     p = i
     # while we are not at the end of the bracket
     while (p < j):
-        # the farthets possible end of the bracket
+        # the farthest possible end of the bracket
         k = j
         # we exclude the whole bracket for the search
         if (p == i):
@@ -76,7 +78,11 @@ for line in sys.stdin:
     elif re.match('^[0-9]', line):
         items = line.split('\t')
         skipped = items[0].split(" ")
-        score[skipped[0] + '-' + str(int(skipped[-1]) + 1)] = float(items[2])
+        coef = (len(skipped) / len(tokens))**0.3
+        #coef = 1
+        score[skipped[0] + '-' + str(int(skipped[-1]) + 1)] = float(items[2]) / coef
+        if re.match('^[\.\,\:;!\?"\-]$', items[1]):
+            score[skipped[0] + '-' + str(int(skipped[-1]) + 1)] = 0
     elif line == '':
         brackets = {}
         for pair in sorted(score, key=score.__getitem__):
