@@ -24,8 +24,12 @@ def readconllu(filename):
                 cur_sent = dict()
             else:
                 items = line.split('\t')
-                if items[ID].isdigit():
-                    cur_sent[items[ID]] = items[PARENT]
+                item_id = items[ID]
+                if item_id.isdigit():
+                    # 1-based
+                    item_id = int(item_id)
+                    parent_id = int(items[PARENT])
+                    cur_sent[item_id] = parent_id
     return result
 
 def readscores(filename):
@@ -42,8 +46,11 @@ def readscores(filename):
                 cur_sent = dict()
             else:
                 items = line.split('\t')
-                if items[ID].isdigit():
-                    cur_sent[items[ID]] = float(items[SCORE])
+                item_id = items[ID]
+                if item_id.isdigit():
+                    # 0-based -> 1-based
+                    item_id = int(item_id) + 1
+                    cur_sent[item_id] = float(items[SCORE])
     return result
 
 if len(sys.argv) != 3:
@@ -61,6 +68,9 @@ for sent_conllu, sent_scores in zip(conllu, scores):
     if len(sent_conllu) != len(sent_scores):
         exit("Different number of words: " + str(len(sent_conllu)) + " != " + str(len(sent_scores)))
     for child, parent in sent_conllu.items():
+        if parent == 0:
+            # TODO: should be least reducible of all; now skip
+            continue
         # negative reducibility: lower is more reducible
         red_correct = sent_scores[child]
         red_reverse = sent_scores[parent]
