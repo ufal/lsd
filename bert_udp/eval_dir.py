@@ -48,19 +48,22 @@ def readscores(filename):
 
 if len(sys.argv) != 3:
     exit('Usage: ' + sys.argv[0] + ' file.conllu file.scores')
-else:
-    conllu = readconllu(sys.argv[1])
-    scores = readscores(sys.argv[2])
+    
+conllu = readconllu(sys.argv[1])
+scores = readscores(sys.argv[2])
 
-    if (len(conllu) != len(scores)):
-        print("Different number of sentences: " + str(len(conllu)) + " != " + str(len(scores)))
-        exit()
+if (len(conllu) != len(scores)):
+    exit("Different number of sentences: " + str(len(conllu)) + " != " + str(len(scores)))
 
-    correct = 0
-    for i in range(len(gp)):
-        if gp[i] == pp[i]:
-            correct += 1
+correct = 0
+total = 0
+for sent_conllu, sent_scores in zip(conllu, scores):
+    if len(sent_conllu) != len(sent_scores):
+        exit("Different number of words: " + str(len(sent_conllu)) + " != " + str(len(sent_scores)))
+    for word_id, word_parent in sent_conllu.items():
+        red_correct = 
 
-    print(str(correct/len(pp)))
+
+print(str(correct/total))
 
 
