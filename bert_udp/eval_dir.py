@@ -60,10 +60,13 @@ total = 0
 for sent_conllu, sent_scores in zip(conllu, scores):
     if len(sent_conllu) != len(sent_scores):
         exit("Different number of words: " + str(len(sent_conllu)) + " != " + str(len(sent_scores)))
-    for word_id, word_parent in sent_conllu.items():
-        red_correct = 
-
+    for child, parent in sent_conllu.items():
+        # negative reducibility: lower is more reducible
+        red_correct = sent_scores[child]
+        red_reverse = sent_scores[parent]
+        if red_correct < red_reverse:
+            correct += 1
+        total += 1
 
 print(str(correct/total))
-
 
