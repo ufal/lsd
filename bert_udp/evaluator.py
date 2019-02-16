@@ -47,7 +47,10 @@ args = parser.parse_args()
 # interesting and therefore pushed down
 UPOS = [
        'NOUN', 'VERB', 'PRON', 'ADP', 'DET', 'PROPN', 'ADJ', 'ADV',
-       'AUX','PUNCT', 'CONJ', 'PART', 'NUM', 'SCONJ', 'X', 'INTJ', 'SYM'
+       'AUX','PUNCT', 'CONJ', 'PART', 'NUM', 'SCONJ', 'X', 'INTJ', 'SYM',
+       # UD 2.0
+       'CCONJ',
+       '_'
         ]
 
 # TODO only use the universal ones...
@@ -66,7 +69,9 @@ UDEP = [
        'xcomp', 'nummod', 'ccomp', 'neg', 'appos', 'parataxis', 'auxpass',
        'name', 'nsubjpass', 'discourse', 'expl', 'mwe', 'list', 'iobj',
        'csubj', 'goeswith', 'vocative', 'remnant', 'reparandum', 'dep',
-       'csubjpass', 'foreign', 'dislocated'
+       'csubjpass', 'foreign', 'dislocated',
+       # UD 2.0
+       'obl', 'obj', 'orphan', 'clf', 'fixed', 'flat'
         ]
 
 class Evaluation:
@@ -144,14 +149,18 @@ def next_token(fh):
             continue
         else:
             # token line
-            fields = line.split('\t')
+            fields = line.rstrip().split('\t')
             if not fields[0].isnumeric():
                 # multitoken
                 continue
             else:
                 # regular token
                 # simplify deprel
-                deprel = fields[7].split(':')[0]
+                if len(fields) <= 7:
+                    # TODO workaround
+                    deprel = 'dep'
+                else:
+                    deprel = fields[7].split(':')[0]
                 # UPOS, head, deprel
                 return (fields[3], fields[6], deprel)
 
