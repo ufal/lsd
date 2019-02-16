@@ -47,9 +47,9 @@ args = parser.parse_args()
 # interesting and therefore pushed down
 UPOS = [
        'NOUN', 'VERB', 'PRON', 'ADP', 'DET', 'PROPN', 'ADJ', 'ADV',
-       'AUX','PUNCT', 'CONJ', 'PART', 'NUM', 'SCONJ', 'X', 'INTJ', 'SYM',
-       # UD 2.0
-       'CCONJ',
+       'AUX','PUNCT', 'CCONJ', 'PART', 'NUM', 'SCONJ', 'X', 'INTJ', 'SYM',
+       # UD 1.0
+       'CONJ', 
        '_'
         ]
 
@@ -64,14 +64,16 @@ UPOS = [
 
 # ordered by frequency in en-ud-train.conllu
 UDEP = [
-       'punct', 'nmod', 'case', 'nsubj', 'det', 'root', 'dobj', 'compound',
+       'punct', 'nmod', 'case', 'nsubj', 'det', 'root', 'obj', 'obl', 'compound',
        'advmod', 'amod', 'conj', 'mark', 'cc', 'aux', 'cop', 'advcl', 'acl',
-       'xcomp', 'nummod', 'ccomp', 'neg', 'appos', 'parataxis', 'auxpass',
-       'name', 'nsubjpass', 'discourse', 'expl', 'mwe', 'list', 'iobj',
+       'xcomp', 'nummod', 'ccomp', 'appos', 'parataxis', 'auxpass',
+       'name', 'nsubjpass', 'discourse', 'expl', 'flat', 'mwe', 'list', 'iobj',
        'csubj', 'goeswith', 'vocative', 'remnant', 'reparandum', 'dep',
        'csubjpass', 'foreign', 'dislocated',
        # UD 2.0
-       'obl', 'obj', 'orphan', 'clf', 'fixed', 'flat'
+       'dobj', 'orphan', 'clf', 'fixed',
+       # UD 1.0
+        'neg',
         ]
 
 class Evaluation:
