@@ -27,24 +27,24 @@ for line in w_file:
         length = len(tokens)
         key = e_keys.pop(0)
         full_sent_emb = e_file[key]
-    elif re.match('^#skipped: ', line):
-        skipped = line.split(" ")
-        skipped.pop(0)
+        sys.stderr.write(str(distance.euclidean(full_sent_emb[0], full_sent_emb[1])) + "\n")
+    elif re.match('^#skipped', line):
+        items = line.split("\t")
+        skipped = items[1].split(" ")
         key = e_keys.pop(0)
         avg = 0
         i2 = 0
+        distances = []
         for i in range(len(tokens)):
             if str(i) not in skipped:
-                #dist = 0
-                #for j in range(len(full_sent_emb[i])):
-                #    dist += (e_file[key][i2][j] - full_sent_emb[i][j])**2  
-                #avg += math.sqrt(dist)
-                avg += distance.euclidean(e_file[key][i2], full_sent_emb[i])
+                d = distance.euclidean(e_file[key][i2], full_sent_emb[i])
+                avg += d
+                distances.append(d)
                 i2 += 1
         avg /= len(e_file[key])
         print(" ".join(skipped), end='\t')
         print(" ".join(map(lambda x: tokens[int(x)], skipped)), end='\t')
-        print(str(avg))
+        print(items[2] + "\t" + items[3] + "\t" + str(len(skipped)) + "\t" + str(avg) + "\t" + " ".join([str(distances[k]) for k in range(len(distances))]))
 print()
         
 
