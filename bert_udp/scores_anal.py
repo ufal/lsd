@@ -11,6 +11,7 @@ FORM = 1
 POS = 3
 PARENT = 6
 # score
+NONE = 3
 SCORE = 5
 SCORES = 6
 
@@ -60,10 +61,31 @@ def readscores(filename):
                     cur_sent.append(scores)
     return result
 
+def readnone(filename):
+    result = list()
+    cur_sent = list()
+    with open(filename, 'r') as infile:
+        for line in infile:
+            if line.startswith('#'):
+                # comment
+                pass
+            elif line == '\n':
+                # end of sentence
+                result.append(cur_sent)
+                cur_sent = list()
+            else:
+                items = line.split('\t')
+                item_id = items[ID]
+                if item_id.isdigit():
+                    isnone = ('none' if items[NONE] == '<none>' else 'leaf')
+                    cur_sent.append(isnone)
+    return result
+
 if len(sys.argv) != 3:
     exit('Usage: ' + sys.argv[0] + ' file.conllu file.scores')
     
 conllu = readconllu(sys.argv[1])
+nones  = readnone(sys.argv[2])
 scores = readscores(sys.argv[2])
 
 if (len(conllu) != len(scores)):
@@ -72,12 +94,13 @@ if (len(conllu) != len(scores)):
 sums = defaultdict(float)
 counts = defaultdict(int)
 
-for sent_poses, sent_scores in zip(conllu, scores):
+for sent_poses, sent_scores, sent_nones in zip(conllu, scores, nones):
     poses = sent_poses[0]
     for line in sent_scores:
-        for score, pos in zip(line, poses):
-            sums[pos] += score
-            counts[pos] += 1
+        for score, pos, none in zip(line, poses, sent_nones):
+            posn = pos + str(none)
+            sums[posn] += score
+            counts[posn] += 1
 
 avgs = dict()
 for pos in sums.keys():
@@ -85,6 +108,8 @@ for pos in sums.keys():
 
 poses = sorted(avgs.keys(), key=avgs.get)
 for pos in poses:
-    print(pos, counts[pos], avgs[pos], sep="\t")
+    if counts[pos] > 100:
+        ppos = ('    ' + pos)[-9:]
+        print(ppos, counts[pos], avgs[pos], sep="\t")
 
 
