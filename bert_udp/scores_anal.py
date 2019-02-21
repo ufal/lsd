@@ -85,6 +85,6 @@ for pos in sums.keys():
 
 poses = sorted(avgs.keys(), key=avgs.get)
 for pos in poses:
-    print(pos, avgs[pos], sep="\t")
+    print(pos, counts[pos], avgs[pos], sep="\t")
 
 
