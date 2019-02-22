@@ -2,13 +2,18 @@
 
 import sys
 import re
+from collections import defaultdict
 
 # both
 ID = 0
 # conll
+FORM = 1
+POS = 3
 PARENT = 6
 # score
+NONE = 3
 SCORE = 5
+SCORES = 6
 
 def readconllu(filename):
     result = list()
@@ -26,9 +31,9 @@ def readconllu(filename):
                 items = line.split('\t')
                 item_id = items[ID]
                 if item_id.isdigit():
-                    # 1-based
-                    item_id = int(item_id)
-                    parent_id = int(items[PARENT])
+                    # 1-based -> 0-based
+                    item_id = int(item_id) - 1
+                    parent_id = int(items[PARENT]) - 1
                     cur_sent[item_id] = parent_id
     return result
 
@@ -48,9 +53,14 @@ def readscores(filename):
                 items = line.split('\t')
                 item_id = items[ID]
                 if item_id.isdigit():
-                    # 0-based -> 1-based
-                    item_id = int(item_id) + 1
-                    cur_sent[item_id] = float(items[SCORE])
+                    item_id = int(item_id)
+                    scores_temp = items[SCORES].split()
+                    scores = scores_temp[:item_id]
+                    scores.append('0')
+                    scores.extend(scores_temp[item_id:])
+                    scores = [float(x) for x in scores]
+                    for parent_id in range(len(scores)):
+                        cur_sent[(item_id, parent_id)] = scores[parent_id]
     return result
 
 if len(sys.argv) != 3:
@@ -65,18 +75,13 @@ if (len(conllu) != len(scores)):
 correct = 0
 total = 0
 for sent_conllu, sent_scores in zip(conllu, scores):
-    if len(sent_conllu) != len(sent_scores):
-        exit("Different number of words: " + str(len(sent_conllu)) + " != " + str(len(sent_scores)))
     for child, parent in sent_conllu.items():
-        if parent == 0:
-            # TODO: should be least reducible of all; now skip
-            continue
-        # negative reducibility: lower is more reducible
-        red_correct = sent_scores[child]
-        red_reverse = sent_scores[parent]
-        if red_correct < red_reverse:
-            correct += 1
-        total += 1
+        if parent != -1:
+            red_correct = sent_scores[(child,parent)]
+            red_reverse = sent_scores[(parent,child)]
+            if red_correct < red_reverse:
+                correct += 1
+            total += 1
+
 
 print(str(correct/total))
-

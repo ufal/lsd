@@ -8,7 +8,7 @@ ID = 0
 # conll
 PARENT = 6
 # score
-SCORE = 2
+SCORE = 5
 
 def readconllu(filename):
     result = list()
