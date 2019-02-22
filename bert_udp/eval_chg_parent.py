@@ -60,8 +60,9 @@ def readscores(filename):
                     scores.extend(scores_temp[item_id:])
                     scores = [float(x) for x in scores]
                     # 0-based
-                    for parent_id in range(len(scores)):
-                        cur_sent[(item_id, parent_id)] = scores[parent_id]
+                    for child_id in range(len(scores)):
+                        #cur_sent[(item_id, parent_id)] = scores[parent_id]
+                        cur_sent[(child_id, item_id)] = scores[child_id]
     return result
 
 if len(sys.argv) != 3:
@@ -84,6 +85,7 @@ for sent_conllu, sent_scores in zip(conllu, scores):
             pp_score = -1
             for potential_parent in range(length):
                 score = sent_scores[(child,potential_parent)]
+                # + sent_scores[(potential_parent,child)]
                 if score > pp_score:
                     predicted_parent = potential_parent
                     pp_score = score
