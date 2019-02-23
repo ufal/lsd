@@ -82,9 +82,19 @@ total = 0
 for sent_conllu, sent_scores in zip(conllu, scores):
     length = len(sent_conllu)
     printsp(length)
+    # root
+    root = -1
+    root_red = -1
+    for parent in range(length):
+        parent_red = sum([sent_scores[(child,parent)] for child in range(length)])
+        if parent_red > root_red:
+            root = parent
+            root_red = parent_red
+    assert root != -1
+    # edges
     for child in range(length):
         for parent in range(length):
-            if child != parent:
+            if child != parent and child != root:
                 # 0-based -> 1-based
                 printsp(parent+1)
                 printsp(child+1)
