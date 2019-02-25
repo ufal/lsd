@@ -102,7 +102,7 @@ def readscores(filename):
     return result
 
 if len(sys.argv) != 3:
-    exit('Usage: ' + sys.argv[0] + ' file.conllu file.scores')
+    exit('Usage: ' + sys.argv[0] + ' test2.input test2.scores')
     
 scores = readscores(sys.argv[2])
 poses = readposes(sys.argv[1])

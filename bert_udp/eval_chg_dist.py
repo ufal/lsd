@@ -66,7 +66,7 @@ def readscores(filename):
     return result
 
 if len(sys.argv) != 3:
-    exit('Usage: ' + sys.argv[0] + ' file.conllu file.scores')
+    exit('Usage: ' + sys.argv[0] + ' test2.input test2.scores')
     
 conllu = readconllu(sys.argv[1])
 scores = readscores(sys.argv[2])
