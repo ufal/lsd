@@ -74,17 +74,12 @@ scores = readscores(sys.argv[2])
 if (len(conllu) != len(scores)):
     exit("Different number of sentences: " + str(len(conllu)) + " != " + str(len(scores)))
 
-parents = 0
-grandparents = 0
-grandchildren = 0
-children = 0
-siblings = 0
-roots = 0  # only if nothing else
-others = 0
+distances = defaultdict(int)
 total = 0
 for parent, sent_scores in zip(conllu, scores):
     length = len(parent)
     for child in range(length):  # child is the changed node
+        total += 1
         removed_node = -1
         mc_score = -1
         for node in range(length):
@@ -93,28 +88,9 @@ for parent, sent_scores in zip(conllu, scores):
             if score > mc_score:
                 removed_node = node
                 mc_score = score
-        
-        removed_node = child + 1
-        if removed_node == length:
-            continue
-        # START only longer deps
-        #dist = abs(removed_node - child)
-        #if dist == 1:
-        #    continue
-        # END only longer deps
-        total += 1
-        if removed_node == parent[child]:
-            parents += 1
-        elif parent[removed_node] == child:
-            children += 1
-        elif parent[child] != -1 and removed_node == parent[parent[child]]:
-            grandparents += 1
-        elif parent[removed_node] != -1 and child == parent[parent[removed_node]]:
-            grandchildren += 1
-        elif parent[child] == parent[removed_node]:
-            siblings += 1
-        else:
-            others += 1
+        distances[abs(removed_node - child)] += 1
 
-print('parent', 'child', 'sibling', 'grandparent', 'grandchild', 'other', sep='\t')
-print(parents/total, children/total, siblings/total, grandparents/total, grandchildren/total, others/total, sep='\t')
+for distance in sorted(distances):
+    print(distance, distances[distance]/total, sep="\t")
+
+
