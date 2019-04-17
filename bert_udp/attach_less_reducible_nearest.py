@@ -7,20 +7,14 @@ import re
 ID = 0
 # conll
 PARENT = 6
-DEPREL = 7
 # score
 SCORE = 5
-POS = 2
-
-THRESH = 4.7
 
 def readconllu(filename, scores):
     sent_id = 0
     sent_scores = scores[sent_id]
     length = len(sent_scores)
     sent_root = -1
-    threshold = sum(sent_scores)/length
-    print('# threshold ', threshold)
     with open(filename, 'r') as infile:
         for line in infile:
             line = line.rstrip()
@@ -33,9 +27,6 @@ def readconllu(filename, scores):
                 sent_id += 1
                 sent_scores = scores[sent_id]
                 length = len(sent_scores)
-                sent_root = -1
-                threshold = sum(sent_scores)/length
-                print('# threshold ', threshold)
             else:
                 items = line.split('\t')
                 item_id = items[ID]
@@ -43,18 +34,29 @@ def readconllu(filename, scores):
                     # 1-based -> 0-based
                     item_id = int(item_id) - 1
                     # 0-based
-                    parent = -1
-                    for potential_parent in range(item_id+1, length):
-                        if sent_scores[potential_parent] > threshold:
-                            parent = potential_parent
+                    right_parent = -1
+                    for potential_parent in range(item_id, length):
+                        if sent_scores[item_id] < sent_scores[potential_parent]:
+                            right_parent = potential_parent
                             break
-                    if parent == -1:
-                        parent = sent_root
-                    if parent == -1:
-                        sent_root = item_id
+                    left_parent = -1
+                    for potential_parent in range(item_id)[::-1]:
+                        if sent_scores[item_id] < sent_scores[potential_parent]:
+                            left_parent = potential_parent
+                            break
+                    parent = -1
+                    if right_parent != -1 and left_parent != -1:
+                        # choose the nearer one, preferring right
+                        if item_id - left_parent < right_parent - item_id:
+                            parent = left_parent
+                        else:
+                            parent = right_parent
+                    else:
+                        # choose the one that is not -1
+                        parent = max(left_parent, right_parent)
+                    # if it stays -1, it becomes the root
                     # 0-based > 1-based
                     items[PARENT] = parent + 1
-                    #items[DEPREL] = str(round(sent_scores[item_id], 2))
                 print(*items, sep="\t")
     return
 
@@ -74,11 +76,8 @@ def readscores(filename):
                 items = line.split('\t')
                 item_id = items[ID]
                 if item_id.isdigit():
-                    if items[POS] == 'PUNCT':
-                        cur_sent.append(0)
-                    else:
-                        cur_sent.append(float(items[SCORE]))
-    result.append([0])
+                    cur_sent.append(float(items[SCORE]))
+    result.append('')
     return result
 
 if len(sys.argv) != 3:

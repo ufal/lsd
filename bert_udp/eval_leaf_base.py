@@ -26,9 +26,8 @@ def readscores(filename, thresh=4.5):
             else:
                 items = line.split('\t')
                 item_id = items[ID]
-                #if item_id.isdigit() and items[POS] != 'PUNCT':
                 if item_id.isdigit():
-                    leaf_red = float(items[SCORE]) < thresh
+                    leaf_red = True
                     leaf_gold = items[NONE] != '<none>'
                     total += 1
                     if leaf_gold == leaf_red:
