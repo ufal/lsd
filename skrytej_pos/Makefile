@@ -13,3 +13,7 @@ cs-ud-dev.ntkshuf: cs-ud-dev.nottop100
 cs-ud-dev.testwords: cs-ud-dev.ntkshuf
 	head -n 10000 $< > $@
 
+split_train_test.out:
+	./split_train_test.py cs-ud-train.forms cs-ud-dev.forms > $@
+
+
