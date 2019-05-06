@@ -16,4 +16,7 @@ cs-ud-dev.testwords: cs-ud-dev.ntkshuf
 split_train_test.out:
 	./split_train_test.py cs-ud-train.forms cs-ud-dev.forms > $@
 
+split_train_test_lc.out:
+	./split_train_test_lc.py cs-ud-train.forms cs-ud-dev.forms > $@
+
 

@@ -23,7 +23,7 @@ train_sents_2 = train_sents[split_position:]
 def sents2wordset(sentences):
     result = set()
     for s in sentences:
-        result = result.union(s)
+        result = result.union({w.lower() for w in s})
     return result
 
 

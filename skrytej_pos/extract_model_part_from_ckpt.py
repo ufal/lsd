@@ -1,0 +1,1 @@
+/home/rosa/vopice/neuralmonkey/scripts/extract_model_part_from_ckpt.py
