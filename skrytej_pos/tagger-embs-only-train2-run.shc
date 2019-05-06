@@ -40,7 +40,7 @@ renice 10 $$ >&2
 
 # rm -rf tagger-embs-only-train1
 source activate /home/libovicky/.conda/envs/py35/
-rurneuralmonkey/bin/neuralmonkey-run tagger-embs-only-train1.ini tagger-embs-only-train1-test.ini
+rurneuralmonkey/bin/neuralmonkey-run tagger-embs-only-train2.ini tagger-embs-only-train2-test.ini
 
 # wait 15s so that the epilogue can record the info accurately
 sleep 15s
