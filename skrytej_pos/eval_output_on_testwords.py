@@ -4,6 +4,7 @@
 import sys
 import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 if len(sys.argv) != 5:
     print('Usage:')
@@ -38,6 +39,7 @@ with open(infile) as ifh, open(predfile) as pfh, open(goldfile) as gfh:
                 total += 1
                 if pred == gold:
                     correct += 1
+                logging.debug('{} {} {} {}'.format(word, pred, gold, (pred==gold)))
 
 print(correct, '/', total, '=', (correct/total))
 
