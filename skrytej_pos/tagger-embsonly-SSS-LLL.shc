@@ -30,7 +30,7 @@
 # send mail: b started, e ended, a aborted or rescheduled, s suspended
 # -M rosa@ufal.mff.cuni.cz -m beas
 #
-# 1 thread
+# 24 threads
 #$ -pe smp 24
 
 # Print each command to STDERR before executing (expanded), prefixed by "+ "
@@ -38,13 +38,20 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-setup=${1%.ini}
+# e.g. split1
+s=$1
+# e.g. 50
+l=$2
 
-rm -rf $setup
+H=tagger-embsonly
+T=$H-$s-$l
+
+sed -e s/SSS/$s/ -e s/LLL/$l/ $H-SSS-LLL.ini      > ini/$T.ini
+sed -e s/SSS/$s/ -e s/LLL/$l/ $H-SSS-LLL-test.ini > ini/$T-test.ini
+rm -rf workdir/$T
+
 source activate /home/libovicky/.conda/envs/py35/
-rurneuralmonkey/bin/neuralmonkey-train $setup.ini 
 
-# wait 15s so that the epilogue can record the info accurately
-sleep 15s
-
+rurneuralmonkey/bin/neuralmonkey-train ini/$T.ini 
+rurneuralmonkey/bin/neuralmonkey-run   ini/$T.ini ini/$T-test.ini
 
