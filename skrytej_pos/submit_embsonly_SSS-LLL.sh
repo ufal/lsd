@@ -5,5 +5,5 @@ s=$1
 # e.g. 50
 l=$2
 
-qsub -N te-$s-$l tagger-embsonly-SSS-LLL.shc $s $l
+qsub -N te-$s-$l tagger-SSS-LLL-HHH.shc $s $l embsonly
 

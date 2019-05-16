@@ -42,6 +42,9 @@ renice 10 $$ >&2
 s=$1
 # e.g. 50
 l=$2
+# e.g. embsonly
+H=tagger-$3
+
 # validation steps = l/batchsize, batchsize=100
 if [ $l -lt 100 ]
 then
@@ -49,7 +52,7 @@ then
 else
     v=$((l/100))
 fi
-H=tagger-embsonly
+
 T=$H-$s-$l
 
 sed -e s/SSS/$s/ -e s/LLL/$l/ -e s/VVV/$v/ $H-SSS-LLL.ini > ini/$T.ini
