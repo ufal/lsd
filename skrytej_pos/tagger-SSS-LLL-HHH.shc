@@ -31,7 +31,7 @@
 # -M rosa@ufal.mff.cuni.cz -m beas
 #
 # 24 threads
-#$ -pe smp 24
+#$ -pe smp 6
 
 # Print each command to STDERR before executing (expanded), prefixed by "+ "
 set -o xtrace
