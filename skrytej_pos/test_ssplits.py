@@ -128,7 +128,7 @@ while uncovered:
     trainsentences_selected = list()
     for sentence_id in trainsentence_ids:
         if testword not in trainsentences_set[sentence_id]:
-            trainsentences_selected.append(sentence_ids))        
+            trainsentences_selected.append(sentence_id)
         if len(trainsentences_selected) == s:
             break
         
