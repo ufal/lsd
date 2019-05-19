@@ -131,28 +131,31 @@ testword_id = 0
 logging.info('Train data have been read')
 
 split = 10
+N=len(uncovered)/2
 while uncovered:
     logging.info('Construct new ssplit ' + str(split))
     
-    # select word to cover
-    while testwords_ordered[testword_id] not in uncovered:
-        testword_id += 1
-    testword = testwords_ordered[testword_id]
-
     # shuffle train
     random.shuffle(trainsentence_ids)
 
-    # take first N sentences that do not contain the word
-    trainsentences_selected = list()
-    trainwords = set()
-    for sentence_id in trainsentence_ids:
-        if testword not in trainsentences_set[sentence_id]:
-            trainsentences_selected.append(sentence_id)
-            trainwords.update(trainsentences_set[sentence_id])
-            if len(trainsentences_selected) == S:
-                break
-    assert len(trainsentences_selected) == S
-        
+    # sample test words
+    testwords_list = random.sample(uncovered, N)
+
+    # take first S sentences that do not contain the test words
+    while len(trainsentences_selected) != S:
+        testwords = set(testwords_list[:N])
+        trainsentences_selected = list()
+        trainwords = set()
+        for sentence_id in trainsentence_ids:
+            sentwords = trainsentences_set[sentence_id]
+            if not testwords.intersection(sentwords):
+                trainsentences_selected.append(sentence_id)
+                trainwords.update(trainsentences_set[sentence_id])
+                if len(trainsentences_selected) == S:
+                    break
+        # satisfying split not found
+        N /= 2
+
     # see which words we have covered, output and update
     covered = uncovered.difference(trainwords)    
     writetest(genfilename(sstrainfile_pref, split), covered)    
@@ -163,7 +166,8 @@ while uncovered:
     logging.info('Done with ssplit ' + str(split) +
             ', covered ' + str(len(covered)) + ' test words, remains ' +
             str(len(uncovered)) + ' test words')
+    
     split += 1
-
+    N *= 2
 
 logging.info('Done')
