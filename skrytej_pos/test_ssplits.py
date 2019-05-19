@@ -58,21 +58,18 @@ if len(sys.argv) != 7:
             'cs-ud-train.forms.68k',
             'cs-ud-train.tags.68k',
             'train/cs-ud-train.forms.ssplit',
+            'train/cs-ud-train.tags.ssplit',
             '1000',
             'test/cs-ud-train.forms.ssplit',
             )
     exit()
 
-devfile, trainfile, trainfile_tags, sstrainfile_pref, S, sstestfile_pref = sys.argv[1:7]
+devfile, trainfile, trainfile_tags, sstrainfile_pref, sstrainfile_tags_pref, S, sstestfile_pref = sys.argv[1:7]
 
 S = int(S)
 
-def tranfilename(split):
+def genfilename(prefix, split):
     return sstrainfile_pref + str(split) + '.' + str(S)
-
-def testfilename(split):
-    return sstestfile_pref + str(split) + '.' + str(S)
-
 
 logging.info('Read in test words')
 
@@ -93,7 +90,7 @@ split = 0
 word2splits = defaultdict(list)
 for split in range(10):
     logging.info('Examine ssplit ' + str(split))
-    trainwords = readwords(tranfilename(split))
+    trainwords = readwords(genfilename(sstrainfile_pref, split))
     covered = uncovered.difference(trainwords)    
     for word in covered:
         word2splits[word].append(split)
@@ -107,7 +104,7 @@ for word in word2splits:
 # write out the test word splits
 for split in range(10):
     covered = split2words[split]
-    writetest(testfilename(split), covered)    
+    writetest(genfilename(sstestfile_pref, split), covered)    
     uncovered.difference_update(covered)
     logging.info('Done with ssplit ' + str(split) +
             ', covered ' + str(len(covered)) + ' test words, remains ' +
@@ -158,8 +155,9 @@ while uncovered:
         
     # see which words we have covered, output and update
     covered = uncovered.difference(trainwords)    
-    writetest(testfilename(split), covered)    
-    writetrain(tranfilename(split), trainsentences, trainsentences_selected)    
+    writetest(genfilename(sstrainfile_pref, split), covered)    
+    writetrain(genfilename(sstestfile_pref, split), trainsentences, trainsentences_selected)    
+    writetrain(genfilename(sstrainfile_tags_pref, split), trainsentences_tags, trainsentences_selected)    
     uncovered.difference_update(covered)
 
     logging.info('Done with ssplit ' + str(split) +
