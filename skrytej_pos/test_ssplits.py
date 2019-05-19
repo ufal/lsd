@@ -65,6 +65,14 @@ if len(sys.argv) != 7:
 
 devfile, trainfile, trainfile_tags, sstrainfile_pref, S, sstestfile_pref = sys.argv[1:7]
 
+S = int(S)
+
+def tranfilename(split):
+    return sstrainfile_pref + str(split) + '.' + str(S)
+
+def testfilename(split):
+    return sstestfile_pref + str(split) + '.' + str(S)
+
 
 logging.info('Read in test words')
 
@@ -84,11 +92,9 @@ logging.info('Test words have been read in, total test words: ' + str(len(uncove
 split = 0
 while split < 10:
     logging.info('Examine ssplit ' + str(split))
-    sstrainfile = sstrainfile_pref + split + '.' + S
-    trainwords = readwords(sstrainfile)
+    trainwords = readwords(tranfilename(split))
     covered = uncovered.difference(trainwords)    
-    sstestfile = sstestfile_pref + split + '.' + S
-    writetest(sstestfile, covered)    
+    writetest(testfilename(split), covered)    
     uncovered.difference_update(covered)
     logging.info('Done with ssplit ' + str(split) +
             ', covered ' + str(len(covered)) + ' test words, remains ' +
@@ -114,8 +120,6 @@ trainsentence_ids = list(range(len(trainsentences)))
 testwords_ordered = [word for (word, count) in testwords.most_common()]
 testword_id = 0
 
-s = int(S)
-
 logging.info('Train data have been read')
 
 while uncovered:
@@ -136,16 +140,14 @@ while uncovered:
         if testword not in trainsentences_set[sentence_id]:
             trainsentences_selected.append(sentence_id)
             trainwords.update(trainsentences_set[sentence_id])
-            if len(trainsentences_selected) == s:
+            if len(trainsentences_selected) == S:
                 break
-    assert len(trainsentences_selected) == s
+    assert len(trainsentences_selected) == S
         
     # see which words we have covered, output and update
     covered = uncovered.difference(trainwords)    
-    sstestfile = sstestfile_pref + split + '.' + S
-    writetest(sstestfile, covered)    
-    sstrainfile = sstrainfile_pref + split + '.' + S
-    writetrain(sstrainfile, trainsentences, trainsentences_selected)    
+    writetest(testfilename(split), covered)    
+    writetrain(tranfilename(split), trainsentences, trainsentences_selected)    
     uncovered.difference_update(covered)
 
     logging.info('Done with ssplit ' + str(split) +
