@@ -159,8 +159,8 @@ while uncovered:
 
     # see which words we have covered, output and update
     covered = uncovered.difference(trainwords)    
-    writetest(genfilename(sstrainfile_pref, split), covered)    
-    writetrain(genfilename(sstestfile_pref, split), trainsentences, trainsentences_selected)    
+    writetest(genfilename(sstestfile_pref, split), covered)    
+    writetrain(genfilename(sstrainfile_pref, split), trainsentences, trainsentences_selected)    
     writetrain(genfilename(sstrainfile_tags_pref, split), trainsentences_tags, trainsentences_selected)    
     uncovered.difference_update(covered)
 
