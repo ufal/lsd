@@ -1,0 +1,13 @@
+Rudlo, připravil jsem to extrahování reprezentací. Zatím pro MT, pro sumarizaci a sentiment to dopřipravím odpoledne.
+
+Máš to v:
+
+/lnet/ms/projects/LSD/get_representation
+
+Postup je následující, vlezeš do příslušného adresáře, třeba csen_transformer a pustíš:
+
+cat tvoje_data | ../mt_neuralmonkey/bin/neuralmonkey-run run.ini data.ini
+
+To to ti vytvoří dva soubory, embeddings.npz a states.npz, které budou obsahovat embeddingy/skryté stavy pro věty na standardním vstup jako seznam np arrayů.
+
+J.

@@ -45,8 +45,13 @@ def writetest(filename, testwords):
     with open(filename, 'w') as fh:
         print(' '.join(testwords), file=fh)
             
+def writetrain(filename, trainsentences, trainsentences_selected):
+    with open(filename, 'w') as fh:
+        for sentence_id in trainsentences_selected:
+            print(trainsentences[sentence_id], end='', file=fh)
+            
 
-if len(sys.argv) != 8:
+if len(sys.argv) != 7:
     print('Usage:')
     print(sys.argv[0],
             'cs-ud-dev.forms.1k',
@@ -58,7 +63,7 @@ if len(sys.argv) != 8:
             )
     exit()
 
-devfile, trainfile, trainfile_tags, sstrainfile_pref, S, sstestfile_pref = sys.argv[1:8]
+devfile, trainfile, trainfile_tags, sstrainfile_pref, S, sstestfile_pref = sys.argv[1:7]
 
 
 logging.info('Read in test words')
@@ -126,16 +131,22 @@ while uncovered:
 
     # take first N sentences that do not contain the word
     trainsentences_selected = list()
+    trainwords = set()
     for sentence_id in trainsentence_ids:
         if testword not in trainsentences_set[sentence_id]:
             trainsentences_selected.append(sentence_id)
-        if len(trainsentences_selected) == s:
-            break
+            trainwords.update(trainsentences_set[sentence_id])
+            if len(trainsentences_selected) == s:
+                break
+    assert len(trainsentences_selected) == s
         
-
-    # see which words we have covered
-
-    # output, update
+    # see which words we have covered, output and update
+    covered = uncovered.difference(trainwords)    
+    sstestfile = sstestfile_pref + split + '.' + S
+    writetest(sstestfile, covered)    
+    sstrainfile = sstrainfile_pref + split + '.' + S
+    writetrain(sstrainfile, trainsentences, trainsentences_selected)    
+    uncovered.difference_update(covered)
 
     logging.info('Done with ssplit ' + str(split) +
             ', covered ' + str(len(covered)) + ' test words, remains ' +
