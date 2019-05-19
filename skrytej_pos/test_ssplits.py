@@ -3,7 +3,7 @@
 
 import sys
 import logging
-from collections import Counter
+from collections import Counter, defaultdict
 import random
 
 logging.basicConfig(level=logging.INFO)
@@ -90,17 +90,28 @@ logging.info('Test words have been read in, total test words: ' + str(len(uncove
 
 # first search through existing train splits
 split = 0
-while split < 10:
+word2splits = defaultdict(list)
+for split in range(10):
     logging.info('Examine ssplit ' + str(split))
     trainwords = readwords(tranfilename(split))
     covered = uncovered.difference(trainwords)    
+    for word in covered:
+        word2splits[word].append(split)
+
+# select a split for each covered test word
+split2words = defaultdict(set)
+for word in word2splits:
+    split = random.choice(word2splits[word])
+    split2words[split].add(word)
+
+# write out the test word splits
+for split in range(10):
+    covered = split2words[split]
     writetest(testfilename(split), covered)    
     uncovered.difference_update(covered)
     logging.info('Done with ssplit ' + str(split) +
             ', covered ' + str(len(covered)) + ' test words, remains ' +
             str(len(uncovered)) + ' test words')
-    split += 1
-
 
 # then generate new train splits covering missing words
 logging.info('Move on to generating new train splits to cover the rest')
@@ -122,6 +133,7 @@ testword_id = 0
 
 logging.info('Train data have been read')
 
+split = 10
 while uncovered:
     logging.info('Construct new ssplit ' + str(split))
     
