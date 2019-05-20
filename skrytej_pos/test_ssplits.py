@@ -51,7 +51,7 @@ def writetrain(filename, trainsentences, trainsentences_selected):
             print(trainsentences[sentence_id], end='', file=fh)
             
 
-if len(sys.argv) != 7:
+if len(sys.argv) != 8:
     print('Usage:')
     print(sys.argv[0],
             'cs-ud-dev.forms.1k',
@@ -64,12 +64,12 @@ if len(sys.argv) != 7:
             )
     exit()
 
-devfile, trainfile, trainfile_tags, sstrainfile_pref, sstrainfile_tags_pref, S, sstestfile_pref = sys.argv[1:7]
+devfile, trainfile, trainfile_tags, sstrainfile_pref, sstrainfile_tags_pref, S, sstestfile_pref = sys.argv[1:8]
 
 S = int(S)
 
 def genfilename(prefix, split):
-    return sstrainfile_pref + str(split) + '.' + str(S)
+    return prefix + str(split) + '.' + str(S)
 
 logging.info('Read in test words')
 
@@ -131,7 +131,6 @@ testword_id = 0
 logging.info('Train data have been read')
 
 split = 10
-N=len(uncovered)/2
 while uncovered:
     logging.info('Construct new ssplit ' + str(split))
     
@@ -139,9 +138,11 @@ while uncovered:
     random.shuffle(trainsentence_ids)
 
     # sample test words
-    testwords_list = random.sample(uncovered, N)
+    testwords_list = random.sample(uncovered, len(uncovered))
 
     # take first S sentences that do not contain the test words
+    trainsentences_selected = list()
+    N=len(uncovered)
     while len(trainsentences_selected) != S:
         testwords = set(testwords_list[:N])
         trainsentences_selected = list()
@@ -154,12 +155,12 @@ while uncovered:
                 if len(trainsentences_selected) == S:
                     break
         # satisfying split not found
-        N /= 2
+        N //= 2
 
     # see which words we have covered, output and update
     covered = uncovered.difference(trainwords)    
-    writetest(genfilename(sstrainfile_pref, split), covered)    
-    writetrain(genfilename(sstestfile_pref, split), trainsentences, trainsentences_selected)    
+    writetest(genfilename(sstestfile_pref, split), covered)    
+    writetrain(genfilename(sstrainfile_pref, split), trainsentences, trainsentences_selected)    
     writetrain(genfilename(sstrainfile_tags_pref, split), trainsentences_tags, trainsentences_selected)    
     uncovered.difference_update(covered)
 
@@ -168,6 +169,5 @@ while uncovered:
             str(len(uncovered)) + ' test words')
     
     split += 1
-    N *= 2
 
 logging.info('Done')
