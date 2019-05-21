@@ -4,7 +4,7 @@
 import sys
 import logging
 
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 
 def readtrain(filename):
     trainwords = set()
@@ -33,14 +33,14 @@ def evalpreds(infile, predfile, goldfile, testwords):
                 #if gold != 'PUNCT':
                     if word in testwords:
                         total += 1
-                        if pred == gold:
+                        if 'NOUN' == gold:
                             correct += 1
     return total, correct
 
 
 
 
-if len(sys.argv) != 8:
+if len(sys.argv) != 9:
     print('Usage:')
     print(sys.argv[0],
             'cs-ud-dev.forms',
@@ -50,17 +50,20 @@ if len(sys.argv) != 8:
             'train/cs-ud-train.forms.ssplit',
             '.30000',
             'cs-ud-dev.invocabforms',
+            'cs-ud-train.forms.495.types'
             )
     exit()
 
-infile, goldfile, predfile_pref, predfile_suf, trainfile_pref, trainfile_suf, testwordsfile = sys.argv[1:8]
+infile, goldfile, predfile_pref, predfile_suf, trainfile_pref, trainfile_suf, testwordsfile, devwordsfile = sys.argv[1:9]
 
 testwords = readtest(testwordsfile)
+devwords = readtest(devwordsfile)
 
 total_seen = 0
 correct_seen = 0
-total_unseen = 0
-correct_unseen = 0
+
+avgs_seen = list()
+
 for ssplit1 in range(0, 10, 2):
 
     ssplit2 = ssplit1 + 1
@@ -68,8 +71,8 @@ for ssplit1 in range(0, 10, 2):
     trainwords1 = readtrain(trainfile_pref + str(ssplit1) + trainfile_suf)
     trainwords2 = readtrain(trainfile_pref + str(ssplit2) + trainfile_suf)
     
-    testwordsA = trainwords1.difference(trainwords2).intersection(testwords)
-    testwordsB = trainwords2.difference(trainwords1).intersection(testwords)
+    testwordsA = trainwords1.difference(trainwords2).intersection(testwords).difference(devwords)
+    testwordsB = trainwords2.difference(trainwords1).intersection(testwords).difference(devwords)
     
     predfile1 = predfile_pref + str(ssplit1) + predfile_suf
     predfile2 = predfile_pref + str(ssplit2) + predfile_suf
@@ -77,24 +80,24 @@ for ssplit1 in range(0, 10, 2):
     t1_seen, c1_seen = evalpreds(infile, predfile1, goldfile, testwordsA)
     t2_seen, c2_seen = evalpreds(infile, predfile2, goldfile, testwordsB)
 
-    t1_unseen, c1_unseen = evalpreds(infile, predfile1, goldfile, testwordsB)
-    t2_unseen, c2_unseen = evalpreds(infile, predfile2, goldfile, testwordsA)
-    
+    avg1_seen = c1_seen/t1_seen
+    avg2_seen = c2_seen/t2_seen
+
     total_seen += t1_seen + t2_seen
     correct_seen += c1_seen + c2_seen
-    total_unseen += t1_unseen + t2_unseen
-    correct_unseen += c1_unseen + c2_unseen
+    avgs_seen.append(avg1_seen)
+    avgs_seen.append(avg2_seen)
 
-    logging.info('ssplit {}, seen {}/{} = {}'.format(ssplit1, c1_seen, t1_seen, (c1_seen/t1_seen)))
-    logging.info('ssplit {}, unsn {}/{} = {}'.format(ssplit1, c1_unseen, t1_unseen, (c1_unseen/t1_unseen)))
+    logging.info('ssplit {}, seen {}/{} = {}'.format(ssplit1, c1_seen, t1_seen, avg1_seen))
     logging.info('ssplit {}, seen {}/{} = {}'.format(ssplit2, c2_seen, t2_seen, (c2_seen/t2_seen)))
-    logging.info('ssplit {}, unsn {}/{} = {}'.format(ssplit2, c2_unseen, t2_unseen, (c2_unseen/t2_unseen)))
 
 
 acc_s = correct_seen/total_seen
-acc_n = correct_unseen/total_unseen
-logging.info('SEEN {}/{} = {}'.format(correct_seen, total_seen, acc_s))
-logging.info('UNSN {}/{} = {}'.format(correct_unseen, total_unseen, acc_n))
 
-print(acc_s, acc_n, sep="\t")
+import statistics 
+std_s = statistics.stdev(avgs_seen)
+
+logging.info('SEEN {}/{} = {}'.format(correct_seen, total_seen, acc_s))
+
+print(acc_s, std_s, sep="\t")
 

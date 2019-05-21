@@ -22,42 +22,43 @@ def evalpreds(infile, predfile, goldfile, testwords):
             preds = preds.split()
             golds = golds.split()
             for word, pred, gold in zip(words, preds, golds):
-                if word in testwords:
-                    total += 1
-                    if pred == gold:
-                        correct += 1
+                if gold != 'PUNCT':
+                    if word in testwords:
+                        total += 1
+                        if pred == gold:
+                            correct += 1
     return total, correct
 
 
 
 
-if len(sys.argv) != 8:
+if len(sys.argv) != 10:
     print('Usage:')
     print(sys.argv[0],
             'cs-ud-dev.forms',
             'cs-ud-dev.tags',
-            'output/cs-ud-dev.tagger-embsonly-ssplit',
-            '-50.output',
+            'output/cs-ud-dev.tagger-hidden-new-ssplit',
+            '-30000.output',
             'train/cs-ud-train.forms.ssplit',
-            '.50',
+            '.30000',
             'test/cs-ud-train.forms.ssplit',
-            '.50',
-            '24',
+            '.30000',
+            '25',
             )
     exit()
 
-infile, goldfile, predfile_pref, predfile_suf, trainfile_pref, trainfile_suf, testfile_pref, testfile_suf, ssplits = sys.argv[1:9]
+infile, goldfile, predfile_pref, predfile_suf, trainfile_pref, trainfile_suf, testfile_pref, testfile_suf, ssplits = sys.argv[1:10]
 
 
 total = 0
 correct = 0
-for split in range(ssplits):
+for ssplit in range(int(ssplits)):
     testwords = readtest(testfile_pref + str(ssplit) + testfile_suf)
     t, c = evalpreds(infile, predfile_pref + str(ssplit) + predfile_suf,
             goldfile, testwords)
-    total += total
-    correct += correct
-    logging.info(' '.join('ssplit', str(ssplit), str(c), '/', str(t), '=', (c/t) ) )
+    total += t
+    correct += c
+    logging.info(' '.join(['ssplit', str(ssplit), str(c), '/', str(t), '=', str(c/t) ]) )
 print(correct, '/', total, '=', (correct/total) )
 
 
