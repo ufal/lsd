@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="1072.4144"
-     inkscape:cy="3668.6737"
+     inkscape:cx="1603.1731"
+     inkscape:cy="2640.4517"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,7 +35,8 @@
      inkscape:window-height="995"
      inkscape:window-x="49"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="false" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -53,6 +54,35 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,892)">
+    <rect
+       style="fill:#c8ffff;fill-opacity:1;stroke:none;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1776"
+       width="841.375"
+       height="367.39285"
+       x="0.75595266"
+       y="-809.71423" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:none;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1782"
+       width="454.32739"
+       height="335.64285"
+       x="387.80359"
+       y="-777.96423"
+       ry="0" />
+    <rect
+       style="fill:#64ffff;fill-opacity:1;stroke:none;stroke-width:0.26865533;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1780"
+       width="179.16072"
+       height="335.64285"
+       x="208.64285"
+       y="-777.96423" />
+    <rect
+       style="fill:#96ffff;fill-opacity:1;stroke:none;stroke-width:0.27013281;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1778"
+       width="207.8869"
+       height="335.64285"
+       x="0.75595266"
+       y="-777.96423" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -454,18 +484,266 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="424.16974"
-       y="-761.92358"
+       x="399.2233"
+       y="-762.67957"
        id="text865-0-9"><tspan
          sodipodi:role="line"
-         x="424.16974"
-         y="-761.92358"
+         x="399.2233"
+         y="-762.67957"
          style="font-weight:bold;stroke-width:0.26458332px"
          id="tspan1273-2-6">Reducibility in BERT representations</tspan><tspan
          sodipodi:role="line"
-         x="424.16974"
-         y="-748.6944"
+         x="399.2233"
+         y="-749.45038"
          style="stroke-width:0.26458332px"
-         id="tspan1428-2">- </tspan></text>
+         id="tspan1428-2">- estimation of a reducibility score based on removability of the word</tspan><tspan
+         sodipodi:role="line"
+         x="399.2233"
+         y="-736.22125"
+         style="stroke-width:0.26458332px"
+         id="tspan1631">- a word is highly reducible if the average of BERT representations of the other</tspan><tspan
+         sodipodi:role="line"
+         x="399.2233"
+         y="-722.99207"
+         style="stroke-width:0.26458332px"
+         id="tspan1633">  words in the sentence does not change much when the word is removed</tspan><tspan
+         sodipodi:role="line"
+         x="399.2233"
+         y="-709.76288"
+         style="stroke-width:0.26458332px"
+         id="tspan1639">- can be also generalized to reducibility of phrases (remove a whole phrase)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="410.48215"
+       y="-674.3988"
+       id="text1643"><tspan
+         sodipodi:role="line"
+         id="tspan1641"
+         x="410.48215"
+         y="-674.3988"
+         style="stroke-width:0.26458332px">I saw a blue car</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1651"
+       width="48.380955"
+       height="26.458332"
+       x="427.11307"
+       y="-664.57141" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="436.18451"
+       y="-647.18451"
+       id="text1655"><tspan
+         sodipodi:role="line"
+         id="tspan1653"
+         x="436.18451"
+         y="-647.18451"
+         style="stroke-width:0.26458332px">BERT</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657"
+       width="6.0476193"
+       height="25.702381"
+       x="413.50595"
+       y="-622.99402" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-9"
+       width="6.0476193"
+       height="25.702381"
+       x="426.35699"
+       y="-622.99408" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-4"
+       width="6.0476193"
+       height="25.702381"
+       x="460.37503"
+       y="-622.31372" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-3"
+       width="6.0476193"
+       height="25.702381"
+       x="444.5"
+       y="-624.12793" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-5"
+       width="6.0476193"
+       height="25.702381"
+       x="480.78571"
+       y="-623.44763" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="593.58026"
+       y="-676.07648"
+       id="text1643-1"><tspan
+         sodipodi:role="line"
+         id="tspan1641-7"
+         x="593.58026"
+         y="-676.07648"
+         style="stroke-width:0.26458332px">I saw a car</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1651-4"
+       width="48.380955"
+       height="26.458334"
+       x="600.15686"
+       y="-666.24908" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="609.22827"
+       y="-648.86218"
+       id="text1655-3"><tspan
+         sodipodi:role="line"
+         id="tspan1653-1"
+         x="609.22827"
+         y="-648.86218"
+         style="stroke-width:0.26458332px">BERT</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-46"
+       width="6.0476193"
+       height="25.702381"
+       x="596.60406"
+       y="-624.67169" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-9-9"
+       width="6.0476193"
+       height="25.702381"
+       x="609.45508"
+       y="-624.67175" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-4-4"
+       width="6.0476193"
+       height="25.702381"
+       x="643.47314"
+       y="-623.99139" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1657-3-2"
+       width="6.0476193"
+       height="25.702381"
+       x="627.59808"
+       y="-625.8056" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 419.55354,-597.29164 c 24.94645,55.18452 24.94645,55.18452 24.94645,55.18452"
+       id="path1736"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 596.60406,-598.96931 c -152.10407,56.86219 -152.10407,56.86219 -152.10407,56.86219"
+       id="path1738"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 426.35699,-597.29169 c 58.96443,52.16078 58.96443,52.16078 58.96443,52.16078"
+       id="path1740"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 609.45508,-598.96936 c -124.13366,53.83845 -124.13366,53.83845 -124.13366,53.83845"
+       id="path1742"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 444.49999,-598.42553 c 77.10715,48.75889 77.10715,48.75889 77.10715,48.75889"
+       id="path1744"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 627.59809,-600.1032 c -105.99095,50.43656 -105.99095,50.43656 -105.99095,50.43656"
+       id="path1746"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 480.78569,-597.74524 c 71.81549,47.32266 71.81549,47.32266 71.81549,47.32266 90.87196,-47.86642 90.87196,-47.86642 90.87196,-47.86642"
+       id="path1748"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="438.45239"
+       y="-527.74402"
+       id="text1752"><tspan
+         sodipodi:role="line"
+         id="tspan1750"
+         x="438.45239"
+         y="-527.74402"
+         style="stroke-width:0.26458332px">0.1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="476.25"
+       y="-528.5"
+       id="text1756"><tspan
+         sodipodi:role="line"
+         id="tspan1754"
+         x="476.25"
+         y="-528.5"
+         style="stroke-width:0.26458332px">0.2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="515.55951"
+       y="-531.5238"
+       id="text1760"><tspan
+         sodipodi:role="line"
+         id="tspan1758"
+         x="515.55951"
+         y="-531.5238"
+         style="stroke-width:0.26458332px">0.5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="550.33331"
+       y="-533.03571"
+       id="text1764"><tspan
+         sodipodi:role="line"
+         id="tspan1762"
+         x="550.33331"
+         y="-533.03571"
+         style="stroke-width:0.26458332px">0.8</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="597.20239"
+       y="-533.03571"
+       id="text1768"><tspan
+         sodipodi:role="line"
+         id="tspan1766"
+         x="597.20239"
+         y="-533.03571"
+         style="stroke-width:0.26458332px">Euclidean distances of word representations</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="430.13693"
+       y="-504.30948"
+       id="text1772"><tspan
+         sodipodi:role="line"
+         id="tspan1770"
+         x="430.13693"
+         y="-504.30948"
+         style="stroke-width:0.26458332px">average = 0.4 ... reducibility score of &quot;blue&quot; in &quot;I saw a blue car&quot; is 0.4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="424.84525"
+       y="-472.55948"
+       id="text1786"><tspan
+         sodipodi:role="line"
+         id="tspan1784"
+         x="424.84525"
+         y="-472.55948"
+         style="stroke-width:0.26458332px">TODO VRAZIT SEM I TEN VZOREČEK</tspan></text>
   </g>
 </svg>
