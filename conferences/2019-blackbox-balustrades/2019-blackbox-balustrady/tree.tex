@@ -25,6 +25,7 @@
 
 \usepackage{tikz}
 \usepackage{tikz-qtree}
+%\usetikzlibrary{positioning}
 
 \usepackage{url}
 \usepackage[normalem]{ulem}
@@ -77,13 +78,16 @@
 \begin{figure}[t]
 %\begin{center}
 \begin{tikzpicture}[scale=0.7]
+%\tikzset{every node/.style={rotate=90, anchor=east, align=right, text width=55pt }}
+\tikzset{every node/.style={rotate=90, anchor=east }}
+\tikzset{every leaf node/.style={text width=60pt, xshift=-25pt, align=right }}
 %\tikzset{every leaf node/.style={font=\Large, align=right, anchor=east, text width=55pt}}
-%\tikzset{level distance=23pt}
+\tikzset{level distance=23pt}
 \tikzset{edge from parent/.style=
 {draw,
-edge from parent path={(\tikzparentnode.south)
--- +(0, -5pt)
--| (\tikzchildnode)}}}
+edge from parent path={(\tikzparentnode.west)
+-- +(0, -3pt)
+-| (\tikzchildnode.east)}}}
 %{draw,
 %edge from parent path={(\tikzparentnode.south)
 %-- +(-5pt, 0)
