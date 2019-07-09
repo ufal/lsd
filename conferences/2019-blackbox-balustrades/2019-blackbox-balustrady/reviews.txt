@@ -1,0 +1,181 @@
+============================================================================
+NAACL-HLT 2019 Reviews for Submission #1162
+============================================================================
+
+Title: From Balustrades to Pierre Vinken: Looking for Syntax in Transformer Self-Attentions
+Authors: David Mareček and Rudolf Rosa
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+Problem/Question:
+This paper addresses the question of whether deep learning networks capture a syntax-like structure when they are trained for a language task. In particular, the authors focus on the multi-head attentions in a transformer architecture analyzing the similarity between the phrases obtained from the attentions and those from a constituency tree parser.
+
+
+Contributions (list at least two):
+1. The analysis results of the attentions would shed some lights on how to develop and improve a seq2seq model in general.
+2. It is interesting to see the comparison between the conceptual idea and how it works in practice.
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+Strengths (list at least two):
+1. The paper is clearly written in general, it helps other researchers to follow or re-implement some of their analysis.
+2. The manual and automatic evaluation parts seem to be sound. It shows that the encoder of the transformer is capable to capture the syntactic structure of sentences.
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+Weaknesses (list at least two):
+1. The paper lacks descriptions of some points; This shifts the paper away from being self-contained. For example, what is multi-head attention mechanism? how to separate words into subwords?
+POCHYBNÝ. TO PŘECE KAŽDEJ VÍ, NEBO SI TO NAJDE
+2. Authors may provide a clear explanation of equation 5, what does 'correct' mean conceptually?
+TODO RR -- DONE
+3. It is helpful to see how the translation model performs. Knowing the results of the translation is insightful for interpreting the analysis results.
+TODO DM: PŘIDAT BLEU A POROVNAT SE SOTA -- DONE
+4. I suggest to compare the syntactic results by a typical single-layer attention model with the multi-layer one. Such comparison would strength the claim that multi-layer attention can better capture the syntactic information.
+TODO DM - na to se asi vykaslu
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                     Overall Score (1-6): 3
+                       Readability (1-5): 3
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+Problem/Question:
+This paper attempts to determine if syntactic structures arise from transformer self-attention when trained on NMT. They initially look for these structures manually be visualizing the attention matrices, and then suggest a computational method to determine the presence of syntactic information.
+
+Contributions (list at least two):
+- Description of a pattern in the self attention matrices, where a sequence of consecutive states attend to the same position.
+- Algorithm for extracting phrase-trees from self-attention.
+- Results comparing the above mentioned algorithm to constituency parse trees obtained using the Stanford Parser suggest that some syntax is captured by the self-attention mechanism
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+Strengths (list at least two):
+- The algorithm provided for extracting parse-trees is sound and simple
+- The authors compare the phrase-tree algorithm results to relevant baselines
+- The results are convincing that there is some syntactic structure captured by transformer self-attention
+- Evaluation on languages in addition to English is interesting
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+Weaknesses (list at least two):
+- The contribution of the paper compared to previous work is not big. The algorithm for extracting parse trees is not of interest by itself, and previous works (cited by the authors) have already shown that syntactic structure is present in transformer self-attention
+TODO RR: TIEDEMAN TO DĚLÁ TRAPNĚ -- DONE
+- The purpose of the method for selecting syntactic heads isn’t clear. If the goal is to determine which layers contain syntactic information – than the method isn’t convincing. The authors do not mention in which order they iterate over the heads, and the order seems to have an influence on the results. The finding in table 3, that many of the heads come from the first layer or the last two layers, simultaneously, contradicts both previous findings, (that suggest that lower layers encode syntax), and the authors intuition (that the syntax is in the balustrades, and suggest that this could be an artifact of the method.  
+TODO RR: VYHODIT TEXT KOLEM "it is unclear for us" -- DONE (to řezání hlav možná ještě nějak zeslabit?)
+- Section 4, which describes the manual analysis of the visualization results, lacks some quantification of the observed patterns. Previous papers have already tried to describe the observed patterns, e.g.  Raganato et. al. Where the patterns overlap (e.g. diagonal pattern), the results are not novel. Where the patterns do not overlap, e.g. Raganato do not observe the column pattern, and this paper does not mention the “end of sequence pattern”, suggests that more structured method is required to quantify which patterns exist and at what prevalence.
+TODO RR, DM: PŘIDAT KOUKÁNÍ NA KONEC -- DONE
+TODO RR, DM: SROVNAT S TIEDEMANEM -- DONE
+mohli bychom explicitnějc říct třeba který struktury tam pozorujou už oni (sekce 4) -- DONE
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                     Overall Score (1-6): 2
+                       Readability (1-5): 5
+
+Additional Comments (Optional)
+---------------------------------------------------------------------------
+I suggest the authors cite Extracting Syntactic Trees from Transformer Encoder Self-Attentions by David Marecek and Rudolf Rosa
+TODO DM -- DONE
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+Problem/Question:
+
+The paper attempts to determine the extent to which syntactic structures can be emergent from transformer neural machine translation models and can be observed in self-attention heads
+
+Contributions (list at least two):
+
+1)  The authors build constituency trees from the attention heads in order to quantify the syntactic information. This is unlike previous work (Ragnanato and Tiedemann) that tried to associate attention points with syntactic dependency edges but with limited success. The apparent ability of the present authors to build extract constituency trees from the encoder with some success reinforces the hypothesis that some form of implicit structural learning has taken place and is accessible to further modelling.  
+
+2)  One valuable insight is that that the structures encoded in the attention heads correspond more closely to syntactic phrasal patterns than dependency structures. These structures are encoded primarily in the first and final two layers. To this reviewer, the emergent structures they describe are somewhat reminiscent of William Croft’s radical construction grammar.
+
+3)  This paper will almost certainly restore the word “baluster” to the active lexicon of a lot of people.
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+Strengths (list at least two):
+
+1)  One important strength of this work is that the authors are able to extract structures from a widely-used model without special modification. The authors might find it to their advantage to note work by Huang et al NAACL 2018 and Palagi et al AAAI-18 using Tensor Product Recurrent Networks. The primary difference between those works and the present paper is that the former require a specific architecture in order to achieve syntactic transparency. In this respect the authors’ approach seems to afford greater generality.  
+
+2) Although the paper evaluates extracted structures against tree-bank structures, the patterns that they attempt to identify are agnostic as to structure. This is good, since we should not assume that emergent patterns correspond to traditional syntactic labels and structures. The use of uninformed baselines is a useful way of dealing with the inevitable gap between the treebank linguistic annotations and the emergent properties.
+ 
+3)  The authors use the heatmaps, not just as eye-candy, as an analysis tool to inform their understanding, and to springboard their analysis. I like the fact that the authors are able to associate the heatmap patterns with structures emergent from the model and are able to explicate them.
+
+4)  This paper is well-written, quite readable indeed, and the description of the transformer models is one of the more accessible that I have read.
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+Weaknesses (list at least two):
+
+1)  It is not clear what the relationship is between Table 1 and Table 2. It appears that numbers in Table 2 to need to be subtracted from those shown in Table 1 to get the no-head baseline. Is this the case?  The title of Table 2 should probably be modified a little to indicate from the get-go that those “low” numbers are gains.
+TODO DM -- snad DONE
+ 
+2)  There is some discussion of the properties of the French and German treebanks, noting there are differences in flatness of the structures. Given that the representations are similar across languages this should probably be drilled down on a little more.  Is there any way to estimate whether the Fra and Deu datasets contain a different kinds of data, perhaps less journalistic and possibly more colloquial?  Or are there differences in the annotation standards used  (e.g., less fine grained)?
+TODO RR -- DONE
+
+3)  Missing references:  
+
+Wojciech Samek, Alexander Binder, Gr´egoire Montavon,
+Sebastian Lapuschkin, and Klaus-Robert
+M¨uller. 2017a. Evaluating the visualization of what
+a deep neural network has learned. IEEE transactions
+on neural networks and learning systems,
+28(11):2660–2673.
+
+Wojciech Samek, Thomas Wiegand, and Klaus-Robert
+M¨uller. 2017b. Explainable artificial intelligence:
+Understanding, visualizing and interpreting deep
+learning models. arXiv preprint arXiv:1708.08296.
+TODO DM: PODÍVAT SE, JESTLI TO ZA NĚCO STOJÍ
+ 
+4)  The cryptic title is going to perplex people.  If this paper is published it will certainly be remembered. But I suspect that the inside joke will go straight over the head of many readers.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                     Overall Score (1-6): 4
+                       Readability (1-5): 4
+
+Additional Comments (Optional)
+---------------------------------------------------------------------------
+Possibly pertinent to a couple of papers noted above is one that appeared on arxiv AFTER the submission deadline:  R.Thomas McCoy et al RNNs Implicitly Implement Tensor Product Representations.
+TODO DM, RR [still TODO, na první pohled nechápu moc o čem ten článek je, přijde mi že je to nějak opačně než to co děláme (ale s LSD to asi taky souvisí)]
+
+Random thought:  the balustrades remind me very much of the emergent structures in Conway’s Game of Life. Is there a complexity theoretic account lurking in here somewhere?
+---------------------------------------------------------------------------
