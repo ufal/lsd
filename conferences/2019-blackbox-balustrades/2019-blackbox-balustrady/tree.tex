@@ -76,14 +76,18 @@
 
 \begin{figure}[t]
 %\begin{center}
-\begin{tikzpicture}[scale=0.7, grow=left]
-\tikzset{every leaf node/.style={font=\Large, align=right, anchor=east, text width=55pt}}
-\tikzset{level distance=23pt}
+\begin{tikzpicture}[scale=0.7]
+%\tikzset{every leaf node/.style={font=\Large, align=right, anchor=east, text width=55pt}}
+%\tikzset{level distance=23pt}
 \tikzset{edge from parent/.style=
 {draw,
-edge from parent path={(\tikzparentnode.west)
--- +(-5pt, 0)
-|- (\tikzchildnode.east)}}}
+edge from parent path={(\tikzparentnode.south)
+-- +(0, -5pt)
+-| (\tikzchildnode)}}}
+%{draw,
+%edge from parent path={(\tikzparentnode.south)
+%-- +(-5pt, 0)
+%|- (\tikzchildnode.north)}}}
 %\tikzset{sibling distance=5pt}
 %\LARGE
 \Tree
