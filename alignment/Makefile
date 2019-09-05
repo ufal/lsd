@@ -35,3 +35,8 @@ align:
 zero2one:
 	python3 zero2one.py < $L.i > $L.i1
 
+eval:
+	python3 eval_word_alignment.py all.sure all.en-cs.i1 > eval.txt
+	cat eval.txt
+
+

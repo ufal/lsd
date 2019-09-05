@@ -1,0 +1,3 @@
+Precision: 72.49
+Recall:    58.49
+F-Score:   64.02
