@@ -20,6 +20,18 @@ install_fastalign:
 	cd build
 	cmake ..
 	make
+	cd ../..
 
+F=fast_align/build
 
+L=all.en-cs
+
+align:
+	paste all.en all.cs | sed 's/\t/ ||| /' > $L
+	$F/fast_align -d -o -v -i    $L > $L.f
+	$F/fast_align -d -o -v -r -i $L > $L.r
+	$F/atools -i $L.f -j $L.r -c intersect > $L.i
+	
+zero2one:
+	python3 zero2one.py < $L.i > $L.i1
 
