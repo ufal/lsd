@@ -1,5 +1,7 @@
 A=CzEnAli_1.0
 
+all: get_manual_wordalignments get_alignments install_fastalign align sym zero2one eval eval_sp
+
 get_manual_wordalignments:
 	curl --remote-name-all https://lindat.mff.cuni.cz/repository/xmlui/bitstream/handle/11234/1-1804/$A.tar.gz
 	mkdir $A_unpacked
