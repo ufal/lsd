@@ -1,0 +1,15 @@
+intersect
+Precision: 77.20
+Recall:    42.65
+F-Score:   54.00
+
+union
+Precision: 54.90
+Recall:    59.03
+F-Score:   56.44
+
+grow-diag-final-and
+Precision: 59.78
+Recall:    56.16
+F-Score:   57.37
+
