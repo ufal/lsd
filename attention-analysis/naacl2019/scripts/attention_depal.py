@@ -7,6 +7,7 @@ import argparse
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
+import sys
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
@@ -77,19 +78,19 @@ def aggregate_subtoken_matrix(attention_matrix, wordpieces):
     wp_ids = []
     for wp_id, wp in enumerate(wordpieces):
         wp_ids.append(wp_id)
-        if wp.endswith('@@'):
+        if not wp.endswith('@@'):
             aggregate_wps.append(wp_ids)
             wp_ids = []
 
     midres_matrix = np.zeros((len(wordpieces), len(aggregate_wps)))
 
     for tok_id, wp_ids in enumerate(aggregate_wps):
-        midres_matrix[tok_id,: ] = np.mean(attention_matrix[wp_ids, :], axis=0, keepdims=True)
+        midres_matrix[tok_id,: ] = np.mean(attention_matrix[wp_ids, :], axis=0)
 
     res_matrix = np.zeros((len(aggregate_wps), len(aggregate_wps)))
 
     for tok_id, wp_ids in enumerate(aggregate_wps):
-        res_matrix[:, tok_id] = np.sum(midres_matrix[:, wp_ids], axis=1, keepdims=True)
+        res_matrix[:, tok_id] = np.sum(midres_matrix[:, wp_ids], axis=1)
 
     words = ' '.join(wordpieces).replace('@@ ', '')
     res_tokens = words.split()
@@ -102,16 +103,12 @@ def read_conllu(conllu_file):
     CONLLU_ID = 0
     CONLLU_HEAD = 6
     relations = []
-    sentence_rel =[]
+    sentence_rel = []
     with open(args.conllu) as conllu_file:
-        conllu = list()
-        sentence = None
         sentid = 0
         for line in conllu_file:
             if line == '\n':
                 relations.append(sentence_rel)
-                conllu.append(sentence)
-                sentence = None
                 sentid += 1
             elif line.startswith('#'):
                 continue
@@ -134,7 +131,7 @@ def plot_matrix(matrix):
 
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--attentions", required=True, help="NPZ file with attentions")
     ap.add_argument("-t", "--tokens", required=True, help="Labels (tokens) separated by spaces")
@@ -157,7 +154,7 @@ if __name__ == 'main':
 
     args = ap.parse_args()
 
-    attentions_loaded = np.load(args.attention_file)
+    attentions_loaded = np.load(args.attentions)
     sentences_count = len(attentions_loaded.files)
     layers_count = attentions_loaded['arr_0'].shape[0]
     heads_count = attentions_loaded['arr_0'].shape[1]
