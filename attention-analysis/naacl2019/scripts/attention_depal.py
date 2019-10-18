@@ -2,6 +2,7 @@
 # my approach:
 #   - eos token is omitted (attention avaraged for the rest of tokens)
 #   - subtoken attentions are averaged
+#   - long sentences skipped (TODO: include them)
 
 import argparse
 import numpy as np
@@ -16,8 +17,7 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     https://stackoverflow.com/questions/20574257/constructing-a-co-occurrence-matrix-in-python-pandas
     '''
     # Plot it out
-    fig, ax = plt.subplots(figsize=(16,6))
-
+    fig, (ax, ax2) = plt.subplots(1,2,figsize=(16,6), gridspec_kw={'width_ratios': [3, 1]})
 
     ax.set_xticklabels(xticklabels, minor=False)
     ax.set_yticklabels(yticklabels, minor=False)
@@ -27,15 +27,41 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     ax.set_yticks(np.arange(AUC.shape[0]))
 
     im = ax.imshow(AUC,cmap='Blues')
-    fig.colorbar(im)
+    fig.colorbar(im, ax=ax, orientation='horizontal')
+    ax2.barh(np.arange(AUC.shape[0]),np.mean(AUC,axis=1), color='lightblue')
+    #ax2.set_xticks(np.arange(AUC.shape[1]))
     # set title and x/y labels
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    fig.suptitle(title)
+    
+    ax.set_xlabel(xlabel)
+    ax2.set_ylabel(ylabel)
+    ax.set_ylabel(ylabel)
+    ax.invert_yaxis()
+    
+    ax.set_title('per head')
+    ax2.set_title('per layer') #just average
 
+
+def save_plots(depal_matrix, file_name,file_format, title):
+    std_depal = np.std(depal_matrix, axis=0)
+
+    std_filename = file_name + '-std.' + file_format
+
+    heatmap(std_depal, f"DepAl {title} std", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
+
+    plt.savefig(std_filename, dpi=200, format=file_format)
+    plt.close()
+
+    av_depal = np.mean(depal_matrix, axis=0)
+    av_filename = file_name + '-average.' + file_format
+    heatmap(av_depal, f"DepAl {title} average", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
+
+    plt.savefig(av_filename, dpi=200, format=file_format)
+    plt.close()
 
 
 def aggregate_subtoken_matrix(attention_matrix, wordpieces):
+    # this functions connects subtokens and aggregates their attention.
     aggregate_wps = []
     wp_ids = []
     for wp_id, wp in enumerate(wordpieces):
@@ -44,7 +70,7 @@ def aggregate_subtoken_matrix(attention_matrix, wordpieces):
             aggregate_wps.append(wp_ids)
             wp_ids = []
 
-    midres_matrix = np.zeros((len(wordpieces), len(aggregate_wps)))
+    midres_matrix = np.zeros((len(aggregate_wps), len(wordpieces)))
 
     for tok_id, wp_ids in enumerate(aggregate_wps):
         midres_matrix[tok_id,: ] = np.mean(attention_matrix[wp_ids, :], axis=0)
@@ -68,14 +94,14 @@ def read_conllu(conllu_file):
     reverse_relations = []
     sentence_rel = []
     sentence_rev_rel = []
-    with open(args.conllu) as conllu_file:
+    with open(conllu_file) as in_conllu:
         sentid = 0
-        for line in conllu_file:
+        for line in in_conllu:
             if line == '\n':
                 relations.append(sentence_rel)
                 sentence_rel = []
                 
-                reverse_relations.append(sentence_rel)
+                reverse_relations.append(sentence_rev_rel)
                 sentence_rev_rel = []
                 sentid += 1
             elif line.startswith('#'):
@@ -111,7 +137,7 @@ if __name__ == '__main__':
     ap.add_argument("-F", "--fontsize", default=8, type=int,
                     help="Fontsize for heatmap; 8 is good for png. 10 is good for PDF it seems")
 
-    ap.add_argument("-s", "--sentences", nargs='+', type=int, default=[4, 5, 6],
+    ap.add_argument("-s", "--sentences", nargs='*', type=int, default=None,
                     help="Only use the specified sentences; 0-based")
     ap.add_argument("-m", "--maxlen", type=int, default=1000,
                     help="Skip sentences longer than this many words. A word split into several wordpieces is counted as one word. EOS is not counted.")
@@ -134,11 +160,10 @@ if __name__ == '__main__':
     dependency_rels, dependency_rels_rev = read_conllu(args.conllu)
 
     depal = np.zeros((sentences_count, layers_count, heads_count))
+    depal_rev = np.zeros((sentences_count, layers_count, heads_count))
 
     for sentence_index in range(sentences_count):
-        if args.sentences and sentence_index in args.sentences:
-            pass
-        else:
+        if args.sentences and sentence_index not in args.sentences:
             continue
 
         sentence_id = 'arr_' + str(sentence_index)
@@ -158,12 +183,14 @@ if __name__ == '__main__':
         # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
         assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
         if len(tokens_list) > tokens_count:
-            TRUNCATED = True
-            print('Truncating tokens from ', len(tokens_list), 'to', tokens_count,
-                  'on line', sentence_index, '(0-based indexing)', file=sys.stderr)
-            tokens_list = tokens_list[:tokens_count]
-        else:
-            TRUNCATED = False
+            print('Too long sentence, skipped', sentence_index, file=sys.stderr)
+            continue
+        #     TRUNCATED = True
+        #     print('Truncating tokens from ', len(tokens_list), 'to', tokens_count,
+        #           'on line', sentence_index, '(0-based indexing)', file=sys.stderr)
+        #     tokens_list = tokens_list[:tokens_count]
+        # else:
+        #     TRUNCATED = False
 
         words_count = len(words_list)
 
@@ -179,31 +206,21 @@ if __name__ == '__main__':
                     matrix = matrix[:-1, :-1]
                 # the max trick -- for each row subtract its max
                 # from all of its components to get the values into (-inf, 0]
-                matrix = np.transpose(np.transpose(matrix) - np.max(matrix, axis=1))
+                matrix = matrix - np.max(matrix, axis=1, keepdims=True)
                 # softmax
                 exp_matrix = np.exp(matrix)
-                deps = np.transpose(np.transpose(exp_matrix) / np.sum(exp_matrix, axis=1))
+                deps = exp_matrix/ np.sum(exp_matrix, axis=1, keepdims=True)
                 deps = aggregate_subtoken_matrix(deps, tokens_list)
                 #layer_deps.append(deps)
                 #layer_matrix = layer_matrix + deps
 
                 depal[sentence_index, layer, head] = np.sum(deps[tuple(zip(*dependency_rels[sentence_index]))])/np.sum(deps)
-
+                depal_rev[sentence_index, layer, head] = np.sum(deps[tuple(zip(*dependency_rels_rev[sentence_index]))])/np.sum(deps)
     if args.sentences:
         depal = depal[args.sentences, :, :]
+        depal_rev = depal_rev[args.sentences, :, :]
+        
+    save_plots(depal, args.depal + '-d2h', args.format, 'dependent to head')
+    save_plots(depal_rev, args.depal + '-h2d', args.format, 'head to dependent')
+    save_plots(depal+depal_rev, args.depal + '-all', args.format, 'combined')
 
-    std_depal = np.std(depal, axis=0)
-
-    std_filename = args.depal + '-std.' + args.format
-
-    heatmap(std_depal, "DepAl std", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
-
-    plt.savefig(std_filename, dpi=200, format=args.format)
-    plt.close()
-
-    av_depal = np.mean(depal, axis=0)
-    av_filename = args.depal + '-average.' + args.format
-    heatmap(av_depal, "DepAl average", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
-
-    plt.savefig(av_filename, dpi=200, format=args.format)
-    plt.close()
