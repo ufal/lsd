@@ -16,61 +16,23 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     https://stackoverflow.com/questions/20574257/constructing-a-co-occurrence-matrix-in-python-pandas
     '''
     # Plot it out
-    fig, ax = plt.subplots()
-    c = ax.pcolor(AUC, edgecolors='k', linestyle='dashed', linewidths=0.2, cmap='pink', vmin=0.0, vmax=1.0)
+    fig, ax = plt.subplots(figsize=(16,6))
+
+
+    ax.set_xticklabels(xticklabels, minor=False)
+    ax.set_yticklabels(yticklabels, minor=False)
 
     # put the major ticks at the middle of each cell
-    ax.set_yticks(np.arange(AUC.shape[0]) + 0.5, minor=False)
-    ax.set_xticks(np.arange(AUC.shape[1]) + 0.5, minor=False)
+    ax.set_xticks(np.arange(AUC.shape[1]))
+    ax.set_yticks(np.arange(AUC.shape[0]))
 
-    # set tick labels
-    xfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize, 'rotation': 'vertical'}
-    yfont = {'family': 'serif', 'weight': 'normal', 'size': args.fontsize}
-    # ax.set_xticklabels(np.arange(1,AUC.shape[1]+1), minor=False)
-
-    no_x_ticks = list()
-    for t in xticklabels:
-        no_x_ticks.append('')
-
-    no_y_ticks = list()
-    for t in yticklabels:
-        no_y_ticks.append('')
-
-    # ax.set_xticklabels(xticklabels, minor=False, fontdict=xfont)
-    # ax.set_yticklabels(yticklabels, minor=False, fontdict=yfont)
-    ax.set_xticklabels(no_x_ticks, minor=False, fontdict=xfont)
-    ax.set_yticklabels(no_y_ticks, minor=False, fontdict=yfont)
-
+    im = ax.imshow(AUC,cmap='Blues')
+    fig.colorbar(im)
     # set title and x/y labels
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
-    # Remove last blank column
-    plt.xlim((0, AUC.shape[1]))
-
-    # Turn off all the ticks
-    ax = plt.gca()
-    for t in ax.xaxis.get_major_ticks():
-        t.tick1On = False
-        t.tick2On = False
-    for t in ax.yaxis.get_major_ticks():
-        t.tick1On = False
-        t.tick2On = False
-
-    # Add color bar
-    # plt.colorbar(c)
-
-    # Add text in each cell
-    # show_values(c)
-
-    # Proper orientation (origin at the top left instead of bottom left)
-    ax.invert_yaxis()
-    ax.xaxis.tick_top()
-
-    # resize
-    # fig = plt.gcf()
-    fig.set_size_inches(20, 20)
 
 
 def aggregate_subtoken_matrix(attention_matrix, wordpieces):
@@ -103,12 +65,18 @@ def read_conllu(conllu_file):
     CONLLU_ID = 0
     CONLLU_HEAD = 6
     relations = []
+    reverse_relations = []
     sentence_rel = []
+    sentence_rev_rel = []
     with open(args.conllu) as conllu_file:
         sentid = 0
         for line in conllu_file:
             if line == '\n':
                 relations.append(sentence_rel)
+                sentence_rel = []
+                
+                reverse_relations.append(sentence_rel)
+                sentence_rev_rel = []
                 sentid += 1
             elif line.startswith('#'):
                 continue
@@ -117,8 +85,9 @@ def read_conllu(conllu_file):
                 if fields[CONLLU_ID].isdigit():
                     if int(fields[CONLLU_HEAD]) != 0:
                         sentence_rel.append((int(fields[CONLLU_ID])-1, int(fields[CONLLU_HEAD])-1))
+                        sentence_rev_rel.append((int(fields[CONLLU_HEAD])-1,int(fields[CONLLU_ID])-1))
 
-    return relations
+    return relations, reverse_relations
 
 
 def plot_matrix(matrix):
@@ -127,8 +96,6 @@ def plot_matrix(matrix):
     im = ax1.imshow(matrix,cmap='Blues')
     fig.colorbar(im)
     plt.show()
-
-
 
 
 if __name__ == '__main__':
@@ -162,7 +129,9 @@ if __name__ == '__main__':
     with open(args.tokens) as tokens_file:
         tokens_loaded = [l.split() for l in tokens_file]
 
-    dependency_rels = read_conllu(args.conllu)
+    # in dependency_rels for each sentece there is a lists of tuples (token, token's head)
+    # in dependency_rels_rev tuples are reversed.
+    dependency_rels, dependency_rels_rev = read_conllu(args.conllu)
 
     depal = np.zeros((sentences_count, layers_count, heads_count))
 
@@ -218,9 +187,7 @@ if __name__ == '__main__':
                 #layer_deps.append(deps)
                 #layer_matrix = layer_matrix + deps
 
-                depal[sentence_index, layer, head] = np.sum(deps[zip(*dependency_rels[sentence_index])])/np.sum(deps)
-
-
+                depal[sentence_index, layer, head] = np.sum(deps[tuple(zip(*dependency_rels[sentence_index]))])/np.sum(deps)
 
     if args.sentences:
         depal = depal[args.sentences, :, :]
@@ -229,14 +196,14 @@ if __name__ == '__main__':
 
     std_filename = args.depal + '-std.' + args.format
 
-    heatmap(std_depal, "", "", "", np.arange(layers_count), np.arange(heads_count))
+    heatmap(std_depal, "DepAl std", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
 
-    plt.savefig(std_filename, dpi=200, format=args.format, bbox_inches='tight')
+    plt.savefig(std_filename, dpi=200, format=args.format)
     plt.close()
 
     av_depal = np.mean(depal, axis=0)
     av_filename = args.depal + '-average.' + args.format
-    heatmap(av_filename, "", "", "", np.arange(layers_count), np.arange(heads_count))
+    heatmap(av_depal, "DepAl average", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
 
-    plt.savefig(av_filename, dpi=200, format=args.format, bbox_inches='tight')
+    plt.savefig(av_filename, dpi=200, format=args.format)
     plt.close()
