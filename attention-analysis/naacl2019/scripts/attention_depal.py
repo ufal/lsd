@@ -10,6 +10,10 @@ import matplotlib
 from matplotlib import pyplot as plt
 import sys
 
+from collections import defaultdict
+
+dependency_relations = ('nsub', 'obj', 'dobj', 'det', 'amod')
+
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     '''
@@ -87,33 +91,39 @@ def aggregate_subtoken_matrix(attention_matrix, wordpieces):
     return res_matrix
 
 
+def add_dependency_relation(drs, head_id, dep_id, label):
+    if head_id != 0:
+        drs['all'].append((head_id -1, dep_id-1))
+        drs['h2d'].append((head_id-1, dep_id-1))
+        drs['all'].append((dep_id-1, head_id-1))
+        drs['d2h'].append((dep_id-1, head_id-1))
+        if label in dependency_relations:
+            drs['label'].append((head_id-1, dep_id-1))
+            drs['label'].append((dep_id-1, head_id-1))
+
 def read_conllu(conllu_file):
     CONLLU_ID = 0
+    CONLLU_LABEL = 7
     CONLLU_HEAD = 6
     relations = []
-    reverse_relations = []
-    sentence_rel = []
-    sentence_rev_rel = []
+    sentence_rel = defaultdict(list)
     with open(conllu_file) as in_conllu:
         sentid = 0
         for line in in_conllu:
             if line == '\n':
                 relations.append(sentence_rel)
-                sentence_rel = []
-                
-                reverse_relations.append(sentence_rev_rel)
-                sentence_rev_rel = []
+                sentence_rel = defaultdict(list)
                 sentid += 1
             elif line.startswith('#'):
                 continue
             else:
                 fields = line.strip().split('\t')
                 if fields[CONLLU_ID].isdigit():
-                    if int(fields[CONLLU_HEAD]) != 0:
-                        sentence_rel.append((int(fields[CONLLU_ID])-1, int(fields[CONLLU_HEAD])-1))
-                        sentence_rev_rel.append((int(fields[CONLLU_HEAD])-1,int(fields[CONLLU_ID])-1))
 
-    return relations, reverse_relations
+                    if int(fields[CONLLU_HEAD]) != 0:
+                        add_dependency_relation(sentence_rel, int(fields[CONLLU_HEAD]),int(fields[CONLLU_ID]), int(fields[CONLLU_LABEL]))
+
+    return relations
 
 
 def plot_matrix(matrix):
@@ -159,8 +169,8 @@ if __name__ == '__main__':
     # in dependency_rels_rev tuples are reversed.
     dependency_rels, dependency_rels_rev = read_conllu(args.conllu)
 
-    depal = np.zeros((sentences_count, layers_count, heads_count))
-    depal_rev = np.zeros((sentences_count, layers_count, heads_count))
+    depals = {aggr: np.zeros((sentences_count, layers_count, heads_count))
+              for aggr in ('all', 'h2d', 'd2h') + dependency_relations}
 
     for sentence_index in range(sentences_count):
         if args.sentences and sentence_index not in args.sentences:
@@ -214,13 +224,14 @@ if __name__ == '__main__':
                 #layer_deps.append(deps)
                 #layer_matrix = layer_matrix + deps
 
-                depal[sentence_index, layer, head] = np.sum(deps[tuple(zip(*dependency_rels[sentence_index]))])/np.sum(deps)
-                depal_rev[sentence_index, layer, head] = np.sum(deps[tuple(zip(*dependency_rels_rev[sentence_index]))])/np.sum(deps)
+                for k in depals.keys():
+                    depals[k][sentence_index, layer, head] \
+                        = np.sum(deps[tuple(zip(*dependency_rels[k][sentence_index]))])/np.sum(deps)
+
     if args.sentences:
-        depal = depal[args.sentences, :, :]
-        depal_rev = depal_rev[args.sentences, :, :]
-        
-    save_plots(depal, args.depal + '-d2h', args.format, 'dependent to head')
-    save_plots(depal_rev, args.depal + '-h2d', args.format, 'head to dependent')
-    save_plots(depal+depal_rev, args.depal + '-all', args.format, 'combined')
+        for k in depals.keys():
+            depals[k] = depals[k][args.sentences, :, :]
+
+    for k in depals.keys():
+        save_plots(depals[k], args.depal + f'-{k}', args.format, k)
 
