@@ -12,10 +12,29 @@ import sys
 
 from collections import defaultdict
 
-dependency_relations = ('nsubj', 'obj', 'det', 'amod')
+aggregate_args = ('all', 'h2d', 'd2h', 'clausal', 'modifier', 'aux', 'compound', 'conjunct', 'object',
+                  'subject', 'determiner', 'other')
+
+dependency_relations = {'acl': 'clausal',
+                        'advcl': 'clausal',
+                        'advmod': 'modifier',
+                        'amod': 'modifier',
+                        'appos': 'modifier',
+                        'aux': 'aux',
+                        'ccomp': 'clausal',
+                        'compound': 'compound',
+                        'conj': 'conjunct',
+                        'csubj': 'clausal',
+                        'det': 'determiner',
+                        'iobj': 'object',
+                        'nmod': 'modifier',
+                        'nsubj': 'subject',
+                        'nummod': 'modifier',
+                        'obj': 'object',
+                        'xcomp': 'clausal'}
 
 
-def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
+def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
     '''
     Copied form:
     https://stackoverflow.com/questions/20574257/constructing-a-co-occurrence-matrix-in-python-pandas
@@ -30,9 +49,13 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
     ax.set_xticks(np.arange(AUC.shape[1]))
     ax.set_yticks(np.arange(AUC.shape[0]))
 
-    im = ax.imshow(AUC,cmap='Blues')
+    im = ax.imshow(AUC,cmap=cmap, vmin=0, vmax=vmax)
+    valfmt = matplotlib.ticker.StrMethodFormatter("{x:.2f}")
+    for i in range(AUC.shape[0]):
+        for j in range(AUC.shape[1]):
+            text = ax.text(j, i, valfmt(AUC[i, j]), ha="center", va="center", color="black")
     fig.colorbar(im, ax=ax, orientation='horizontal')
-    ax2.barh(np.arange(AUC.shape[0]),np.mean(AUC,axis=1), color='lightblue')
+    ax2.barh(np.arange(AUC.shape[0]),np.mean(AUC,axis=1), color=color)
     #ax2.set_xticks(np.arange(AUC.shape[1]))
     # set title and x/y labels
     fig.suptitle(title)
@@ -51,7 +74,8 @@ def save_plots(depal_matrix, file_name,file_format, title):
 
     std_filename = file_name + '-std.' + file_format
 
-    heatmap(std_depal, f"DepAl {title} std", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
+    heatmap(std_depal, f"DepAl {title} std", "heads", "layers", np.arange(heads_count), np.arange(layers_count),
+            cmap='pink', color='sandybrown', vmax=0.3)
 
     plt.savefig(std_filename, dpi=200, format=file_format)
     plt.close()
@@ -97,9 +121,15 @@ def add_dependency_relation(drs, head_id, dep_id, label):
         drs['h2d'].append((head_id-1, dep_id-1))
         drs['all'].append((dep_id-1, head_id-1))
         drs['d2h'].append((dep_id-1, head_id-1))
+        label = label.split(':')[0] # to cope with nsubj:pass for instance
         if label in dependency_relations:
-            drs[label].append((head_id-1, dep_id-1))
-            drs[label].append((dep_id-1, head_id-1))
+            label = dependency_relations[label]
+        else:
+            label = 'other'
+        
+        drs[label].append((head_id-1, dep_id-1))
+        drs[label].append((dep_id-1, head_id-1))
+
 
 def read_conllu(conllu_file):
     CONLLU_ID = 0
@@ -170,7 +200,10 @@ if __name__ == '__main__':
     dependency_rels = read_conllu(args.conllu)
 
     depals = {aggr: np.zeros((sentences_count, layers_count, heads_count))
-              for aggr in ('all', 'h2d', 'd2h') + dependency_relations}
+              for aggr in aggregate_args}
+    
+    depals_norm = {aggr: np.zeros((sentences_count, layers_count, heads_count))
+              for aggr in aggregate_args}
 
     for sentence_index in range(sentences_count):
         if args.sentences and sentence_index not in args.sentences:
@@ -227,14 +260,19 @@ if __name__ == '__main__':
                 for k in depals.keys():
                     if len(dependency_rels[sentence_index][k]) == 0:
                         depals[k][sentence_index, layer, head] = 0
+                        depals_norm[k][sentence_index, layer, head] = 0
                     else:
                         depals[k][sentence_index, layer, head] \
                                 = np.sum(deps[tuple(zip(*dependency_rels[sentence_index][k]))])/np.sum(deps)
+                        depals_norm[k][sentence_index, layer, head] = \
+                            depals[k][sentence_index, layer, head] * len(deps) / len(dependency_rels[sentence_index][k])
 
     if args.sentences:
         for k in depals.keys():
             depals[k] = depals[k][args.sentences, :, :]
+            depals_norm[k] = depals_norm[k][args.sentences, :, :]
 
     for k in depals.keys():
         save_plots(depals[k], args.depal + f'-{k}', args.format, k)
+        save_plots(depals_norm[k], args.depal + f'-normed-{k}', args.format, 'normed ' + k)
 
