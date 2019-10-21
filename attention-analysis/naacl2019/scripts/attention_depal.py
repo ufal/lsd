@@ -12,7 +12,7 @@ import sys
 
 from collections import defaultdict
 
-dependency_relations = ('nsub', 'obj', 'dobj', 'det', 'amod')
+dependency_relations = ('nsubj', 'obj', 'det', 'amod')
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels):
@@ -98,8 +98,8 @@ def add_dependency_relation(drs, head_id, dep_id, label):
         drs['all'].append((dep_id-1, head_id-1))
         drs['d2h'].append((dep_id-1, head_id-1))
         if label in dependency_relations:
-            drs['label'].append((head_id-1, dep_id-1))
-            drs['label'].append((dep_id-1, head_id-1))
+            drs[label].append((head_id-1, dep_id-1))
+            drs[label].append((dep_id-1, head_id-1))
 
 def read_conllu(conllu_file):
     CONLLU_ID = 0
@@ -121,7 +121,7 @@ def read_conllu(conllu_file):
                 if fields[CONLLU_ID].isdigit():
 
                     if int(fields[CONLLU_HEAD]) != 0:
-                        add_dependency_relation(sentence_rel, int(fields[CONLLU_HEAD]),int(fields[CONLLU_ID]), int(fields[CONLLU_LABEL]))
+                        add_dependency_relation(sentence_rel, int(fields[CONLLU_HEAD]),int(fields[CONLLU_ID]), fields[CONLLU_LABEL])
 
     return relations
 
@@ -167,7 +167,7 @@ if __name__ == '__main__':
 
     # in dependency_rels for each sentece there is a lists of tuples (token, token's head)
     # in dependency_rels_rev tuples are reversed.
-    dependency_rels, dependency_rels_rev = read_conllu(args.conllu)
+    dependency_rels = read_conllu(args.conllu)
 
     depals = {aggr: np.zeros((sentences_count, layers_count, heads_count))
               for aggr in ('all', 'h2d', 'd2h') + dependency_relations}
@@ -225,8 +225,11 @@ if __name__ == '__main__':
                 #layer_matrix = layer_matrix + deps
 
                 for k in depals.keys():
-                    depals[k][sentence_index, layer, head] \
-                        = np.sum(deps[tuple(zip(*dependency_rels[k][sentence_index]))])/np.sum(deps)
+                    if len(dependency_rels[sentence_index][k]) == 0:
+                        depals[k][sentence_index, layer, head] = 0
+                    else:
+                        depals[k][sentence_index, layer, head] \
+                                = np.sum(deps[tuple(zip(*dependency_rels[sentence_index][k]))])/np.sum(deps)
 
     if args.sentences:
         for k in depals.keys():
