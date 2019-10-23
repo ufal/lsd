@@ -184,6 +184,9 @@ if __name__ == '__main__':
 
     ap.add_argument("-e", "--eos", action="store_true",
                     help="Attentions contain EOS")
+    
+    ap.add_argument("-n", "--no-softmax", action="store_true",
+                    help="Whether to ")
 
     args = ap.parse_args()
 
@@ -221,6 +224,9 @@ if __name__ == '__main__':
         words_list = words.split()
         if len(words_list) <= args.maxlen:
             print('Processing sentence', sentence_index, file=sys.stderr)
+        else:
+            print('Too long sentence, skipped', sentence_index, file=sys.stderr)
+            continue
 
         # NOTE sentences truncated to 64 tokens
         # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
@@ -249,10 +255,13 @@ if __name__ == '__main__':
                     matrix = matrix[:-1, :-1]
                 # the max trick -- for each row subtract its max
                 # from all of its components to get the values into (-inf, 0]
-                matrix = matrix - np.max(matrix, axis=1, keepdims=True)
-                # softmax
-                exp_matrix = np.exp(matrix)
-                deps = exp_matrix/ np.sum(exp_matrix, axis=1, keepdims=True)
+                if not args.no_softmax:
+                    matrix = matrix - np.max(matrix, axis=1, keepdims=True)
+                    # softmax
+                    exp_matrix = np.exp(matrix)
+                    deps = exp_matrix/ np.sum(exp_matrix, axis=1, keepdims=True)
+                else:
+                    deps = matrix / np.sum(matrix, axis=1, keepdims=True)
                 deps = aggregate_subtoken_matrix(deps, tokens_list)
                 #layer_deps.append(deps)
                 #layer_matrix = layer_matrix + deps
