@@ -12,26 +12,7 @@ import sys
 
 from collections import defaultdict
 
-aggregate_args = ('all', 'clausal', 'modifier', 'aux', 'compound', 'conjunct', 'object',
-                  'subject', 'determiner', 'other')
-
-dependency_relations = {'acl': 'clausal',
-                        'advcl': 'clausal',
-                        'advmod': 'modifier',
-                        'amod': 'modifier',
-                        'appos': 'modifier',
-                        'aux': 'aux',
-                        'ccomp': 'clausal',
-                        'compound': 'compound',
-                        'conj': 'conjunct',
-                        'csubj': 'clausal',
-                        'det': 'determiner',
-                        'iobj': 'object',
-                        'nmod': 'modifier',
-                        'nsubj': 'subject',
-                        'nummod': 'modifier',
-                        'obj': 'object',
-                        'xcomp': 'clausal'}
+import dependency
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
@@ -69,25 +50,6 @@ def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', c
     ax2.set_title('per layer') #just average
 
 
-def save_plots(depal_matrix, file_name,file_format, title):
-    std_depal = np.std(depal_matrix, axis=0)
-
-    std_filename = file_name + '-std.' + file_format
-
-    heatmap(std_depal, f"DepAl {title} std", "heads", "layers", np.arange(heads_count), np.arange(layers_count),
-            cmap='pink', color='sandybrown', vmax=0.3)
-
-    plt.savefig(std_filename, dpi=200, format=file_format)
-    plt.close()
-
-    av_depal = np.mean(depal_matrix, axis=0)
-    av_filename = file_name + '-average.' + file_format
-    heatmap(av_depal, f"DepAl {title} average", "heads", "layers", np.arange(heads_count), np.arange(layers_count))
-
-    plt.savefig(av_filename, dpi=200, format=file_format)
-    plt.close()
-
-
 def aggregate_subtoken_matrix(attention_matrix, wordpieces):
     # this functions connects subtokens and aggregates their attention.
     aggregate_wps = []
@@ -115,51 +77,6 @@ def aggregate_subtoken_matrix(attention_matrix, wordpieces):
     return res_matrix
 
 
-def add_dependency_relation(drs, head_id, dep_id, label, directional):
-    if head_id != 0:
-        label = label.split(':')[0] # to cope with nsubj:pass for instance
-        if label in dependency_relations:
-            label = dependency_relations[label]
-        else:
-            label = 'other'
-        if directional:
-            drs['all-p2d'].append((head_id - 1, dep_id - 1))
-            drs['all-d2p'].append((dep_id - 1, head_id - 1))
-            drs[label + '-p2d'].append((head_id-1, dep_id-1))
-            drs[label + '-d2p'].append((dep_id-1, head_id-1))
-        
-        else:
-            drs['all'].append((head_id - 1, dep_id - 1))
-            drs['all'].append((dep_id - 1, head_id - 1))
-            drs[label].append((head_id-1, dep_id-1))
-            drs[label].append((dep_id-1, head_id-1))
-
-
-def read_conllu(conllu_file, directional=False):
-    CONLLU_ID = 0
-    CONLLU_LABEL = 7
-    CONLLU_HEAD = 6
-    relations = []
-    sentence_rel = defaultdict(list)
-    with open(conllu_file) as in_conllu:
-        sentid = 0
-        for line in in_conllu:
-            if line == '\n':
-                relations.append(sentence_rel)
-                sentence_rel = defaultdict(list)
-                sentid += 1
-            elif line.startswith('#'):
-                continue
-            else:
-                fields = line.strip().split('\t')
-                if fields[CONLLU_ID].isdigit():
-
-                    if int(fields[CONLLU_HEAD]) != 0:
-                        add_dependency_relation(sentence_rel, int(fields[CONLLU_HEAD]),int(fields[CONLLU_ID]), fields[CONLLU_LABEL], directional)
-
-    return relations
-
-
 def plot_matrix(matrix):
 
     fig, ax1 = plt.subplots(figsize=(9,9), ncols=1)
@@ -173,7 +90,7 @@ if __name__ == '__main__':
     ap.add_argument("-a", "--attentions", required=True, help="NPZ file with attentions")
     ap.add_argument("-t", "--tokens", required=True, help="Labels (tokens) separated by spaces")
 
-    ap.add_argument("-d", "--depal", help="Output deep alignment measuere into this file")
+    ap.add_argument("-u", "--uas", help="Output uas measuere into this file")
     ap.add_argument("-c", "--conllu", help="Eval against the given conllu faile")
 
     ap.add_argument("-f", "--format", default="png",
@@ -191,9 +108,6 @@ if __name__ == '__main__':
     
     ap.add_argument("-n", "--no-softmax", action="store_true",
                     help="Whether not to use softmax for attention matrices, use with bert metrices")
-    
-    ap.add_argument("-b", "--baseline", action="store_true",
-                    help="whether to calculate syntax retrival accuracy to compare with baselines ")
 
     args = ap.parse_args()
 
@@ -207,17 +121,12 @@ if __name__ == '__main__':
 
     # in dependency_rels for each sentece there is a lists of tuples (token, token's head)
     # in dependency_rels_rev tuples are reversed.
-    dependency_rels = read_conllu(args.conllu, directional=args.baseline)
+    dependency_rels = dependency.read_conllu(args.conllu, directional=True)
+
+    uas = {aggr: np.zeros((sentences_count, layers_count, heads_count))
+           for aggr in dependency.labels}
     
-    if args.baseline:
-        dependency_relations.update({ k + '-d2p': v + '-d2p' for k, v in dependency_relations.items()})
-        dependency_relations.update({k + '-p2d': v + '-p2d' for k, v in dependency_relations.items()})
-        aggregate_args = tuple(ar + '-d2p' for ar in aggregate_args) + tuple(ar + '-p2d' for ar in aggregate_args)
-    depals = {aggr: np.zeros((sentences_count, layers_count, heads_count))
-              for aggr in aggregate_args}
-    
-    depals_norm = {aggr: np.zeros((sentences_count, layers_count, heads_count))
-              for aggr in aggregate_args}
+    rel_number = {aggr: np.zeros((sentences_count, 1, 1)) for aggr in dependency.labels}
 
     for sentence_index in range(sentences_count):
         if args.sentences and sentence_index not in args.sentences:
@@ -248,6 +157,9 @@ if __name__ == '__main__':
 
         words_count = len(words_list)
 
+        for k in uas.keys():
+            rel_number[k][sentence_index, 0, 0] = len(dependency_rels[sentence_index][k])
+
         # for visualisation -- vis[layer][aggreg][head]
         vis = list()
 
@@ -268,27 +180,26 @@ if __name__ == '__main__':
                 else:
                     deps = matrix / np.sum(matrix, axis=1, keepdims=True)
                 deps = aggregate_subtoken_matrix(deps, tokens_list)
-                if args.baseline:
-                    deps = (deps == deps.max(axis=1)[:,None]).astype(int)
+                deps = (deps == deps.max(axis=1)[:,None]).astype(int)
                 #layer_deps.append(deps)
                 #layer_matrix = layer_matrix + deps
 
-                for k in depals.keys():
-                    if len(dependency_rels[sentence_index][k]) == 0:
-                        depals[k][sentence_index, layer, head] = 0
-                        depals_norm[k][sentence_index, layer, head] = 0
-                    else:
-                        depals[k][sentence_index, layer, head] \
-                                = np.sum(deps[tuple(zip(*dependency_rels[sentence_index][k]))])/np.sum(deps)
-                        depals_norm[k][sentence_index, layer, head] = \
-                            depals[k][sentence_index, layer, head] * len(deps) / len(dependency_rels[sentence_index][k])
+                for k in uas.keys():
+                    if len(dependency_rels[sentence_index][k]):
+                        uas[k][sentence_index, layer, head] \
+                                = np.sum(deps[tuple(zip(*dependency_rels[sentence_index][k]))])
 
-    if args.sentences:
-        for k in depals.keys():
-            depals[k] = depals[k][args.sentences, :, :]
-            depals_norm[k] = depals_norm[k][args.sentences, :, :]
+    for k in uas.keys():
+        if args.sentences:
+            uas[k] = uas[k][args.sentences, :, :]
+            rel_number[k] = rel_number[k][args.sentences, :, :]
+            
+        uas[k] = np.sum(uas[k], axis=0) / np.sum(rel_number[k], axis=0)
+        uas_filename = f'{args.uas}-{k}.{args.format}'
 
-    for k in depals.keys():
-        # save_plots(depals[k], args.depal + f'-{k}', args.format, k)
-        save_plots(depals_norm[k], args.depal + f'-normed-{k}', args.format, 'normed ' + k)
+        heatmap(uas[k], f"Accuracy {k}", "heads", "layers", np.arange(heads_count), np.arange(layers_count),
+                cmap='pink', color='sandybrown', vmax=1.0)
+
+        plt.savefig(uas_filename, dpi=200, format=args.format)
+        plt.close()
 
