@@ -3,23 +3,23 @@ from copy import copy
 
 labels = []
 
-label_map = {'acl': 'clausal',
-	            'advcl': 'clausal',
-	            'advmod': 'modifier',
-	            'amod': 'modifier',
-	            'appos': 'modifier',
-	            'aux': 'aux',
+label_map = {'acl': 'adj-clause',
+	            'advcl': 'adv-clause',
+	            'advmod': 'adv-modifier',
+	            'amod': 'adj-modifier',
+	            'appos': 'apposition',
+	            'aux': 'auxiliary',
 	            'ccomp': 'clausal',
 	            'compound': 'compound',
 	            'conj': 'conjunct',
-	            'csubj': 'clausal',
+	            'csubj': 'clausal subject',
 	            'det': 'determiner',
-	            'iobj': 'object',
-	            'nmod': 'modifier',
+	            'iobj': 'i object',
+	            'nmod': 'noun-modifier',
 	            'nsubj': 'subject',
-	            'nummod': 'modifier',
+	            'nummod': 'num-modifier',
 	            'obj': 'object',
-	            'xcomp': 'clausal'}
+                'punct': 'punctuation'}
 
 
 def define_labels(consider_directionality):
