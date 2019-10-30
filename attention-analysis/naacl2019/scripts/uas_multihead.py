@@ -22,17 +22,22 @@ def uas_from_matrices(matrices, dep_rels):
 			total[rel_type] += len(set(rel_pairs))
 	
 	for k in retrived.keys():
-		print(f"UAS for {k} : {retrived[k]/total[k]} (number of relations: {total[k]})")
-
+		if total[k] > 0:
+			print(f"UAS for {k} : {retrived[k]/total[k]} (number of relations: {total[k]})")
+		else:
+			print(f"No relations for {k}")
 
 def uas_from_matrices_rel(matrices, dep_rels, rel_type):
 	retrived = 0.
 	total = 0.
 	for matrix, dep_rel in zip(matrices, dep_rels):
 		retr_pairs = set(zip(range(matrix.shape[0]), np.argmax(matrix, axis=1)))
-		for rel_pairs in dep_rel[rel_type]:
-			retrived += len(set(rel_pairs).intersection(retr_pairs))
-			total += len(set(rel_pairs))
+		rel_pairs = dep_rel[rel_type]
+		retrived += len(set(rel_pairs).intersection(retr_pairs))
+		total += len(set(rel_pairs))
+		
+	if total == 0:
+		return 0.
 	
 	return float(retrived)/float(total)
 
@@ -64,11 +69,15 @@ def aggregate_subtoken_matrix(attention_matrix, wordpieces):
 	return res_matrix
 
 
-def generate_deps(attentions_loaded, tokens_loaded, eos=True, no_softmax=False, maxlen=1000):
+def generate_deps(attentions_loaded, tokens_loaded, eos=True, no_softmax=False, maxlen=1000, sentences=None):
 	sentences_count = len(tokens_loaded)
 	layers_count = attentions_loaded['arr_0'].shape[0]
 	heads_count = attentions_loaded['arr_0'].shape[1]
 	for sentence_index in range(sentences_count):
+		
+		if sentences and sentence_index not in sentences:
+			continue
+			
 		sentence_id = 'arr_' + str(sentence_index)
 		tokens_count = attentions_loaded[sentence_id].shape[2]
 		
@@ -174,10 +183,9 @@ if __name__ == '__main__':
 	
 	rel_number = {aggr: np.zeros((sentences_count, 1, 1)) for aggr in dependency.labels}
 	
-	
 	all_metrices = list()
 	
-	for idx, vis in enumerate(generate_deps(attentions_loaded, tokens_loaded, args.eos, args.no_softmax, args.maxlen)):
+	for idx, vis in enumerate(generate_deps(attentions_loaded, tokens_loaded, args.eos, args.no_softmax, args.maxlen, args.sentences)):
 		for k in uas.keys():
 			rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
 		for layer in range(layers_count):
@@ -189,6 +197,11 @@ if __name__ == '__main__':
 						uas[k][idx, layer, head] \
 							= np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
 		all_metrices.append(vis)
+		
+	for k in uas.keys():
+		if args.sentences:
+			uas[k] = uas[k][args.sentences, :, :]
+			rel_number[k] = rel_number[k][args.sentences, :, :]
 
 	all_uas = defaultdict(list)
 	best_head_mixture = dict()
@@ -197,7 +210,7 @@ if __name__ == '__main__':
 		
 		best_heads_ids = np.argsort(uas[k], axis=None)[-10:][::-1]
 		max_uas = - np.inf
-		for num in range(10):
+		for num in range(1,10):
 			considered_heads = np.unravel_index(best_heads_ids[:num], uas[k].shape)
 			avg_gen = (average_heads(np.array(c_m), considered_heads[0], considered_heads[1]) for c_m in all_metrices)
 			curr_uas = uas_from_matrices_rel(avg_gen, dependency_rels, k)
