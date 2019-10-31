@@ -10,7 +10,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 import sys
 
-import dependency
+import dependency, sentence_attentions
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
@@ -68,33 +68,6 @@ def save_plots(depal_matrix, file_name,file_format, title):
     plt.close()
 
 
-def aggregate_subtoken_matrix(attention_matrix, wordpieces):
-    # this functions connects subtokens and aggregates their attention.
-    aggregate_wps = []
-    wp_ids = []
-    for wp_id, wp in enumerate(wordpieces):
-        wp_ids.append(wp_id)
-        if not wp.endswith('@@'):
-            aggregate_wps.append(wp_ids)
-            wp_ids = []
-
-    midres_matrix = np.zeros((len(aggregate_wps), len(wordpieces)))
-
-    for tok_id, wp_ids in enumerate(aggregate_wps):
-        midres_matrix[tok_id,: ] = np.mean(attention_matrix[wp_ids, :], axis=0)
-
-    res_matrix = np.zeros((len(aggregate_wps), len(aggregate_wps)))
-
-    for tok_id, wp_ids in enumerate(aggregate_wps):
-        res_matrix[:, tok_id] = np.sum(midres_matrix[:, wp_ids], axis=1)
-
-    words = ' '.join(wordpieces).replace('@@ ', '')
-    res_tokens = words.split()
-
-    assert len(res_tokens) == len(aggregate_wps), "Result matrix and token dimesnions don't match"
-    return res_matrix
-
-
 def plot_matrix(matrix):
 
     fig, ax1 = plt.subplots(figsize=(9,9), ncols=1)
@@ -150,67 +123,22 @@ if __name__ == '__main__':
     depals_norm = {aggr: np.zeros((sentences_count, layers_count, heads_count))
                    for aggr in dependency.labels}
 
-    for sentence_index in range(sentences_count):
-        if args.sentences and sentence_index not in args.sentences:
-            continue
-
-        sentence_id = 'arr_' + str(sentence_index)
-        tokens_count = attentions_loaded[sentence_id].shape[2]
-        if args.eos:
-            tokens_count -= 1
-        tokens_list = tokens_loaded[sentence_index]
-
-        # check maxlen
-        words = ' '.join(tokens_list).replace('@@ ', '')
-
-        words_list = words.split()
-        if len(words_list) <= args.maxlen:
-            print('Processing sentence', sentence_index, file=sys.stderr)
-        else:
-            print('Too long sentence, skipped', sentence_index, file=sys.stderr)
-            continue
-
-        # NOTE sentences truncated to 64 tokens
-        # assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
-        assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
-        if len(tokens_list) > tokens_count:
-            print('Too long sentence, skipped', sentence_index, file=sys.stderr)
-            continue
-
-        words_count = len(words_list)
-
-        # for visualisation -- vis[layer][aggreg][head]
-        vis = list()
-
+    attention_gen = sentence_attentions.generate_matrices(attentions_loaded, tokens_loaded, args.eos, args.no_softmax,
+                                                            args.maxlen, args.sentences)
+    for idx, vis in enumerate(attention_gen):
         for layer in range(layers_count):
-            layer_deps = list()  # for vis
-            layer_matrix = np.zeros((words_count, words_count))
             for head in range(heads_count):
-                matrix = attentions_loaded[sentence_id][layer][head]
-                if args.eos:
-                    matrix = matrix[:-1, :-1]
-                # the max trick -- for each row subtract its max
-                # from all of its components to get the values into (-inf, 0]
-                if not args.no_softmax:
-                    matrix = matrix - np.max(matrix, axis=1, keepdims=True)
-                    # softmax
-                    exp_matrix = np.exp(matrix)
-                    deps = exp_matrix/ np.sum(exp_matrix, axis=1, keepdims=True)
-                else:
-                    deps = matrix / np.sum(matrix, axis=1, keepdims=True)
-                deps = aggregate_subtoken_matrix(deps, tokens_list)
-
-
+                deps = vis[layer][head]
                 for k in depals.keys():
-                    if len(dependency_rels[sentence_index][k]) == 0:
-                        depals[k][sentence_index, layer, head] = 0
-                        depals_norm[k][sentence_index, layer, head] = 0
+                    if len(dependency_rels[idx][k]) == 0:
+                        depals[k][idx, layer, head] = 0
+                        depals_norm[k][idx, layer, head] = 0
                     else:
-                        depals[k][sentence_index, layer, head] \
-                                = np.sum(deps[tuple(zip(*dependency_rels[sentence_index][k]))])/np.sum(deps)
-                        depals_norm[k][sentence_index, layer, head] = \
-                            depals[k][sentence_index, layer, head] * len(deps) / len(dependency_rels[sentence_index][k])
-
+                        depals[k][idx, layer, head] \
+                            = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))]) / np.sum(deps)
+                        depals_norm[k][idx, layer, head] = \
+                            depals[k][idx, layer, head] * len(deps) / len(dependency_rels[idx][k])
+                    
     if args.sentences:
         for k in depals.keys():
             depals[k] = depals[k][args.sentences, :, :]
