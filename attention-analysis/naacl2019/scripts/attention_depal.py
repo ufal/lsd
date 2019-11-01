@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, tokens_loaded, args.eos, args.no_softmax,
                                                             args.maxlen, args.sentences)
-    for idx, vis in enumerate(attention_gen):
+    for vis, idx in attention_gen:
         for layer in range(layers_count):
             for head in range(heads_count):
                 deps = vis[layer][head]

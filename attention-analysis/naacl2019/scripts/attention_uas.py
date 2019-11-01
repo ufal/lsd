@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, tokens_loaded, args.eos, args.no_softmax,
                                                           args.maxlen, args.sentences)
-    for idx, vis in enumerate(attention_gen):
+    for vis, idx in attention_gen:
         for k in uas.keys():
             rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
         for layer in range(layers_count):

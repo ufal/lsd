@@ -84,4 +84,4 @@ def generate_matrices(attentions_loaded, tokens_loaded, eos=True, no_softmax=Fal
 				layer_deps.append(deps)
 			# layer_matrix = layer_matrix + deps
 			matrices.append(layer_deps)
-		yield matrices
+		yield matrices, sentence_index

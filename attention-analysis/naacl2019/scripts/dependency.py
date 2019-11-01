@@ -42,7 +42,12 @@ def postprocess(sentence_relations):
 		relation_map_label[idx] = label
 		relation_map[idx] = head
 		relation_map_reverse[head].append(idx)
-
+	
+	if ++idx < len(sentence_relations):
+		relation_map_label[idx] = 'ROOT'
+		relation_map[idx] = None
+		idx += 1
+		
 	## get rid of copulas
 	for idx, label in relation_map_label.items():
 		if label == 'cop':
@@ -73,9 +78,6 @@ def postprocess(sentence_relations):
 	
 	return res_sentence_relations
 
-			
-	
-
 
 def define_labels(consider_directionality):
 	labels_raw = list(set(label_map.values())) + ['all', 'other']
@@ -97,42 +99,34 @@ def add_dependency_relation(drs, head_id, dep_id, label, directional):
 		else:
 			label = 'other'
 		if directional:
-			drs['all-p2d'].append((head_id - 1, dep_id - 1))
-			drs['all-d2p'].append((dep_id - 1, head_id - 1))
-			drs[label + '-p2d'].append((head_id - 1, dep_id - 1))
-			drs[label + '-d2p'].append((dep_id - 1, head_id - 1))
+			drs['all-p2d'].append((head_id, dep_id))
+			drs['all-d2p'].append((dep_id, head_id))
+			drs[label + '-p2d'].append((head_id, dep_id))
+			drs[label + '-d2p'].append((dep_id, head_id))
 		
 		else:
-			drs['all'].append((head_id - 1, dep_id - 1))
-			drs['all'].append((dep_id - 1, head_id - 1))
-			drs[label].append((head_id - 1, dep_id - 1))
-			drs[label].append((dep_id - 1, head_id - 1))
+			drs['all'].append((head_id, dep_id))
+			drs['all'].append((dep_id, head_id))
+			drs[label].append((head_id, dep_id))
+			drs[label].append((dep_id, head_id))
 
 
+def conllu2dict(relations_labeled, directional=False):
+	res_relations = []
+	
+	for sentence_rel_labeled in relations_labeled:
+		sentence_rel = defaultdict(list)
+		for dep, head, label in sentence_rel_labeled:
+			add_dependency_relation(sentence_rel, head, dep, label, directional)
+		res_relations.append(sentence_rel)
+	return res_relations
+	
+	
 def read_conllu(conllu_file, directional=False):
 	define_labels(directional)
-	
-	CONLLU_ID = 0
-	CONLLU_LABEL = 7
-	CONLLU_HEAD = 6
-	relations = []
-	sentence_rel = defaultdict(list)
-	with open(conllu_file) as in_conllu:
-		sentid = 0
-		for line in in_conllu:
-			if line == '\n':
-				relations.append(sentence_rel)
-				sentence_rel = defaultdict(list)
-				sentid += 1
-			elif line.startswith('#'):
-				continue
-			else:
-				fields = line.strip().split('\t')
-				if fields[CONLLU_ID].isdigit():
-					if int(fields[CONLLU_HEAD]) != 0:
-						add_dependency_relation(sentence_rel, int(fields[CONLLU_HEAD]), int(fields[CONLLU_ID]),
-						                        fields[CONLLU_LABEL], directional)
-	
+	relations_labeled = read_conllu_labeled(conllu_file)
+	relations_labeled = [postprocess(sent_rel) for sent_rel in relations_labeled]
+	relations = conllu2dict(relations_labeled, directional)
 	return relations
 
 
@@ -146,7 +140,7 @@ def read_conllu_labeled(conllu_file):
 		sentid = 0
 		for line in in_conllu:
 			if line == '\n':
-				sentence_rel = postprocess(sentence_rel)
+
 				relations_labeled.append(sentence_rel)
 				sentence_rel = []
 				sentid += 1
