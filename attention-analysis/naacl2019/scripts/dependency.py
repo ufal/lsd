@@ -48,7 +48,8 @@ def postprocess(sentence_relations):
 		relation_map[idx] = None
 		idx += 1
 		
-	## get rid of copulas
+	# NOTE: version 3
+	# get rid of copulas
 	for idx, label in relation_map_label.items():
 		if label == 'cop':
 			cop_head = relation_map[idx]
@@ -63,14 +64,26 @@ def postprocess(sentence_relations):
 			relation_map_reverse[idx].append(cop_head)
 			## move some children of copula
 			
-			labels_to_move = {'nsubj', 'aux','csubj','ccomp', 'xcomp', 'advcl', 'acl', 'parataxis', 'punct'}
+			labels_to_move = {'nsubj', 'aux','csubj','ccomp', 'xcomp', 'advcl', 'acl', 'parataxis', 'expl','punct'}
 			for cop_dep in relation_map_reverse[cop_head]:
 				if relation_map_label[cop_dep].split(':')[0] in labels_to_move :
 					relation_map[cop_dep] = idx
 					relation_map_reverse[idx].append(cop_dep)
 			
-			relation_map_reverse[cop_head][:] = filterfalse(lambda x: x in labels_to_move ,
+			relation_map_reverse[cop_head][:] = filterfalse(lambda x: x in labels_to_move,
 			                                                relation_map_reverse[cop_head])
+	
+	# NOTE: version 5
+	# expletive to subject:
+	for idx, label in relation_map_label.items():
+		if label == 'expl':
+			expl_head = relation_map[idx]
+			if idx < expl_head:
+				for expl_dep in relation_map_reverse[expl_head]:
+					if relation_map_label[expl_dep].split(':')[0] == 'nsubj':
+						relation_map_label[expl_dep] = 'obj'
+				relation_map_label[idx] = 'nsubj'
+		
 	res_sentence_relations = []
 	for idx in range(len(relation_map)):
 		if relation_map[idx] is not None:
@@ -93,7 +106,8 @@ def define_labels(consider_directionality):
 
 def add_dependency_relation(drs, head_id, dep_id, label, directional):
 	if head_id != 0:
-		label = label.split(':')[0]  # to cope with nsubj:pass for instance
+		# NOTE: version 4 when line below commented
+		#label = label.split(':')[0]  # to cope with nsubj:pass for instance
 		if label in label_map or label + '-p2d' in label_map:
 			label = label_map[label]
 		else:
