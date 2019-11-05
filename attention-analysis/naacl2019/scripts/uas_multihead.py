@@ -101,7 +101,9 @@ if __name__ == '__main__':
 	
 	all_metrices = list()
 	
-	attention_gen = sentence_attentions.generate_matrices(attentions_loaded, tokens_loaded, args.eos, args.no_softmax, args.maxlen, args.sentences)
+	grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
+	
+	attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax, args.maxlen, args.sentences)
 	for vis, idx in attention_gen:
 		for k in uas.keys():
 			rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])

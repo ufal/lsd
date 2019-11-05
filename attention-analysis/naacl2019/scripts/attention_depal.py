@@ -122,8 +122,10 @@ if __name__ == '__main__':
     
     depals_norm = {aggr: np.zeros((sentences_count, layers_count, heads_count))
                    for aggr in dependency.labels}
+    
+    grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
 
-    attention_gen = sentence_attentions.generate_matrices(attentions_loaded, tokens_loaded, args.eos, args.no_softmax,
+    attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
                                                             args.maxlen, args.sentences)
     for vis, idx in attention_gen:
         for layer in range(layers_count):

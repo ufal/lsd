@@ -1,35 +1,25 @@
 import numpy as np
+import sys
+from itertools import chain
 
 
-def aggregate_subtoken_matrix(attention_matrix, wordpieces):
+def aggregate_subtoken_matrix(attention_matrix, tokens_grouped):
 	# this functions connects subtokens and aggregates their attention.
-	aggregate_wps = []
-	wp_ids = []
-	for wp_id, wp in enumerate(wordpieces):
-		wp_ids.append(wp_id)
-		if not wp.endswith('@@'):
-			aggregate_wps.append(wp_ids)
-			wp_ids = []
+	midres_matrix = np.zeros((len(tokens_grouped), attention_matrix.shape[0]))
 	
-	midres_matrix = np.zeros((len(aggregate_wps), len(wordpieces)))
-	
-	for tok_id, wp_ids in enumerate(aggregate_wps):
+	for tok_id, wp_ids in enumerate(tokens_grouped):
 		midres_matrix[tok_id, :] = np.mean(attention_matrix[wp_ids, :], axis=0)
 	
-	res_matrix = np.zeros((len(aggregate_wps), len(aggregate_wps)))
+	res_matrix = np.zeros((len(tokens_grouped), len(tokens_grouped)))
 	
-	for tok_id, wp_ids in enumerate(aggregate_wps):
+	for tok_id, wp_ids in enumerate(tokens_grouped):
 		res_matrix[:, tok_id] = np.sum(midres_matrix[:, wp_ids], axis=1)
-	
-	words = ' '.join(wordpieces).replace('@@ ', '')
-	res_tokens = words.split()
-	
-	assert len(res_tokens) == len(aggregate_wps), "Result matrix and token dimesnions don't match"
+
 	return res_matrix
 
 
-def generate_matrices(attentions_loaded, tokens_loaded, eos=True, no_softmax=False, maxlen=1000, sentences=None):
-	sentences_count = len(tokens_loaded)
+def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=False, maxlen=1000, sentences=None):
+	sentences_count = len(tokens_grouped)
 	layers_count = attentions_loaded['arr_0'].shape[0]
 	heads_count = attentions_loaded['arr_0'].shape[1]
 	for sentence_index in range(sentences_count):
@@ -40,27 +30,24 @@ def generate_matrices(attentions_loaded, tokens_loaded, eos=True, no_softmax=Fal
 		sentence_id = 'arr_' + str(sentence_index)
 		tokens_count = attentions_loaded[sentence_id].shape[2]
 		
-		
 		if eos:
 			tokens_count -= 1
-		tokens_list = tokens_loaded[sentence_index]
+		groups_list = tokens_grouped[sentence_index]
 		
 		# check maxlen
-		words = ' '.join(tokens_list).replace('@@ ', '')
-		
-		words_list = words.split()
-		if not len(words_list) <= maxlen:
+		if not len(groups_list) <= maxlen:
 			print('Too long sentence, skipped', sentence_index, file=sys.stderr)
 			continue
 		
+		ungrouped_list = list(chain.from_iterable(groups_list))
 		# NOTE sentences truncated to 64 tokens
 		# assert len(tokens_list) == tokens_count, "Bad no of tokens in sent " + str(sentence_index)
-		assert len(tokens_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
-		if len(tokens_list) > tokens_count:
+		assert len(ungrouped_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
+		if len(ungrouped_list) > tokens_count:
 			print('Too long sentence, skipped', sentence_index, file=sys.stderr)
 			continue
 		
-		words_count = len(words_list)
+		words_count = len(groups_list)
 		
 		# for visualisation -- vis[layer][head]
 		matrices = list()
@@ -80,7 +67,7 @@ def generate_matrices(attentions_loaded, tokens_loaded, eos=True, no_softmax=Fal
 					deps = exp_matrix / np.sum(exp_matrix, axis=1, keepdims=True)
 				else:
 					deps = matrix / np.sum(matrix, axis=1, keepdims=True)
-				deps = aggregate_subtoken_matrix(deps, tokens_list)
+				deps = aggregate_subtoken_matrix(deps, groups_list)
 				layer_deps.append(deps)
 			# layer_matrix = layer_matrix + deps
 			matrices.append(layer_deps)
