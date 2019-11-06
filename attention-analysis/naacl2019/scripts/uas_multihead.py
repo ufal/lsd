@@ -1,11 +1,9 @@
 import numpy as np
-import sys
 import argparse
 from collections import defaultdict
-import matplotlib
 import matplotlib.pyplot as plt
 
-import dependency, sentence_attentions
+from tools import dependency, sentence_attentions
 
 TOP_HEADS_NUM = 25
 

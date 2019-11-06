@@ -8,9 +8,8 @@ import argparse
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
-import sys
 
-import dependency, sentence_attentions
+from tools import dependency, sentence_attentions
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
@@ -126,7 +125,7 @@ if __name__ == '__main__':
     grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
-                                                            args.maxlen, args.sentences)
+                                                          args.maxlen, args.sentences)
     for vis, idx in attention_gen:
         for layer in range(layers_count):
             for head in range(heads_count):

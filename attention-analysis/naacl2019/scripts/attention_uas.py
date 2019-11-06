@@ -8,11 +8,8 @@ import argparse
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
-import sys
 
-from collections import defaultdict
-
-import dependency, sentence_attentions
+from tools import dependency, sentence_attentions
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
