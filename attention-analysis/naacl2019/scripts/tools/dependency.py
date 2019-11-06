@@ -3,7 +3,7 @@ from copy import copy
 from itertools import filterfalse
 from unidecode import unidecode
 
-
+from tools.dependency_converter import DependencyConverter
 made_directional = False
 
 labels = []
@@ -159,8 +159,11 @@ def conllu2dict(relations_labeled, directional=False):
 def read_conllu(conllu_file, directional=False):
 	define_labels(directional)
 	relations_labeled = read_conllu_labeled(conllu_file)
-	relations_labeled = [postprocess(sent_rel) for sent_rel in relations_labeled]
-	relations = conllu2dict(relations_labeled, directional)
+	output_relations_labeled = []
+	for sent_rel in relations_labeled:
+		DC = DependencyConverter(sent_rel)
+		output_relations_labeled.append(DC.convert())
+	relations = conllu2dict(output_relations_labeled, directional)
 	return relations
 
 
