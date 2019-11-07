@@ -6,6 +6,9 @@ from unidecode import unidecode
 from tools.dependency_converter import DependencyConverter
 made_directional = False
 
+pos_labels = ('ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN','NUM',
+              'PART','PRON','PROPN','PUNCT','SCONJ','SYM','VERB','X')
+
 labels = []
 
 label_map = {'acl': 'adj-clause',
@@ -25,6 +28,7 @@ label_map = {'acl': 'adj-clause',
 	            'nummod': 'num-modifier',
 	            'obj': 'object',
                 'punct': 'punctuation'}
+
 
 def postprocess(sentence_relations):
 	relation_map = dict()
@@ -150,7 +154,7 @@ def conllu2dict(relations_labeled, directional=False):
 	
 	for sentence_rel_labeled in relations_labeled:
 		sentence_rel = defaultdict(list)
-		for dep, head, label in sentence_rel_labeled:
+		for dep, head, label, _ in sentence_rel_labeled:
 			add_dependency_relation(sentence_rel, head, dep, label, directional)
 		res_relations.append(sentence_rel)
 	return res_relations
@@ -171,6 +175,7 @@ def read_conllu_labeled(conllu_file):
 	CONLLU_ID = 0
 	CONLLU_LABEL = 7
 	CONLLU_HEAD = 6
+	CONLLU_POS = 3
 	relations_labeled = []
 	sentence_rel = []
 	with open(conllu_file) as in_conllu:
@@ -186,11 +191,12 @@ def read_conllu_labeled(conllu_file):
 			else:
 				fields = line.strip().split('\t')
 				if fields[CONLLU_ID].isdigit():
-					if int(fields[CONLLU_HEAD]) != 0:
-						head_id = int(fields[CONLLU_HEAD]) -1
-						dep_id = int(fields[CONLLU_ID]) -1
-						label = fields[CONLLU_LABEL]
-						sentence_rel.append((dep_id, head_id, label))
+					#if int(fields[CONLLU_HEAD]) != 0:
+					head_id = int(fields[CONLLU_HEAD]) -1
+					dep_id = int(fields[CONLLU_ID]) -1
+					label = fields[CONLLU_LABEL]
+					pos_tag = fields[CONLLU_POS]
+					sentence_rel.append((dep_id, head_id, label, pos_tag))
 	
 	return relations_labeled
 

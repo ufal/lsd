@@ -8,26 +8,28 @@ class DependencyConverter:
 		self.to_head = dict()
 		self.to_deps = defaultdict(list)
 		self.to_label = dict()
+		self.to_pos = dict()
 		idx = -1
 		# print(sentence_relations)
 		for rel in sentence_relations:
 			idx += 1
-			dep, head, label = rel
-			if dep != idx:
-				self.to_label[idx] = 'ROOT'
-				self.to_head[idx] = -1
-				self.to_deps[-1].append(idx)
-				idx += 1
-				assert idx == dep
+			dep, head, label, pos = rel
+			# if dep != idx:
+			# 	self.to_label[idx] = 'ROOT'
+			# 	self.to_head[idx] = -1
+			# 	self.to_deps[-1].append(idx)
+			# 	idx += 1
+			# 	assert idx == dep
 			self.to_label[idx] = label
 			self.to_head[idx] = head
+			self.to_pos[idx] = pos
 			self.to_deps[head].append(idx)
 		
-		if ++idx < len(sentence_relations):
-			self.to_label[idx] = 'ROOT'
-			self.to_head[idx] = -1
-			self.to_deps[-1].append(idx)
-			idx += 1
+		# if ++idx < len(sentence_relations):
+		# 	self.to_label[idx] = 'ROOT'
+		# 	self.to_head[idx] = -1
+		# 	self.to_deps[-1].append(idx)
+		# 	idx += 1
 		
 	def __change_direction(self, old_dep, new_label):
 		old_head = self.to_head[old_dep]
@@ -90,9 +92,7 @@ class DependencyConverter:
 		
 		for copula_dep in copulas:
 			new_dep = self.__change_direction(copula_dep, 'dep')
-			self.check_structure()
 			self.__move_labeled_relations(new_dep, copula_dep, labels_to_move)
-			self.check_structure()
 	
 	# NOTE: version 5
 	# expletive to subject:
@@ -104,10 +104,10 @@ class DependencyConverter:
 				expletives.append(idx)
 				
 		for expl_dep in expletives:
-			self.__change_dependent_labels(self.to_head[expl_dep], {'obj': 'nsubj'})
+			self.__change_dependent_labels(self.to_head[expl_dep], {'nsubj': 'obj'})
 			self.__change_label(expl_dep, 'nsubj')
 	
-	# NOTE: version 7
+	# NOTE: version 7 <- discarded step
 	# object attends subject instead of root
 	def object2subject_attachment(self):
 		
@@ -131,17 +131,14 @@ class DependencyConverter:
 				if nsubj_dep is not None:
 					self.__move_relation(obj_dep,nsubj_dep, 'obj')
 	
-	def convert(self):
-		self.check_structure()
+	def convert(self, return_root=False):
 		self.remove_copulas()
-		self.check_structure()
 		self.expletive2subject()
-		self.check_structure()
-		self.object2subject_attachment()
+		# self.object2subject_attachment()
 		self.check_structure()
 		res_sentence_relations = []
 		for idx in range(len(self.to_head)):
-			if self.to_head[idx] is not None:
-				res_sentence_relations.append((idx, self.to_head[idx], self.to_label[idx]))
+			if self.to_head[idx] != -1 or return_root:
+				res_sentence_relations.append((idx, self.to_head[idx], self.to_label[idx], self.to_pos[idx]))
 		
 		return res_sentence_relations
