@@ -102,7 +102,10 @@ if __name__ == '__main__':
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
                                                           args.maxlen, args.sentences)
+    
+    sentences_considered = []
     for vis, idx in attention_gen:
+        sentences_considered.append(idx)
         for k in uas.keys():
             rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
         for layer in range(layers_count):
@@ -113,11 +116,11 @@ if __name__ == '__main__':
                     if len(dependency_rels[idx][k]):
                         uas[k][idx, layer, head] \
                             = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
-                        
+
+    dependency_rels = [dependency_rels[idx] for idx in sentences_considered]
     for k in uas.keys():
-        if args.sentences:
-            uas[k] = uas[k][args.sentences, :, :]
-            rel_number[k] = rel_number[k][args.sentences, :, :]
+        uas[k] = uas[k][sentences_considered, :, :]
+        rel_number[k] = rel_number[k][sentences_considered, :, :]
             
         uas[k] = np.sum(uas[k], axis=0) / np.sum(rel_number[k], axis=0)
         uas_filename = f'{args.uas}-{k}.{args.format}'

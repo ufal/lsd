@@ -228,6 +228,7 @@ def group_wordpieces(wordpieces_all, conllu_file):
 	grouped_ids_all = []
 	tokens_out_all = []
 	conllu_tokens_all = read_conllu_tokens(conllu_file)
+	idx = 0
 	for wordpieces, conllu_tokens in zip(wordpieces_all, conllu_tokens_all):
 		conllu_id = 0
 		curr_token = ''
@@ -246,8 +247,15 @@ def group_wordpieces(wordpieces_all, conllu_file):
 				tokens_out.append(curr_token)
 				curr_token = ''
 				conllu_id += 1
-				
-		assert conllu_id == len(conllu_tokens)
-		tokens_out_all.append(tokens_out)
-		grouped_ids_all.append(grouped_ids)
+		try:
+			assert conllu_id == len(conllu_tokens), f'{idx} \n' \
+			                                        f'bert count {conllu_id} tokens{tokens_out} \n' \
+			                                        f'conllu count {len(conllu_tokens)}, tokens {conllu_tokens}'
+		except AssertionError:
+			grouped_ids_all.append(None)
+			tokens_out_all.append([])
+		else:
+			tokens_out_all.append(tokens_out)
+			grouped_ids_all.append(grouped_ids)
+		idx += 1
 	return grouped_ids_all, tokens_out_all

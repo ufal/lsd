@@ -126,7 +126,10 @@ if __name__ == '__main__':
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
                                                           args.maxlen, args.sentences)
+
+    sentences_considered = []
     for vis, idx in attention_gen:
+        sentences_considered.append(idx)
         for layer in range(layers_count):
             for head in range(heads_count):
                 deps = vis[layer][head]
@@ -140,10 +143,9 @@ if __name__ == '__main__':
                         depals_norm[k][idx, layer, head] = \
                             depals[k][idx, layer, head] * len(deps) / len(dependency_rels[idx][k])
                     
-    if args.sentences:
-        for k in depals.keys():
-            depals[k] = depals[k][args.sentences, :, :]
-            depals_norm[k] = depals_norm[k][args.sentences, :, :]
+    for k in depals.keys():
+        depals[k] = depals[k][sentences_considered, :, :]
+        depals_norm[k] = depals_norm[k][sentences_considered, :, :]
 
     for k in depals.keys():
         # save_plots(depals[k], args.depal + f'-{k}', args.format, k)

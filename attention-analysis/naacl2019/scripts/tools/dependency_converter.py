@@ -14,23 +14,12 @@ class DependencyConverter:
 		for rel in sentence_relations:
 			idx += 1
 			dep, head, label, pos = rel
-			# if dep != idx:
-			# 	self.to_label[idx] = 'ROOT'
-			# 	self.to_head[idx] = -1
-			# 	self.to_deps[-1].append(idx)
-			# 	idx += 1
-			# 	assert idx == dep
+
 			self.to_label[idx] = label
 			self.to_head[idx] = head
 			self.to_pos[idx] = pos
 			self.to_deps[head].append(idx)
-		
-		# if ++idx < len(sentence_relations):
-		# 	self.to_label[idx] = 'ROOT'
-		# 	self.to_head[idx] = -1
-		# 	self.to_deps[-1].append(idx)
-		# 	idx += 1
-		
+
 	def __change_direction(self, old_dep, new_label):
 		old_head = self.to_head[old_dep]
 		self.__change_label(old_dep, self.to_label[old_head])

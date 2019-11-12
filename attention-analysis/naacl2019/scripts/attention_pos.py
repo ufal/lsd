@@ -10,6 +10,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 
 from tools import dependency, sentence_attentions
+from tools.dependency_converter import DependencyConverter
 
 
 def heatmap(AUC, title, xlabel, ylabel, xticklabels, yticklabels, cmap='bone', color='lightblue', vmax=0.5):
@@ -95,22 +96,29 @@ if __name__ == '__main__':
 
     pos = {posl: np.zeros((sentences_count, layers_count, heads_count))
            for posl in dependency.pos_labels}
+    pos['root'] = np.zeros((sentences_count, layers_count, heads_count))
 
     grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
 
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
                                                           args.maxlen, args.sentences)
+    sentences_considered = []
     for vis, idx in attention_gen:
+        sentences_considered.append(idx)
+        sent_relations = DependencyConverter(dependency_rels_labeled[idx]).convert(return_root=True)
+        
         for layer in range(layers_count):
             for head in range(heads_count):
                 deps = vis[layer][head]
                 deps = deps.mean(axis=0)
-                for token_id, _, _, posl in dependency_rels_labeled[idx]:
+                for token_id, _, rell, posl in sent_relations:
                     pos[posl][idx, layer, head] += deps[token_id]
-                        
+                    if rell == 'root':
+                        pos['root'][idx, layer, head] += deps[token_id]
+
+
     for k in pos.keys():
-        if args.sentences:
-            pos[k] = pos[k][args.sentences, :, :]
+        pos[k] = pos[k][sentences_considered, :, :]
             
         pos[k] = np.mean(pos[k], axis=0)
         pos_filename = f'{args.pos}-{k}.{args.format}'

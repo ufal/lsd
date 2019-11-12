@@ -26,6 +26,7 @@ def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=Fa
 		
 		if sentences and sentence_index not in sentences:
 			continue
+
 		
 		sentence_id = 'arr_' + str(sentence_index)
 		tokens_count = attentions_loaded[sentence_id].shape[2]
@@ -33,6 +34,10 @@ def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=Fa
 		if eos:
 			tokens_count -= 1
 		groups_list = tokens_grouped[sentence_index]
+		
+		if groups_list is None:
+			print('Token mismatch sentence skipped', sentence_index, file=sys.stderr)
+			continue
 		
 		# check maxlen
 		if not len(groups_list) <= maxlen:
