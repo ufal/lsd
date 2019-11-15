@@ -121,8 +121,8 @@ class DependencyConverter:
 					self.__move_relation(obj_dep,nsubj_dep, 'obj')
 	
 	def convert(self, return_root=False):
-		self.remove_copulas()
-		self.expletive2subject()
+		#self.remove_copulas()
+		#self.expletive2subject()
 		# self.object2subject_attachment()
 		self.check_structure()
 		res_sentence_relations = []

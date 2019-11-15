@@ -3,6 +3,30 @@ import sys
 from itertools import chain
 
 
+def pos_soft_mask(sentence_rels, relation_label, pos_frame):
+	pos_mask = np.zeros((len(sentence_rels), len(sentence_rels)))
+	for idx in range(len(sentence_rels)):
+		for jdx in range(idx+1,len(sentence_rels)):
+			i_pos = sentence_rels[idx][3]
+			j_pos = sentence_rels[jdx][3]
+			pos_mask[idx,jdx] = pos_frame[relation_label][(i_pos, j_pos)]
+			pos_mask[jdx, idx] = pos_frame[relation_label][(j_pos, i_pos)]
+	
+	return pos_mask
+
+
+def pos_hard_mask(sentence_rels, relation_label, pos_frame, thr=0.005):
+	pos_mask = np.zeros((len(sentence_rels), len(sentence_rels)))
+	for idx in range(len(sentence_rels)):
+		for jdx in range(idx + 1, len(sentence_rels)):
+			i_pos = sentence_rels[idx][3]
+			j_pos = sentence_rels[jdx][3]
+			if pos_frame[relation_label][(i_pos, j_pos)] >= thr:
+				pos_mask[idx, jdx] = 1.0
+			if pos_frame[relation_label][(j_pos, i_pos)] >= thr:
+				pos_mask[jdx, idx] = 1.0
+	return pos_mask
+
 def aggregate_subtoken_matrix(attention_matrix, tokens_grouped):
 	# this functions connects subtokens and aggregates their attention.
 	midres_matrix = np.zeros((len(tokens_grouped), attention_matrix.shape[0]))

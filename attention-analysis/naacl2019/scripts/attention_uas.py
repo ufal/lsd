@@ -9,6 +9,10 @@ import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
 
+from tqdm import tqdm
+
+import pandas as pd
+
 from tools import dependency, sentence_attentions
 
 
@@ -61,7 +65,9 @@ if __name__ == '__main__':
     ap.add_argument("-t", "--tokens", required=True, help="Labels (tokens) separated by spaces")
 
     ap.add_argument("-u", "--uas", help="Output uas measuere into this file")
-    ap.add_argument("-c", "--conllu", help="Eval against the given conllu faile")
+    ap.add_argument("-c", "--conllu", help="Eval against the given conllu file")
+    ap.add_argument("-T", "--train-conllu", help="Conllu file for training POS",
+                    default='/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/graph-extraction/entrain.conllu')
 
     ap.add_argument("-f", "--format", default="png",
                     help="Output visualisation as this format (pdf, png, maybe other options)")
@@ -103,16 +109,27 @@ if __name__ == '__main__':
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
                                                           args.maxlen, args.sentences)
     
+    dependency_rels_labeled = dependency.read_conllu_labeled(args.conllu, convert=True)
+    pos_frame = dependency.conllu2freq_frame(args.train_conllu)
+    
     sentences_considered = []
-    for vis, idx in attention_gen:
+    for vis, idx in tqdm(attention_gen):
         sentences_considered.append(idx)
+        pos_masks = dict()
         for k in uas.keys():
             rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
+            # NOTE 9: pos soft mask is used (
+            pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
+            # NOTE 10: hard mask used
+            #pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame)
         for layer in range(layers_count):
             for head in range(heads_count):
-                deps = vis[layer][head]
-                deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+                # deps = vis[layer][head]
+                #
                 for k in uas.keys():
+                    # NOTE 9: pos soft mask is used (based on frequency of nodes)
+                    deps = vis[layer][head] * pos_masks[k]
+                    deps = (deps == deps.max(axis=1)[:, None]).astype(int)
                     if len(dependency_rels[idx][k]):
                         uas[k][idx, layer, head] \
                             = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])

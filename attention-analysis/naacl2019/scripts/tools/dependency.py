@@ -2,6 +2,7 @@ from collections import defaultdict
 from copy import copy
 from itertools import filterfalse
 from unidecode import unidecode
+import pandas as pd
 
 from tools.dependency_converter import DependencyConverter
 made_directional = False
@@ -128,14 +129,20 @@ def define_labels(consider_directionality):
 		labels = labels_raw
 
 
+def transform_label(label):
+	# NOTE: version 4 when line below commented
+	# label = label.split(':')[0]  # to cope with nsubj:pass for instance
+	if label in label_map or label + '-p2d' in label_map:
+		label = label_map[label]
+	else:
+		label = 'other'
+	
+	return label
+
+
 def add_dependency_relation(drs, head_id, dep_id, label, directional):
 	if head_id != 0:
-		# NOTE: version 4 when line below commented
-		#label = label.split(':')[0]  # to cope with nsubj:pass for instance
-		if label in label_map or label + '-p2d' in label_map:
-			label = label_map[label]
-		else:
-			label = 'other'
+		label = transform_label(label)
 		if directional:
 			drs['all-p2d'].append((head_id, dep_id))
 			drs['all-d2p'].append((dep_id, head_id))
@@ -147,6 +154,33 @@ def add_dependency_relation(drs, head_id, dep_id, label, directional):
 			drs['all'].append((dep_id, head_id))
 			drs[label].append((head_id, dep_id))
 			drs[label].append((dep_id, head_id))
+
+
+def pos_dict():
+	res_dict = dict()
+	for pos1 in pos_labels:
+		for pos2 in pos_labels:
+			res_dict[(pos1, pos2)] = 0
+	return res_dict
+
+
+def conllu2freq_frame(conllu_file, directional=True):
+	dependency_pos_freq = defaultdict(lambda: pos_dict())
+	relation_labeled = read_conllu_labeled(conllu_file, convert=True)
+	for sent_rels in relation_labeled:
+		for dep, head, label, pos in sent_rels:
+			if label != 'root':
+				label = transform_label(label)
+				dependency_pos_freq['all-d2p'][(pos, sent_rels[head][3])] += 1
+				dependency_pos_freq[label + '-d2p'][(pos, sent_rels[head][3])] += 1
+				dependency_pos_freq['all-p2d'][(sent_rels[head][3], pos)] += 1
+				dependency_pos_freq[label + '-p2d'][(sent_rels[head][3], pos)] += 1
+	
+	pos_frame = pd.DataFrame.from_dict(dependency_pos_freq)
+	pos_frame = pos_frame / pos_frame.sum(axis=0)[None, :]
+	pos_frame.fillna(0, inplace=True)
+	
+	return pos_frame.to_dict()
 
 
 def conllu2dict(relations_labeled, directional=False):
@@ -171,7 +205,7 @@ def read_conllu(conllu_file, directional=False):
 	return relations
 
 
-def read_conllu_labeled(conllu_file):
+def read_conllu_labeled(conllu_file, convert=False):
 	CONLLU_ID = 0
 	CONLLU_LABEL = 7
 	CONLLU_HEAD = 6
@@ -182,8 +216,10 @@ def read_conllu_labeled(conllu_file):
 		sentid = 0
 		for line in in_conllu:
 			if line == '\n':
-
-				relations_labeled.append(sentence_rel)
+				if convert:
+					relations_labeled.append(DependencyConverter(sentence_rel).convert(return_root=True))
+				else:
+					relations_labeled.append(sentence_rel)
 				sentence_rel = []
 				sentid += 1
 			elif line.startswith('#'):

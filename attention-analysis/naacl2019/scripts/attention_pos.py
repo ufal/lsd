@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     # in dependency_rels for each sentece there is a lists of tuples (token, token's head)
     # in dependency_rels_rev tuples are reversed.
-    dependency_rels_labeled = dependency.read_conllu_labeled(args.conllu)
+    dependency_rels_labeled = dependency.read_conllu_labeled(args.conllu, convert=True)
 
     pos = {posl: np.zeros((sentences_count, layers_count, heads_count))
            for posl in dependency.pos_labels}
@@ -105,12 +105,14 @@ if __name__ == '__main__':
     sentences_considered = []
     for vis, idx in attention_gen:
         sentences_considered.append(idx)
-        sent_relations = DependencyConverter(dependency_rels_labeled[idx]).convert(return_root=True)
+        sent_relations = dependency_rels_labeled[idx]
         
         for layer in range(layers_count):
             for head in range(heads_count):
                 deps = vis[layer][head]
                 deps = deps.mean(axis=0)
+                # NOTE: for hard selection of POS uncomment:
+                #deps = (deps == deps.max()).astype(int)
                 for token_id, _, rell, posl in sent_relations:
                     pos[posl][idx, layer, head] += deps[token_id]
                     if rell == 'root':
