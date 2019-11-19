@@ -25,7 +25,10 @@ def uas_from_matrices(matrices, dep_rels, all_posmasks):
 	total = defaultdict(int)
 	for matrix, dep_rel, pos_masks in zip(matrices, dep_rels, all_posmasks):
 		for rel_type, rel_pairs in dep_rel.items():
-			retr_pairs = set(zip(range(matrix.shape[0]), np.argmax(matrix * pos_masks[rel_type], axis=1)))
+			if rel_type not in pos_masks:
+				retr_pairs = {}
+			else:
+				retr_pairs = set(zip(range(matrix.shape[0]), np.argmax(matrix * pos_masks[rel_type], axis=1)))
 			retrived[rel_type] += len(set(rel_pairs).intersection(retr_pairs) )
 			total[rel_type] += len(set(rel_pairs))
 	
@@ -128,9 +131,9 @@ if __name__ == '__main__':
 		pos_masks = dict()
 		for k in uas.keys():
 			rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
-			pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
+			#pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
 			# NOTE 10: hard mask used
-			#pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame)
+			pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
 		for layer in range(layers_count):
 			for head in range(heads_count):
 				# deps = vis[layer][head]
@@ -152,32 +155,38 @@ if __name__ == '__main__':
 
 	all_uas = defaultdict(list)
 	best_head_mixture = dict()
+	max_uas = dict()
 	for k in tqdm(sorted(uas.keys())):
 		uas[k] = np.sum(uas[k], axis=0) / np.sum(rel_number[k], axis=0)
 		
 		top_heads_ids = np.argsort(uas[k], axis=None)[-TOP_HEADS_NUM:][::-1]
 		picked_heads_ids = []
-		max_uas = - np.inf
+		max_uas[k] = - np.inf
 		for num in range(0,TOP_HEADS_NUM):
 			curr_heads_ids = picked_heads_ids + [top_heads_ids[num]]
 			curr_lids, curr_hids = np.unravel_index(curr_heads_ids, uas[k].shape)
 			avg_gen = (average_heads(np.array(c_m),curr_lids, curr_hids ) for c_m in all_metrices)
 			curr_uas = uas_from_matrices_rel(avg_gen, dependency_rels, k, all_pos_masks)
 			all_uas[k].append(curr_uas)
-			if curr_uas > max_uas:
-				max_uas = curr_uas
+			if curr_uas > max_uas[k]:
+				max_uas[k] = curr_uas
 				picked_heads_ids = curr_heads_ids
 				best_head_mixture[k] = np.unravel_index(picked_heads_ids, uas[k].shape)
 				
 		print('\n*****\n')
-		print(f"Best uas for: {k} : {max_uas}")
+		print(f"Best uas for: {k} : {max_uas[k]}")
 		print(f"Head mixture : {best_head_mixture[k]}")
 		best_gen = (average_heads(np.array(c_m), best_head_mixture[k][0], best_head_mixture[k][1]) for c_m in all_metrices)
 		uas_from_matrices(best_gen, dependency_rels, all_pos_masks)
 		
-	for k in tqdm(sorted(uas.keys())):
+	for k in tqdm(sorted(max_uas.keys())):
 		if k.endswith('d2p'):
-			print(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
+			alt_k = k[:-4] + '-p2d'
+			if max_uas[k] > max_uas[alt_k]:
+				print(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
+			else:
+				print(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
+				
 		
 	for k in sorted(uas.keys()):
 		uas_filename = f'{args.uas}-{k}.{args.format}'

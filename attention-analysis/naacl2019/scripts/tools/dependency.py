@@ -12,109 +12,54 @@ pos_labels = ('ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN','NUM',
 
 labels = []
 
-label_map = {'acl': 'adj-clause',
-	            'advcl': 'adv-clause',
-	            'advmod': 'adv-modifier',
-	            'amod': 'adj-modifier',
-	            'appos': 'apposition',
-	            'aux': 'auxiliary',
-	            'ccomp': 'clausal',
+# label_map = {'acl': 'adj-clause',
+# 	            'advcl': 'adv-clause',
+# 	            'advmod': 'adv-modifier',
+# 	            'amod': 'adj-modifier',
+# 	            'appos': 'apposition',
+# 	            'aux': 'auxiliary',
+# 	            'ccomp': 'clausal',
+# 	            'compound': 'compound',
+# 	            'conj': 'conjunct',
+# 	            'csubj': 'clausal subject',
+# 	            'det': 'determiner',
+# 	            'iobj': 'i object',
+# 	            'nmod': 'noun-modifier',
+# 	            'nsubj': 'subject',
+# 	            'nummod': 'num-modifier',
+# 	            'obj': 'object',
+#                 'punct': 'punctuation'}
+
+#all relations
+label_map = {'acl': 'acl',
+	            'advcl': 'advcl',
+	            'advmod': 'advmod',
+	            'amod': 'amod',
+	            'appos': 'appos',
+	            'aux': 'aux',
+	            'ccomp': 'ccomp',
 	            'compound': 'compound',
-	            'conj': 'conjunct',
-	            'csubj': 'clausal subject',
-	            'det': 'determiner',
-	            'iobj': 'i object',
-	            'nmod': 'noun-modifier',
-	            'nsubj': 'subject',
-	            'nummod': 'num-modifier',
-	            'obj': 'object',
-                'punct': 'punctuation'}
-
-
-def postprocess(sentence_relations):
-	relation_map = dict()
-	relation_map_reverse = defaultdict(list)
-	relation_map_label = dict()
-	idx = -1
-	#print(sentence_relations)
-	for rel in sentence_relations:
-		idx += 1
-		dep, head, label = rel
-		if dep != idx:
-			relation_map_label[idx] = 'ROOT'
-			relation_map[idx] = None
-			idx += 1
-			assert idx == dep
-		relation_map_label[idx] = label
-		relation_map[idx] = head
-		relation_map_reverse[head].append(idx)
-	
-	if ++idx < len(sentence_relations):
-		relation_map_label[idx] = 'ROOT'
-		relation_map[idx] = None
-		idx += 1
-		
-	# NOTE: version 3
-	#get rid of copulas
-	for idx, label in relation_map_label.items():
-		if label == 'cop':
-			cop_head = relation_map[idx]
-
-			relation_map_label[idx] = relation_map_label[cop_head]
-			relation_map_label[cop_head] = 'dep'
-
-			relation_map[idx] = relation_map[cop_head]
-			relation_map[cop_head] = idx
-
-			#relation_map_reverse[cop_head].remove(idx)
-			relation_map_reverse[idx].append(cop_head)
-			## move some children of copula
-
-			labels_to_move = {'nsubj', 'aux','csubj','ccomp', 'xcomp', 'advcl', 'acl', 'parataxis', 'expl','punct', 'obj'}
-			for cop_dep in relation_map_reverse[cop_head]:
-				if relation_map_label[cop_dep].split(':')[0] in labels_to_move:
-					relation_map[cop_dep] = idx
-					relation_map_reverse[idx].append(cop_dep)
-
-			relation_map_reverse[cop_head] = list(filter(lambda x: relation_map_label[x].split(':')[0] in labels_to_move,
-			                                                relation_map_reverse[cop_head]))
-
-	# NOTE: version 5
-	# expletive to subject:
-	for idx, label in relation_map_label.items():
-		if label == 'expl':
-			expl_head = relation_map[idx]
-			if idx < expl_head:
-				for expl_dep in relation_map_reverse[expl_head]:
-					if relation_map_label[expl_dep].split(':')[0] == 'nsubj':
-						relation_map_label[expl_dep] = 'obj'
-				relation_map_label[idx] = 'nsubj'
-
-	# NOTE: version 7
-	# object attends subject instead of root
-	for idx, label in relation_map_label.items():
-		if label == 'obj':
-			obj_head = relation_map[idx]
-			nsubj_idx = None
-			for sibling in relation_map_reverse[obj_head]:
-				if relation_map_label[sibling] == 'nsubj':
-					if nsubj_idx is None:
-						nsubj_idx = sibling
-					else:
-						nsubj_idx = None
-						break
-			if nsubj_idx is not None:
-				relation_map[idx] = nsubj_idx
-				relation_map_reverse[nsubj_idx].append(idx)
-				relation_map_reverse[obj_head].remove(idx)
-				
-		
-	res_sentence_relations = []
-	for idx in range(len(relation_map)):
-		if relation_map[idx] is not None:
-			res_sentence_relations.append((idx, relation_map[idx], relation_map_label[idx]))
-	
-	return res_sentence_relations
+	            'conj': 'conj',
+                'cc': 'cc',
+	            'csubj': 'csubj',
+                'xcomp': 'xcomp',
+                'parataxis': 'parataxis',
+	            'det': 'det',
+                'dep': 'dep',
+	            'iobj': 'iobj',
+	            'nmod': 'nmod',
+	            'nsubj': 'nsubj',
+	            'nummod': 'nummod',
+	            'obj': 'obj',
+                'mark': 'mark',
+                'case': 'case',
+                'punct': 'punct',
+                'discourse': 'discourse',
+                'vocative': 'vocative',
+                'flat': 'flat',
+                'fixed': 'fixed',
+                'expl': 'expl',
+                'orphan': 'orphan'}
 
 
 def define_labels(consider_directionality):
@@ -135,7 +80,7 @@ def transform_label(label):
 	if label in label_map or label + '-p2d' in label_map:
 		label = label_map[label]
 	else:
-		label = 'other'
+		label = 'dep'
 	
 	return label
 

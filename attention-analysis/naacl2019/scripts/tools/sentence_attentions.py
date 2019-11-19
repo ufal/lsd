@@ -9,9 +9,13 @@ def pos_soft_mask(sentence_rels, relation_label, pos_frame):
 		for jdx in range(idx+1,len(sentence_rels)):
 			i_pos = sentence_rels[idx][3]
 			j_pos = sentence_rels[jdx][3]
-			pos_mask[idx,jdx] = pos_frame[relation_label][(i_pos, j_pos)]
-			pos_mask[jdx, idx] = pos_frame[relation_label][(j_pos, i_pos)]
-	
+			if relation_label not in pos_frame:
+				pos_mask[idx,jdx] = 0
+				pos_mask[jdx, idx] = 0
+			else:
+				pos_mask[idx,jdx] = pos_frame[relation_label][(i_pos, j_pos)]
+				pos_mask[jdx, idx] = pos_frame[relation_label][(j_pos, i_pos)]
+		
 	return pos_mask
 
 
@@ -21,11 +25,12 @@ def pos_hard_mask(sentence_rels, relation_label, pos_frame, thr=0.005):
 		for jdx in range(idx + 1, len(sentence_rels)):
 			i_pos = sentence_rels[idx][3]
 			j_pos = sentence_rels[jdx][3]
-			if pos_frame[relation_label][(i_pos, j_pos)] >= thr:
+			if relation_label in pos_frame and pos_frame[relation_label][(i_pos, j_pos)] >= thr:
 				pos_mask[idx, jdx] = 1.0
-			if pos_frame[relation_label][(j_pos, i_pos)] >= thr:
+			if relation_label in pos_frame and pos_frame[relation_label][(j_pos, i_pos)] >= thr:
 				pos_mask[jdx, idx] = 1.0
 	return pos_mask
+
 
 def aggregate_subtoken_matrix(attention_matrix, tokens_grouped):
 	# this functions connects subtokens and aggregates their attention.
