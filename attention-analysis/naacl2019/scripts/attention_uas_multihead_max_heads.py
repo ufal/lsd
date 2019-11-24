@@ -183,14 +183,16 @@ if __name__ == '__main__':
         max_uas[k] = - np.inf
         for num in range(0,TOP_HEADS_NUM):
             new_head_id = top_heads_ids[num]
-            curr_heads_ids = list(picked_heads_ids)
+
             candidate_heads_ids = None
 
-            if len(curr_heads_ids) < args.numheads:
+            if len(picked_heads_ids) < args.numheads:
+                curr_heads_ids = list(picked_heads_ids)
                 curr_heads_ids.append(new_head_id)
                 candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture)
 
-            for sub_idx in range(len(curr_heads_ids)):
+            for sub_idx in range(len(picked_heads_ids)):
+                curr_heads_ids = list(picked_heads_ids)
                 curr_heads_ids[sub_idx] = new_head_id
                 candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture)
 
