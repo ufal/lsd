@@ -15,9 +15,9 @@ echo "language ${LAN}"
 for f in $FILES
 do
   b=$(basename $f)
-  if [ ! -d  "$OUTPUT_DIR/$b/multihead3" ]
+  if [ ! -d  "$OUTPUT_DIR/$b/multihead_h3" ]
   then
-    mkdir -p "$OUTPUT_DIR/$b/multihead3"
+    mkdir -p "$OUTPUT_DIR/$b/multihead_h3"
   fi
-  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead3/mhuas" -c $CONVCONLLU -e --numheads 3
+  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead_h3/mhuas" -c $CONVCONLLU -e --numheads 3
 done

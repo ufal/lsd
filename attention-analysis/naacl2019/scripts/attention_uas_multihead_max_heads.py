@@ -169,7 +169,7 @@ if __name__ == '__main__':
         all_uas[k].append(curr_uas)
         if curr_uas > max_uas[k]:
             max_uas[k] = curr_uas
-            best_head_mixture[k] = np.unravel_index(picked_heads_ids, uas[k].shape)
+            best_head_mixture[k] = np.unravel_index(curr_heads_ids, uas[k].shape)
             return list(curr_heads_ids)
         else:
             return None
