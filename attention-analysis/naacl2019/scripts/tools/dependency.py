@@ -12,54 +12,80 @@ pos_labels = ('ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN','NUM',
 
 labels = []
 
-# label_map = {'acl': 'adj-clause',
-# 	            'advcl': 'adv-clause',
-# 	            'advmod': 'adv-modifier',
-# 	            'amod': 'adj-modifier',
-# 	            'appos': 'apposition',
-# 	            'aux': 'auxiliary',
-# 	            'ccomp': 'clausal',
-# 	            'compound': 'compound',
-# 	            'conj': 'conjunct',
-# 	            'csubj': 'clausal subject',
-# 	            'det': 'determiner',
-# 	            'iobj': 'i object',
-# 	            'nmod': 'noun-modifier',
-# 	            'nsubj': 'subject',
-# 	            'nummod': 'num-modifier',
-# 	            'obj': 'object',
-#                 'punct': 'punctuation'}
-
-#all relations
-label_map = {'acl': 'acl',
-	            'advcl': 'advcl',
-	            'advmod': 'advmod',
-	            'amod': 'amod',
-	            'appos': 'appos',
-	            'aux': 'aux',
-	            'ccomp': 'ccomp',
+label_map = {'acl': 'adj-clause',
+	            'advcl': 'adv-clause',
+	            'advmod': 'adv-modifier',
+	            'amod': 'adj-modifier',
+	            'appos': 'apposition',
+	            'aux': 'auxiliary',
+	            'ccomp': 'clausal',
 	            'compound': 'compound',
-	            'conj': 'conj',
-                'cc': 'cc',
-	            'csubj': 'csubj',
-                'xcomp': 'xcomp',
-                'parataxis': 'parataxis',
-	            'det': 'det',
-                'dep': 'dep',
-	            'iobj': 'iobj',
-	            'nmod': 'nmod',
-	            'nsubj': 'nsubj',
-	            'nummod': 'nummod',
-	            'obj': 'obj',
-                'mark': 'mark',
-                'case': 'case',
-                'punct': 'punct',
-                'discourse': 'discourse',
-                'vocative': 'vocative',
-                'flat': 'flat',
-                'fixed': 'fixed',
-                'expl': 'expl',
-                'orphan': 'orphan'}
+	            'conj': 'conjunct',
+	            'csubj': 'clausal subject',
+	            'det': 'determiner',
+	            'nmod': 'noun-modifier',
+	            'nsubj': 'subject',
+	            'nummod': 'num-modifier',
+	            'obj': 'object',
+                'punct': 'punctuation'}
+
+pos_map = {'ADJ': 'ADJ',
+           'ADP': 'ADP',
+			'ADV': 'ADV',
+			'AUX': 'VERB',
+            'DET': 'DET',
+			'NOUN': 'NOUN',
+			'NUM': 'ADJ',
+			'PRON': 'NOUN',
+			'PROPN': 'NOUN',
+			'PUNCT': 'PUNCT',
+			'VERB': 'VERB'}
+
+
+dep2pos_map = {'adv-modifier' : 'ADV',
+	            'adj-modifier' : 'ADJ',
+	            'apposition' : 'NOUN',
+	            'auxiliary': 'VERB',
+	            'clausal': 'VERB',
+	            'compound': 'NOUN',
+	            'clausal subject': 'VERB',
+	            'det': 'DET',
+	            'object': 'NOUN',
+	            'noun-modifier': 'NOUN',
+	            'subject': 'NOUN',
+	            'num-modifier': 'ADJ',
+                'punctuation': 'PUNCT'}
+	
+#all relations
+# label_map = {'acl': 'acl',
+# 	            'advcl': 'advcl',
+# 	            'advmod': 'advmod',
+# 	            'amod': 'amod',
+# 	            'appos': 'appos',
+# 	            'aux': 'aux',
+# 	            'ccomp': 'ccomp',
+# 	            'compound': 'compound',
+# 	            'conj': 'conj',
+#                 'cc': 'cc',
+# 	            'csubj': 'csubj',
+#                 'xcomp': 'xcomp',
+#                 'parataxis': 'parataxis',
+# 	            'det': 'det',
+#                 'dep': 'dep',
+# 	            'iobj': 'iobj',
+# 	            'nmod': 'nmod',
+# 	            'nsubj': 'nsubj',
+# 	            'nummod': 'nummod',
+# 	            'obj': 'obj',
+#                 'mark': 'mark',
+#                 'case': 'case',
+#                 'punct': 'punct',
+#                 'discourse': 'discourse',
+#                 'vocative': 'vocative',
+#                 'flat': 'flat',
+#                 'fixed': 'fixed',
+#                 'expl': 'expl',
+#                 'orphan': 'orphan'}
 
 
 def define_labels(consider_directionality):
@@ -74,13 +100,28 @@ def define_labels(consider_directionality):
 		labels = labels_raw
 
 
+def transform_pos(label):
+	if label in pos_map:
+		label = pos_map[label]
+	else:
+		label = 'UNK'
+	return label
+
+
+def transform_label2pos(label):
+	if label in dep2pos_map:
+		label = dep2pos_map[label]
+	else:
+		label = 'UNK'
+	return label
+
 def transform_label(label):
 	# NOTE: version 4 when line below commented
 	# label = label.split(':')[0]  # to cope with nsubj:pass for instance
 	if label in label_map or label + '-p2d' in label_map:
 		label = label_map[label]
 	else:
-		label = 'dep'
+		label = 'other'
 	
 	return label
 
@@ -101,7 +142,7 @@ def add_dependency_relation(drs, head_id, dep_id, label, directional):
 			drs[label].append((dep_id, head_id))
 
 
-def pos_dict():
+def pos_dict(pos_labels):
 	res_dict = dict()
 	for pos1 in pos_labels:
 		for pos2 in pos_labels:
@@ -109,8 +150,27 @@ def pos_dict():
 	return res_dict
 
 
+def conllu2pp_frame(conllu_file):
+	pos_labels2 = sorted(list(set([transform_pos(l) for l in pos_labels])))
+	pp_frame = defaultdict(dict)
+	for posi in pos_labels2:
+		for posj in pos_labels2:
+			pp_frame[posj][posi] = 0
+			
+	if conllu_file:
+		relation_labeled = read_conllu_labeled(conllu_file, convert=True)
+		for sent_rels in relation_labeled:
+			for dep, head, label, pos in sent_rels:
+				if label != 'root':
+					pp_frame[transform_pos(sent_rels[head][3])][transform_pos(pos)] += 1
+		
+	pos_frame = pd.DataFrame.from_dict(pp_frame)
+
+	return pos_frame
+
+
 def conllu2freq_frame(conllu_file, directional=True):
-	dependency_pos_freq = defaultdict(lambda: pos_dict())
+	dependency_pos_freq = defaultdict(lambda: pos_dict(pos_labels))
 	relation_labeled = read_conllu_labeled(conllu_file, convert=True)
 	for sent_rels in relation_labeled:
 		for dep, head, label, pos in sent_rels:
@@ -161,10 +221,10 @@ def read_conllu_labeled(conllu_file, convert=False):
 		sentid = 0
 		for line in in_conllu:
 			if line == '\n':
-				if convert:
-					relations_labeled.append(DependencyConverter(sentence_rel).convert(return_root=True))
-				else:
-					relations_labeled.append(sentence_rel)
+				# if convert:
+				# 	relations_labeled.append(DependencyConverter(sentence_rel).convert(return_root=True))
+				# else:
+				relations_labeled.append(sentence_rel)
 				sentence_rel = []
 				sentid += 1
 			elif line.startswith('#'):

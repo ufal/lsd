@@ -1,0 +1,16 @@
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/358.
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/358.
+from: can't read /var/mail/collections
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/358.
+from: can't read /var/mail/tqdm
+from: can't read /var/mail/copy
+from: can't read /var/mail/tools
+from: can't read /var/mail/tools.dependency_converter
+/opt/LRC/spool/orion7/job_scripts/6194332: line 10: TOP_HEADS_NUM: command not found
+/opt/LRC/spool/orion7/job_scripts/6194332: line 13: syntax error near unexpected token `('
+/opt/LRC/spool/orion7/job_scripts/6194332: line 13: `def average_heads(all_matrices, ls, hs):'
+======= EPILOG: Wed Nov 20 15:43:24 CET 2019
+== Limits:   mem_free=15G,act_mem_free=15G
+== Usage:    cpu=00:00:00, mem=0.00000 GB s, io=0.00000 GB, vmem=N/A, maxvmem=N/A
+== Duration: 00:00:00 (0 s)
+== Server name: orion7

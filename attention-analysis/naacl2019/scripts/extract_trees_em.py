@@ -6,13 +6,11 @@ import argparse
 from collections import defaultdict, namedtuple
 
 import numpy as np
-
+import json
+import pandas as pd
 
 
 RelData = namedtuple('RelData','layers heads transpose d2p')
-
-
-
 
 # soft pos mask (BEST)
 # relation_rules  = {'adj-clause-p2d': RelData([3, 4, 7, 6, 5, 7], [3, 5, 6, 6, 9, 10],False, False),
@@ -54,26 +52,51 @@ RelData = namedtuple('RelData','layers heads transpose d2p')
 #     'punctuation-p2d': RelData([11, 10, 2, 11, 7, 7], [6, 7, 2, 2, 8, 7],False, False),
 #     'subject-p2d': RelData([7, 4], [11, 10],False, False)}
 
-# diagonal mask2
-relation_rules  = {'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
+# # diagonal mask2
+relation_rules  = {#'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
     'adj-modifier-d2p': RelData([3, 7, 6, 5, 7, 8, 0, 2], [9, 10, 5, 7, 6, 5, 8, 11],False, True),
-    'adv-clause-p2d': RelData([4, 5, 5, 0, 4, 5, 11, 8, 3, 0], [3, 4, 5, 8, 9, 8, 8, 7, 1, 4],False, False),
+    # 'adv-clause-p2d': RelData([4, 5, 5, 0, 4, 5, 11, 8, 3, 0], [3, 4, 5, 8, 9, 8, 8, 7, 1, 4],False, False),
     'adv-modifier-d2p': RelData([7, 5, 6, 8, 7, 3, 10, 0, 6, 0], [6, 7, 5, 5, 10, 10, 10, 8, 4, 11],False, True),
-    'apposition-p2d': RelData([0, 9], [8, 0],False, False),
+    # 'apposition-p2d': RelData([0, 9], [8, 0],False, False),
     'auxiliary-d2p': RelData([3, 8, 7, 5, 4, 7, 10], [9, 5, 6, 0, 5, 10, 10],False, True),
     'clausal subject-p2d': RelData([8, 0, 0, 0], [10, 8, 5, 1],False, False),
-    'clausal-p2d': RelData([5, 4, 7, 5, 0, 7, 4], [7, 5, 6, 8, 8, 1, 8],False, False),
+    # 'clausal-p2d': RelData([5, 4, 7, 5, 0, 7, 4], [7, 5, 6, 8, 8, 1, 8],False, False),
     'compound-d2p': RelData([3, 7, 6, 7, 0], [9, 6, 5, 10, 8],False, True),
-    'conjunct-d2p': RelData([4, 6, 4, 9, 5, 1, 0, 4, 6], [3, 0, 9, 6, 4, 10, 1, 4, 8],False, True),
+    # 'conjunct-d2p': RelData([4, 6, 4, 9, 5, 1, 0, 4, 6], [3, 0, 9, 6, 4, 10, 1, 4, 8],False, True),
     'determiner-d2p': RelData([7, 3, 4, 8], [10, 9, 5, 10],False, True),
     #'i object-d2p': RelData([6], [9],False, True),
     'noun-modifier-p2d': RelData([4, 0, 9, 5, 3, 0, 0], [5, 8, 1, 8, 3, 1, 5],False, False),
     'num-modifier-d2p': RelData([7, 6, 3, 8, 7, 6, 0, 10], [10, 5, 10, 5, 6, 4, 11, 10],False, True),
     'object-d2p': RelData([7, 6, 4, 5, 3], [9, 9, 6, 3, 8],False, True),
     'other-d2p': RelData([7, 4, 8, 6, 3, 0], [10, 5, 5, 5, 10, 8],False, True),
-    'punctuation-d2p': RelData([4, 8, 3, 7, 3], [5, 5, 10, 5, 9],False, True),
+    # 'punctuation-d2p': RelData([4, 8, 3, 7, 3], [5, 5, 10, 5, 9],False, True),
     'subject-p2d': RelData([7, 4], [11, 10],False, False)
     }
+
+# diagonal mask dpendent 2 parent only:
+# relation_rules  = {'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
+#     'adj-modifier-p2d': RelData([3, 6, 0, 4, 6, 7], [5, 11, 2, 7, 4, 4],False, False),
+# 	'adv-clause-p2d': RelData([4, 5, 5, 0, 4, 5, 11, 8, 3, 0], [3, 4, 5, 8, 9, 8, 8, 7, 1, 4],False, False),
+# 	'adv-modifier-p2d': RelData([7, 4, 0, 4, 9, 6, 8], [3, 7, 11, 6, 3, 2, 9],False, False),
+#     'apposition-p2d': RelData([0, 9], [8, 0],False, False),
+#     'auxiliary-p2d': RelData([7, 6, 5, 6, 7, 7, 5, 8, 9, 6, 2], [4, 3, 6, 9, 9, 3, 1, 11, 2, 2, 7],False, False),
+#     'clausal subject-p2d': RelData([8, 0, 0, 0], [10, 8, 5, 1],False, False),
+#     'clausal-p2d': RelData([5, 4, 7, 5, 0, 7, 4], [7, 5, 6, 8, 8, 1, 8],False, False),
+#     'compound-p2d': RelData([3, 6, 0, 7, 4], [5, 11, 2, 4, 7],False, False),
+# 	'conjunct-p2d': RelData([5, 4, 0, 4], [5, 3, 8, 4],False, False),
+#     'determiner-p2d': RelData([5, 1, 2, 8, 4, 6, 3, 9], [6, 4, 1, 6, 10, 2, 2, 6],False, False),
+#     #'i object-d2p': RelData([6], [9],False, True),
+#     'noun-modifier-p2d': RelData([4, 0, 9, 5, 3, 0, 0], [5, 8, 1, 8, 3, 1, 5],False, False),
+#     'num-modifier-p2d': RelData([7, 9, 1, 0], [11, 4, 10, 8],False, False),
+# 	'object-p2d': RelData([7, 4, 3, 3, 0, 5, 2, 9], [10, 5, 10, 9, 8, 0, 11, 1],False, False),
+# 	'other-p2d': RelData([6, 8], [9, 6],False, False),
+#     'punctuation-p2d': RelData([11, 10, 2, 11, 7, 7], [6, 7, 2, 2, 8, 7],False, False),
+#     'subject-p2d': RelData([7, 4], [11, 10],False, False)
+#     }
+
+
+
+
 # based on tiny set 10 examples
 # relation_rules  = {'adj-clause-p2d': RelData([1], [1],False, False),
 # 	'adj-modifier-d2p': RelData([3], [9],False, True),
@@ -92,42 +115,24 @@ relation_rules  = {'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, F
 # 	'subject-p2d': RelData([4, 6], [10, 4],False, False)}
 
 
-# more detailed relationship labels
-# relation_rules  = {'acl-p2d': RelData([3, 4, 7, 6, 5, 7], [3, 5, 6, 6, 9, 10],False, False),
-# 	'advcl-p2d': RelData([5, 3, 4, 5, 1], [8, 3, 8, 11, 5],False, False),
-# 	'advmod-p2d': RelData([7, 5, 6, 4, 9, 4], [7, 1, 9, 7, 3, 10],False, False),
-# 	'amod-d2p': RelData([3, 7, 4, 5], [9, 2, 5, 0],False, True),
-# 	'appos-p2d': RelData([3], [3],False, False),
-# 	'aux-d2p': RelData([7, 3, 5, 4, 1, 1], [2, 9, 9, 11, 6, 1],False, True),
-# 	'case-p2d': RelData([0, 5, 3, 9, 1], [3, 10, 11, 3, 4],False, False),
-# 	'cc-p2d': RelData([5, 3, 0, 6, 7, 7], [10, 11, 3, 9, 9, 4],False, False),
-# 	'ccomp-d2p': RelData([6, 5, 7, 7], [2, 3, 0, 9],False, True),
-# 	'compound-d2p': RelData([3, 7], [9, 2],False, True),
-# 	'conj-p2d': RelData([5, 9, 7, 3, 10, 4, 11], [5, 6, 8, 3, 5, 8, 8],False, False),
-# 	'csubj-p2d': RelData([7, 7], [1, 10],False, False),
-# 	'det-p2d': RelData([0, 6, 2, 6, 1], [3, 9, 1, 3, 4],False, False),
-# 	'discourse-p2d': RelData([11], [11],False, False),
-# 	'expl-p2d': RelData([5], [9],False, False),
-# 	'fixed-d2p': RelData([8], [6],False, True),
-# 	'flat-p2d': RelData([8], [5],False, False),
-# 	'iobj-p2d': RelData([3], [9],False, False),
-# 	'mark-p2d': RelData([7, 6, 5, 0, 6, 7, 8], [9, 9, 6, 3, 10, 4, 11],False, False),
-# 	'nmod-d2p': RelData([6, 3, 7, 6], [9, 11, 9, 2],False, True),
-# 	'nsubj-d2p': RelData([7, 6, 5, 5, 1, 7, 5, 7, 4], [2, 6, 9, 0, 6, 1, 11, 8, 11],False, True),
-# 	'nummod-p2d': RelData([7, 4, 0, 6, 5], [11, 7, 2, 9, 9],False, False),
-# 	'obj-d2p': RelData([6, 3, 6], [9, 11, 10],False, True),
-# 	'parataxis-p2d': RelData([5], [5],False, False),
-# 	'punct-p2d': RelData([5, 6], [10, 11],False, False),
-# 	'vocative-p2d': RelData([6], [9],False, False),
-# 	'xcomp-d2p': RelData([6, 3, 5, 5], [9, 11, 6, 3],False, True)}
 
-
-def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold, break_after=1000):
+def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, ann_file, break_after=1000, first_iter=True):
 	
 	CONLLU_ID = 0
 	CONLLU_LABEL = 7
 	CONLLU_HEAD = 6
 	
+	new_params = dependency.conllu2pp_frame(None)
+	new_ann = []
+	if not first_iter:
+		with open(params_file, 'r') as infile:
+			past_params = pd.DataFrame(json.load(infile))
+		past_ann = np.load(ann_file)
+		past_ann = [past_ann[f"arr_{i}"] for i in range(len(past_ann))]
+	else:
+		past_params = None
+		past_ann = None
+		
 	reverse_label_map = {value: key for key, value in dependency.label_map.items()}
 	reverse_label_map['other'] = 'dep'
 	
@@ -150,14 +155,15 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold, break_after=10
 					list(map(int, pred.ravel() != 'no edge')))).sum() / np.array(list(map(int,gold.ravel()!='no edge'))).sum()
 				uas.append(uas_sent)
 				lengths.append(length_sent)
-				print(f"Processed sentence {sentid}", flush=True)
+				if not sentid % 20:
+					print(f"Processed sentence {sentid}", flush=True)
 				sentid += 1
 				
 			elif line.startswith('#'):
 				if line.startswith('# sent_id'):
 					out_lines.append(line.strip() + '/pred')
 					out_lines_gold.append(line.strip() + '/gold')
-					pred, gold = multigraph_aborescene(sentid)
+					pred, gold = multigraph_aborescene(sentid,first_iter, past_ann, new_ann, past_params, new_params)
 					length_sent = 0
 				else:
 					out_lines_gold.append(line.strip())
@@ -185,18 +191,31 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold, break_after=10
 	with open(conllu_out_gold, 'w') as out_conllu:
 		out_conllu.write('\n'.join(out_lines_gold))
 
+
+	np.savez(ann_file, *new_ann)
+	
+	with open(params_file, 'w') as out_params:
+		json.dump(new_params.to_dict(), out_params)
+		
+	print("Estimaitions:")
+	print(new_params)
 	print("mena uas:")
 	print(np.mean(np.array(uas)))
 	print("length uas corr coef:")
 	print(np.corrcoef(np.array(uas), np.array(lengths)))
 
-def multigraph_aborescene(sentence_index):
+
+def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_params, new_params):
 	matrices, sentence_id = next(attention_gen)
 
 	assert sentence_index == sentence_id
 	
 	words_list = common_tokens[sentence_index]
-	words = ' '.join(words_list)
+	
+	pos2ord = {pos: i for i, pos in enumerate(new_params.columns)}
+	if not first_iter:
+		conditional_matrix = past_params.values / past_params.values.sum(axis=1, keepdims=True)
+		x_prob = past_params.values.sum(axis=0, keepdims=True) / past_params.values.sum()
 	
 	edge_labeled = {(h, d): l for d, h, l, p in dependency_rels[sentence_index] if l != 'root'}
 	root_ord = 0
@@ -204,15 +223,13 @@ def multigraph_aborescene(sentence_index):
 		if l == 'root':
 			root_ord = d
 			break
-	
-	token2pos = {d: p for d, h, l, p in dependency_rels[sentence_index]}
+
 	DG = nx.DiGraph()
 	DG.add_edges_from(edge_labeled.keys())
 	
 	labels = {}
 	for node in DG.nodes():
 		labels[node] = words_list[node]
-	posG = nx.spring_layout(DG)
 	
 	MultiAttention = nx.MultiDiGraph()
 	MultiAttention.add_nodes_from(DG.nodes())
@@ -225,15 +242,19 @@ def multigraph_aborescene(sentence_index):
 			aggr_matrix = aggr_matrix.transpose()
 		aggr_matrix[:, root_ord] = 0.001
 		np.fill_diagonal(aggr_matrix, 0.001)
-		aggr_matrix = np.log(aggr_matrix/(1-aggr_matrix))
-		# for i in range(len(aggr_matrix)):
-		# 	for j in range(len(aggr_matrix)):
-		# 		if i != j:
-		# 			if relation in pos_frame:
-		# 				aggr_matrix[i, j] *= pos_frame[relation][(token2pos[j], token2pos[i])]
-		# 			else:
-		# 				aggr_matrix[i, j] *= 0
 		
+		
+		aggr_matrix = np.log(aggr_matrix/(1-aggr_matrix))
+		
+		if not first_iter:
+			y_ord = pos2ord[dependency.transform_label2pos(relation[:-4])]
+			y_prob = (conditional_matrix[y_ord, np.newaxis] * x_prob).sum(axis=1, keepdims=True)
+			xy_prob = np.dot(conditional_matrix, past_ann[sentence_index])[y_ord, np.newaxis]
+			prob_matrix = xy_prob / y_prob
+			prob_matrix = np.log(prob_matrix.transpose())
+			
+			aggr_matrix = 1.0 * aggr_matrix + 1.0 * prob_matrix
+			
 		AG = nx.from_numpy_matrix(aggr_matrix, create_using=nx.DiGraph)
 		
 		for u, v, d in AG.edges(data=True):
@@ -244,20 +265,22 @@ def multigraph_aborescene(sentence_index):
 	
 	AttentionAborescene = tree.branchings.maximum_spanning_arborescence(MultiAttention)
 	espanning = AttentionAborescene.edges(data=True)
-	weights = [max(d['weight'] * 20, 1) for _, _, d in espanning]
 	attention_labels = {(u, v): multi_edge2label[(u, v, d['weight'])] for u, v, d in espanning}
-	espanning = [(u, v) for (u, v, d) in espanning]
-	posA = nx.spring_layout(AttentionAborescene)
 
+
+	# prepare output
 	alabelm = np.full((len(aggr_matrix), len(aggr_matrix)), 'no edge', dtype='U24')
 	dlabelm = np.full((len(aggr_matrix), len(aggr_matrix)), 'no edge', dtype='U24')
 	
+	parent2deps = defaultdict(list)
+	node2pos = dict()
+	node2pos[root_ord] = 'VERB'
 	for aedge, ael in attention_labels.items():
 
 		alabelm[aedge[0], aedge[1]] = ael
-	#         else:
-	#             alabelm[aedge[1],aedge[0]] = ael
-	
+		parent2deps[aedge[0]].append(aedge[1])
+		node2pos[aedge[1]] = dependency.transform_label2pos(ael[:-4])
+
 	for dedge, deel in edge_labeled.items():
 		
 		deel = dependency.transform_label(deel)
@@ -272,6 +295,22 @@ def multigraph_aborescene(sentence_index):
 		elif 'other-p2d' in relation_rules:
 			dlabelm[dedge[1], dedge[0]] = 'other-p2d'
 	
+	#annotate POS-like tags
+	sent_pos = np.zeros((len(new_params.columns), len(alabelm)))
+	sent_pos[pos2ord['VERB'], root_ord] = 1.
+	curr_nodes = [root_ord]
+	while curr_nodes:
+		new_nodes = []
+		for n in curr_nodes:
+			for dep in parent2deps[n]:
+				i = pos2ord[node2pos[dep]]
+				sent_pos[i, dep] = 1
+				new_params[node2pos[n]][node2pos[dep]] += 1
+				new_nodes.append(dep)
+		curr_nodes = new_nodes
+	
+	new_ann.append(sent_pos)
+	
 	return alabelm, dlabelm
 
 	
@@ -280,16 +319,11 @@ if __name__ == '__main__':
 	ap.add_argument("-a", "--attentions", required=True, help="NPZ file with attentions")
 	ap.add_argument("-t", "--tokens", required=True, help="Labels (tokens) separated by spaces")
 	
-	ap.add_argument("-T", "--train-conllu", help="Conllu file for training POS",
-	                default='/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/graph-extraction/entrain.conllu')
-	
 	ap.add_argument("-c", "--conllu", help="Eval against the given conllu file")
 	
 	ap.add_argument("-o", "--output-pred")
 	ap.add_argument("-g", "--output-gold")
 	
-	ap.add_argument("-s", "--sentences", nargs='*', type=int, default=None,
-	                help="Only use the specified sentences; 0-based")
 	ap.add_argument("-m", "--maxlen", type=int, default=1000,
 	                help="Skip sentences longer than this many words. A word split into several wordpieces is counted as one word. EOS is not counted.")
 	
@@ -298,6 +332,11 @@ if __name__ == '__main__':
 	
 	ap.add_argument("-n", "--no-softmax", action="store_true",
 	                help="Whether not to use softmax for attention matrices, use with bert metrices")
+	
+	ap.add_argument("-f", "--first-iteration", action="store_true",
+	                help = "Whether it is the first iteration!")
+	
+	ap.add_argument("-s", "--seed", help = "To identify temp files used")
 	
 	args = ap.parse_args()
 	
@@ -313,11 +352,11 @@ if __name__ == '__main__':
 	# in dependency_rels_rev tuples are reversed.
 	dependency_rels = dependency.read_conllu_labeled(args.conllu)
 	
-	grouped_tokens, common_tokens  = dependency.group_wordpieces(tokens_loaded, args.conllu)
+	grouped_tokens, common_tokens = dependency.group_wordpieces(tokens_loaded, args.conllu)
 	
 	attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, args.no_softmax,
-	                                                      args.maxlen, args.sentences)
+	                                                      args.maxlen, None)
 	
-	pos_frame = dependency.conllu2freq_frame(args.train_conllu)
-	
-	rewrite_conllu(args.conllu, args.output_pred, args.output_gold, break_after=300)
+	rewrite_conllu(args.conllu, args.output_pred, args.output_gold,
+	               f'/tmp/em_params-{args.seed}.json', f'/tmp/em_annotations-{args.seed}.npz',
+	               break_after=200, first_iter=args.first_iteration)

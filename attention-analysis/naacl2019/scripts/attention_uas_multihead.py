@@ -129,11 +129,14 @@ if __name__ == '__main__':
 	for vis, idx in tqdm(attention_gen):
 		sentences_considered.append(idx)
 		pos_masks = dict()
+		diag_mask = sentence_attentions.diagonal_mask(dependency_rels_labeled[idx])
 		for k in uas.keys():
 			rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
 			#pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
 			# NOTE 10: hard mask used
-			pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
+			#pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
+		
+			pos_masks[k] = diag_mask
 		for layer in range(layers_count):
 			for head in range(heads_count):
 				# deps = vis[layer][head]
@@ -179,15 +182,19 @@ if __name__ == '__main__':
 		best_gen = (average_heads(np.array(c_m), best_head_mixture[k][0], best_head_mixture[k][1]) for c_m in all_metrices)
 		uas_from_matrices(best_gen, dependency_rels, all_pos_masks)
 		
+	print_next = []
 	for k in tqdm(sorted(max_uas.keys())):
 		if k.endswith('d2p'):
 			alt_k = k[:-4] + '-p2d'
 			if max_uas[k] > max_uas[alt_k]:
 				print(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
+				print_next.append(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
 			else:
 				print(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
+				print_next.append(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
 				
-		
+	print("worse relations")
+	print("\n".join(print_next))
 	for k in sorted(uas.keys()):
 		uas_filename = f'{args.uas}-{k}.{args.format}'
 		
