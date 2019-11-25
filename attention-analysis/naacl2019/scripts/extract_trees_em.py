@@ -12,6 +12,8 @@ import pandas as pd
 
 RelData = namedtuple('RelData','layers heads transpose d2p')
 
+#DF = 0.33
+
 # soft pos mask (BEST)
 # relation_rules  = {'adj-clause-p2d': RelData([3, 4, 7, 6, 5, 7], [3, 5, 6, 6, 9, 10],False, False),
 #     'adj-modifier-d2p': RelData([3, 7, 4, 5], [9, 2, 5, 0],False, True),
@@ -53,24 +55,44 @@ RelData = namedtuple('RelData','layers heads transpose d2p')
 #     'subject-p2d': RelData([7, 4], [11, 10],False, False)}
 
 # # diagonal mask2
-relation_rules  = {#'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
-    'adj-modifier-d2p': RelData([3, 7, 6, 5, 7, 8, 0, 2], [9, 10, 5, 7, 6, 5, 8, 11],False, True),
-    # 'adv-clause-p2d': RelData([4, 5, 5, 0, 4, 5, 11, 8, 3, 0], [3, 4, 5, 8, 9, 8, 8, 7, 1, 4],False, False),
-    'adv-modifier-d2p': RelData([7, 5, 6, 8, 7, 3, 10, 0, 6, 0], [6, 7, 5, 5, 10, 10, 10, 8, 4, 11],False, True),
-    # 'apposition-p2d': RelData([0, 9], [8, 0],False, False),
-    'auxiliary-d2p': RelData([3, 8, 7, 5, 4, 7, 10], [9, 5, 6, 0, 5, 10, 10],False, True),
-    'clausal subject-p2d': RelData([8, 0, 0, 0], [10, 8, 5, 1],False, False),
-    # 'clausal-p2d': RelData([5, 4, 7, 5, 0, 7, 4], [7, 5, 6, 8, 8, 1, 8],False, False),
-    'compound-d2p': RelData([3, 7, 6, 7, 0], [9, 6, 5, 10, 8],False, True),
-    # 'conjunct-d2p': RelData([4, 6, 4, 9, 5, 1, 0, 4, 6], [3, 0, 9, 6, 4, 10, 1, 4, 8],False, True),
-    'determiner-d2p': RelData([7, 3, 4, 8], [10, 9, 5, 10],False, True),
-    #'i object-d2p': RelData([6], [9],False, True),
-    'noun-modifier-p2d': RelData([4, 0, 9, 5, 3, 0, 0], [5, 8, 1, 8, 3, 1, 5],False, False),
-    'num-modifier-d2p': RelData([7, 6, 3, 8, 7, 6, 0, 10], [10, 5, 10, 5, 6, 4, 11, 10],False, True),
-    'object-d2p': RelData([7, 6, 4, 5, 3], [9, 9, 6, 3, 8],False, True),
-    'other-d2p': RelData([7, 4, 8, 6, 3, 0], [10, 5, 5, 5, 10, 8],False, True),
-    # 'punctuation-d2p': RelData([4, 8, 3, 7, 3], [5, 5, 10, 5, 9],False, True),
-    'subject-p2d': RelData([7, 4], [11, 10],False, False)
+# relation_rules  = {#'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
+#     'adj-modifier-d2p': RelData([3, 7, 6, 5, 7, 8, 0, 2], [9, 10, 5, 7, 6, 5, 8, 11],False, True),
+#     # 'adv-clause-p2d': RelData([4, 5, 5, 0, 4, 5, 11, 8, 3, 0], [3, 4, 5, 8, 9, 8, 8, 7, 1, 4],False, False),
+#     'adv-modifier-d2p': RelData([7, 5, 6, 8, 7, 3, 10, 0, 6, 0], [6, 7, 5, 5, 10, 10, 10, 8, 4, 11],False, True),
+#     # 'apposition-p2d': RelData([0, 9], [8, 0],False, False),
+#     'auxiliary-d2p': RelData([3, 8, 7, 5, 4, 7, 10], [9, 5, 6, 0, 5, 10, 10],False, True),
+#     'clausal subject-p2d': RelData([8, 0, 0, 0], [10, 8, 5, 1],False, False),
+#     # 'clausal-p2d': RelData([5, 4, 7, 5, 0, 7, 4], [7, 5, 6, 8, 8, 1, 8],False, False),
+#     'compound-d2p': RelData([3, 7, 6, 7, 0], [9, 6, 5, 10, 8],False, True),
+#     # 'conjunct-d2p': RelData([4, 6, 4, 9, 5, 1, 0, 4, 6], [3, 0, 9, 6, 4, 10, 1, 4, 8],False, True),
+#     'determiner-d2p': RelData([7, 3, 4, 8], [10, 9, 5, 10],False, True),
+#     #'i object-d2p': RelData([6], [9],False, True),
+#     'noun-modifier-p2d': RelData([4, 0, 9, 5, 3, 0, 0], [5, 8, 1, 8, 3, 1, 5],False, False),
+#     'num-modifier-d2p': RelData([7, 6, 3, 8, 7, 6, 0, 10], [10, 5, 10, 5, 6, 4, 11, 10],False, True),
+#     'object-d2p': RelData([7, 6, 4, 5, 3], [9, 9, 6, 3, 8],False, True),
+#     'other-d2p': RelData([7, 4, 8, 6, 3, 0], [10, 5, 5, 5, 10, 8],False, True),
+#     # 'punctuation-d2p': RelData([4, 8, 3, 7, 3], [5, 5, 10, 5, 9],False, True),
+#     'subject-p2d': RelData([7, 4], [11, 10],False, False)
+#     }
+
+# up to 3 heads (diagonal masked):
+relation_rules = {#'adj-clause-p2d': RelData([4, 7, 6], [5, 6, 5],False, False),
+	'adj-modifier-d2p': RelData([3, 7, 5], [9, 10, 7],False, True),
+	# 'adv-clause-d2p': RelData([4, 4, 3], [9, 3, 1],False, True),
+	'adv-modifier-d2p': RelData([7, 3, 6], [6, 10, 5],False, True),
+	# 'apposition-p2d': RelData([0, 9], [8, 0],False, False),
+	'auxiliary-d2p': RelData([3, 8, 4], [9, 5, 5],False, True),
+	'clausal subject-p2d': RelData([8, 0, 0], [10, 8, 5],False, False),
+	# 'clausal-d2p': RelData([7, 0, 5], [0, 5, 4],False, True),
+	'compound-d2p': RelData([3, 7, 5], [9, 6, 7],False, True),
+	'conjunct-d2p': RelData([4, 6, 0], [3, 0, 1],False, True),
+	'determiner-d2p': RelData([7, 3, 4], [10, 9, 5],False, True),
+	'noun-modifier-p2d': RelData([4, 0, 5], [5, 8, 8],False, False),
+	'num-modifier-d2p': RelData([7, 6, 0], [10, 5, 8],False, True),
+	'object-d2p': RelData([7, 6, 3], [9, 9, 8],False, True),
+	'other-d2p': RelData([7, 4, 8], [10, 5, 5],False, True),
+	# 'punctuation-p2d': RelData([11, 10, 7], [1, 2, 8],False, False),
+	'subject-p2d': RelData([7, 4], [11, 10],False, False)
     }
 
 # diagonal mask dpendent 2 parent only:
@@ -115,14 +137,15 @@ relation_rules  = {#'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, 
 # 	'subject-p2d': RelData([4, 6], [10, 4],False, False)}
 
 
-
 def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, ann_file, break_after=1000, first_iter=True):
 	
 	CONLLU_ID = 0
+	CONLLU_POS = 3
 	CONLLU_LABEL = 7
 	CONLLU_HEAD = 6
 	
 	new_params = dependency.conllu2pp_frame(None)
+	new_params += 1
 	new_ann = []
 	if not first_iter:
 		with open(params_file, 'r') as infile:
@@ -135,8 +158,6 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 		
 	reverse_label_map = {value: key for key, value in dependency.label_map.items()}
 	reverse_label_map['other'] = 'dep'
-	
-	print(reverse_label_map)
 	
 	lengths = []
 	uas= []
@@ -163,7 +184,7 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 				if line.startswith('# sent_id'):
 					out_lines.append(line.strip() + '/pred')
 					out_lines_gold.append(line.strip() + '/gold')
-					pred, gold = multigraph_aborescene(sentid,first_iter, past_ann, new_ann, past_params, new_params)
+					pred, gold, ord2pos = multigraph_aborescene(sentid,first_iter, past_ann, new_ann, past_params, new_params)
 					length_sent = 0
 				else:
 					out_lines_gold.append(line.strip())
@@ -182,7 +203,8 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 						
 						fields[CONLLU_HEAD] = str(x + 1)
 						fields[CONLLU_LABEL] = lab
-				
+						
+					fields[CONLLU_POS] = ord2pos[int(fields[CONLLU_ID]) - 1]
 				out_lines.append('\t'.join(fields))
 	
 	with open(conllu_out_pred, 'w') as out_conllu:
@@ -240,11 +262,10 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 
 		if rules.d2p == True:
 			aggr_matrix = aggr_matrix.transpose()
-		aggr_matrix[:, root_ord] = 0.001
-		np.fill_diagonal(aggr_matrix, 0.001)
-		
-		
-		aggr_matrix = np.log(aggr_matrix/(1-aggr_matrix))
+		aggr_matrix[:, root_ord] = 0.
+		np.fill_diagonal(aggr_matrix, 0.)
+		aggr_matrix = np.clip(aggr_matrix, 0.001, 0.999)
+		aggr_matrix = np.log(aggr_matrix/(1.-aggr_matrix))
 		
 		if not first_iter:
 			y_ord = pos2ord[dependency.transform_label2pos(relation[:-4])]
@@ -309,9 +330,11 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 				new_nodes.append(dep)
 		curr_nodes = new_nodes
 	
+	if not first_iter:
+		sent_pos = (1. - DF)*sent_pos + DF*past_ann[sentence_index]
 	new_ann.append(sent_pos)
 	
-	return alabelm, dlabelm
+	return alabelm, dlabelm, node2pos
 
 	
 if __name__ == '__main__':
@@ -338,7 +361,13 @@ if __name__ == '__main__':
 	
 	ap.add_argument("-s", "--seed", help = "To identify temp files used")
 	
+	ap.add_argument("-d", "--discarding", help = "Factor responisble for discarding past annotations", type=float, default=0.)
+	
 	args = ap.parse_args()
+	
+	global DF
+	DF = args.discarding
+	
 	
 	attentions_loaded = np.load(args.attentions)
 	sentences_count = len(attentions_loaded.files)

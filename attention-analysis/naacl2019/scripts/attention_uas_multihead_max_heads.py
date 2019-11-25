@@ -162,11 +162,10 @@ if __name__ == '__main__':
     max_uas = dict()
 
 
-    def update_if_canidate(curr_heads_ids, max_uas, best_head_mixture):
+    def update_if_canidate(curr_heads_ids, max_uas, best_head_mixture, k):
         curr_lids, curr_hids = np.unravel_index(curr_heads_ids, uas[k].shape)
         avg_gen = (average_heads(np.array(c_m), curr_lids, curr_hids) for c_m in all_metrices)
         curr_uas = uas_from_matrices_rel(avg_gen, dependency_rels, k, all_pos_masks)
-        all_uas[k].append(curr_uas)
         if curr_uas > max_uas[k]:
             max_uas[k] = curr_uas
             best_head_mixture[k] = np.unravel_index(curr_heads_ids, uas[k].shape)
@@ -189,15 +188,18 @@ if __name__ == '__main__':
             if len(picked_heads_ids) < args.numheads:
                 curr_heads_ids = list(picked_heads_ids)
                 curr_heads_ids.append(new_head_id)
-                candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture)
+                candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture,k)
 
-            for sub_idx in range(len(picked_heads_ids)):
-                curr_heads_ids = list(picked_heads_ids)
-                curr_heads_ids[sub_idx] = new_head_id
-                candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture)
+            else:
+                for sub_idx in range(len(picked_heads_ids)):
+                    curr_heads_ids = list(picked_heads_ids)
+                    curr_heads_ids[sub_idx] = new_head_id
+                    candidate_heads_ids = update_if_canidate(curr_heads_ids, max_uas, best_head_mixture, k)
 
-            if candidate_heads_ids:
+            if candidate_heads_ids is not None:
                 picked_heads_ids = candidate_heads_ids
+
+            all_uas[k].append(max_uas[k])
 
         print('\n*****\n')
         print(f"Best uas for: {k} : {max_uas[k]}")

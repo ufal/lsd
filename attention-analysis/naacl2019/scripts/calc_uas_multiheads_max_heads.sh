@@ -5,7 +5,7 @@ FILES="/ha/home/limisiewicz/attention_my/lsd/attention-analysis/naacl2019/BertAA
 
 OUTPUT_DIR=/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/graph-extraction/experiments
 UAS_SCRIPT=/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/scripts/attention_uas_multihead_max_heads.py
-CONVCONLLU=/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/graph-extraction/${LAN}dev-conv3.conllu
+CONVCONLLU=/net/projects/LSD/attention_tomasz/lsd/attention-analysis/naacl2019/graph-extraction/${LAN}dev-conv.conllu
 
 
 source /home/limisiewicz/general/bin/activate
@@ -19,5 +19,5 @@ do
   then
     mkdir -p "$OUTPUT_DIR/$b/multihead_h3"
   fi
-  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead_h3/mhuas" -c $CONVCONLLU -e --numheads 3
+  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead_h3/mhuas" -c $CONVCONLLU -e --numheads 6
 done
