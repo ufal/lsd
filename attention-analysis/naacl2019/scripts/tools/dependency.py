@@ -18,16 +18,24 @@ label_map = {'acl': 'adj-clause',
 	            'amod': 'adj-modifier',
 	            'appos': 'apposition',
 	            'aux': 'auxiliary',
+                'xcomp': 'clausal',
+                'parataxis': 'parataxis',
 	            'ccomp': 'clausal',
 	            'compound': 'compound',
+                'flat': 'compound',
 	            'conj': 'conjunct',
+                'cc': 'cc',
 	            'csubj': 'clausal subject',
 	            'det': 'determiner',
 	            'nmod': 'noun-modifier',
+                'obl': 'noun-modifier',
 	            'nsubj': 'subject',
 	            'nummod': 'num-modifier',
 	            'obj': 'object',
-                'punct': 'punctuation'}
+				'iobj': 'object',
+                'punct': 'punctuation',
+                'case': 'case',
+                'mark': 'mark'}
 
 pos_map = {'ADJ': 'ADJ',
            'ADP': 'ADP',
@@ -35,7 +43,7 @@ pos_map = {'ADJ': 'ADJ',
 			'AUX': 'VERB',
             'DET': 'DET',
 			'NOUN': 'NOUN',
-			'NUM': 'ADJ',
+			'NUM': 'NUM',
 			'PRON': 'NOUN',
 			'PROPN': 'NOUN',
 			'PUNCT': 'PUNCT',
@@ -49,7 +57,7 @@ dep2pos_map = {'adv-modifier' : 'ADV',
 	            'clausal': 'VERB',
 	            'compound': 'NOUN',
 	            'clausal subject': 'VERB',
-	            'determiner': 'DET',
+	            'determiner': 'ADJ',
 	            'object': 'NOUN',
 	            'noun-modifier': 'NOUN',
 	            'subject': 'NOUN',
@@ -149,6 +157,20 @@ def pos_dict(pos_labels):
 			res_dict[(pos1, pos2)] = 0
 	return res_dict
 
+
+def conllu2ll_frame(conllu_file):
+	labels2 = sorted(list(label_map.values()) + ['other', 'root'])
+	ll_frame = defaultdict(dict)
+	for labi in labels2:
+		for labj in labels2:
+			ll_frame[labi][labj] = 0
+			
+	if conllu_file:
+		raise NotImplementedError
+	
+	ll_frame = pd.DataFrame.from_dict(ll_frame)
+	
+	return ll_frame
 
 def conllu2pp_frame(conllu_file):
 	pos_labels2 = sorted(list(set([transform_pos(l) for l in pos_labels])))

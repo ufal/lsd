@@ -19,5 +19,5 @@ do
   then
     mkdir -p "$OUTPUT_DIR/$b/multihead_h3"
   fi
-  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead_h3/mhuas" -c $CONVCONLLU -e --numheads 6
+  python $UAS_SCRIPT -a "$f/attentions.npz" -t "$f/source.txt" -u "$OUTPUT_DIR/$b/multihead_h3/mhuas" -c $CONVCONLLU -e --numheads 4
 done
