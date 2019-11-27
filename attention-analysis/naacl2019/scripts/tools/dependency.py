@@ -13,57 +13,57 @@ pos_labels = ('ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN','NUM',
 labels = []
 
 label_map = {'acl': 'adj-clause',
-	            'advcl': 'adv-clause',
-	            'advmod': 'adv-modifier',
-	            'amod': 'adj-modifier',
-	            'appos': 'apposition',
-	            'aux': 'auxiliary',
-                'xcomp': 'clausal',
-                'parataxis': 'parataxis',
-	            'ccomp': 'clausal',
-	            'compound': 'compound',
-                'flat': 'compound',
-	            'conj': 'conjunct',
-                'cc': 'cc',
-	            'csubj': 'clausal subject',
-	            'det': 'determiner',
-	            'nmod': 'noun-modifier',
-                'obl': 'noun-modifier',
-	            'nsubj': 'subject',
-	            'nummod': 'num-modifier',
-	            'obj': 'object',
-				'iobj': 'object',
-                'punct': 'punctuation',
-                'case': 'case',
-                'mark': 'mark'}
+             'advcl': 'adv-clause',
+             'advmod': 'adv-modifier',
+             'amod': 'adj-modifier',
+             'appos': 'apposition',
+             'aux': 'auxiliary',
+             'xcomp': 'clausal',
+             'parataxis': 'parataxis',
+             'ccomp': 'clausal',
+             'compound': 'compound',
+             'flat': 'compound',
+             'conj': 'conjunct',
+             'cc': 'cc',
+             'csubj': 'clausal subject',
+             'det': 'determiner',
+             'nmod': 'noun-modifier',
+             'obl': 'noun-modifier',
+             'nsubj': 'subject',
+             'nummod': 'num-modifier',
+             'obj': 'object',
+             'iobj': 'object',
+             'punct': 'punctuation',
+             'case': 'case',
+             'mark': 'mark'}
 
 pos_map = {'ADJ': 'ADJ',
-           'ADP': 'ADP',
-			'ADV': 'ADV',
-			'AUX': 'VERB',
-            'DET': 'DET',
-			'NOUN': 'NOUN',
-			'NUM': 'NUM',
-			'PRON': 'NOUN',
-			'PROPN': 'NOUN',
-			'PUNCT': 'PUNCT',
-			'VERB': 'VERB'}
+           #'ADP': 'ADP',
+           #'ADV': 'ADV',
+           'AUX': 'VERB',
+           'DET': 'ADJ',
+           'NOUN': 'NOUN',
+           'NUM': 'ADJ',
+           'PRON': 'NOUN',
+           'PROPN': 'NOUN',
+           #'PUNCT': 'PUNCT',
+           'VERB': 'VERB'}
 
 
-dep2pos_map = {'adv-modifier' : 'ADV',
-	            'adj-modifier' : 'ADJ',
-	            'apposition' : 'NOUN',
-	            'auxiliary': 'VERB',
-	            'clausal': 'VERB',
-	            'compound': 'NOUN',
-	            'clausal subject': 'VERB',
-	            'determiner': 'ADJ',
-	            'object': 'NOUN',
-	            'noun-modifier': 'NOUN',
-	            'subject': 'NOUN',
-	            'num-modifier': 'ADJ',
-                'punctuation': 'PUNCT'}
-	
+dep2pos_map = {#'adv-modifier' : 'ADV',
+	'adj-modifier' : 'ADJ',
+	'apposition' : 'NOUN',
+	'auxiliary': 'VERB',
+	'clausal': 'VERB',
+	'compound': 'NOUN',
+	'clausal subject': 'VERB',
+	'determiner': 'ADJ',
+	'object': 'NOUN',
+	'noun-modifier': 'NOUN',
+	'subject': 'NOUN',
+	'num-modifier': 'ADJ'}
+#'punctuation': 'PUNCT'}
+
 #all relations
 # label_map = {'acl': 'acl',
 # 	            'advcl': 'advcl',
@@ -164,7 +164,7 @@ def conllu2ll_frame(conllu_file):
 	for labi in labels2:
 		for labj in labels2:
 			ll_frame[labi][labj] = 0
-			
+	
 	if conllu_file:
 		raise NotImplementedError
 	
@@ -178,16 +178,16 @@ def conllu2pp_frame(conllu_file):
 	for posi in pos_labels2:
 		for posj in pos_labels2:
 			pp_frame[posj][posi] = 0
-			
+	
 	if conllu_file:
 		relation_labeled = read_conllu_labeled(conllu_file, convert=True)
 		for sent_rels in relation_labeled:
 			for dep, head, label, pos in sent_rels:
 				if label != 'root':
 					pp_frame[transform_pos(sent_rels[head][3])][transform_pos(pos)] += 1
-		
+	
 	pos_frame = pd.DataFrame.from_dict(pp_frame)
-
+	
 	return pos_frame
 
 
@@ -219,8 +219,8 @@ def conllu2dict(relations_labeled, directional=False):
 			add_dependency_relation(sentence_rel, head, dep, label, directional)
 		res_relations.append(sentence_rel)
 	return res_relations
-	
-	
+
+
 def read_conllu(conllu_file, directional=False):
 	define_labels(directional)
 	relations_labeled = read_conllu_labeled(conllu_file)

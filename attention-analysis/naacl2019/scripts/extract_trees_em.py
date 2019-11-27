@@ -438,4 +438,4 @@ if __name__ == '__main__':
 	
 	rewrite_conllu(args.conllu, args.output_pred, args.output_gold,
 	               f'/lnet/tspec/tmp/limisiewicz/em_params-{args.seed}.json', f'/lnet/tspec/tmp/limisiewicz/em_annotations-{args.seed}.npz',
-	               break_after=10, first_iter=args.first_iteration)
+	               break_after=200, first_iter=args.first_iteration)
