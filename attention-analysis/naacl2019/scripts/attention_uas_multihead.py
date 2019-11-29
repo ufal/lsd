@@ -127,28 +127,29 @@ if __name__ == '__main__':
 	all_pos_masks = []
 	sentences_considered = []
 	for vis, idx in tqdm(attention_gen):
-		sentences_considered.append(idx)
-		pos_masks = dict()
-		diag_mask = sentence_attentions.diagonal_mask(dependency_rels_labeled[idx])
-		for k in uas.keys():
-			rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
-			#pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
-			# NOTE 10: hard mask used
-			#pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
-		
-			pos_masks[k] = diag_mask
-		for layer in range(layers_count):
-			for head in range(heads_count):
-				# deps = vis[layer][head]
-				# deps = (deps == deps.max(axis=1)[:, None]).astype(int)
-				for k in uas.keys():
-					deps = vis[layer][head] * pos_masks[k]
-					deps = (deps == deps.max(axis=1)[:, None]).astype(int)
-					if len(dependency_rels[idx][k]):
-						uas[k][idx, layer, head] \
-							= np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
-		all_metrices.append(vis)
-		all_pos_masks.append(pos_masks)
+		if vis:
+			sentences_considered.append(idx)
+			pos_masks = dict()
+			diag_mask = sentence_attentions.diagonal_mask(dependency_rels_labeled[idx])
+			for k in uas.keys():
+				rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
+				#pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
+				# NOTE 10: hard mask used
+				#pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
+			
+				pos_masks[k] = diag_mask
+			for layer in range(layers_count):
+				for head in range(heads_count):
+					# deps = vis[layer][head]
+					# deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+					for k in uas.keys():
+						deps = vis[layer][head] * pos_masks[k]
+						deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+						if len(dependency_rels[idx][k]):
+							uas[k][idx, layer, head] \
+								= np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
+			all_metrices.append(vis)
+			all_pos_masks.append(pos_masks)
 	
 	dependency_rels = [dependency_rels[idx] for idx in sentences_considered]
 

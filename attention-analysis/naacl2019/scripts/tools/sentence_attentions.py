@@ -73,11 +73,13 @@ def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=Fa
 		
 		if groups_list is None:
 			print('Token mismatch sentence skipped', sentence_index, file=sys.stderr)
+			yield None, sentence_index
 			continue
 		
 		# check maxlen
 		if not len(groups_list) <= maxlen:
 			print('Too long sentence, skipped', sentence_index, file=sys.stderr)
+			yield None, sentence_index
 			continue
 		
 		ungrouped_list = list(chain.from_iterable(groups_list))
@@ -86,6 +88,7 @@ def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=Fa
 		assert len(ungrouped_list) >= tokens_count, "Bad no of tokens in sent " + str(sentence_index)
 		if len(ungrouped_list) > tokens_count:
 			print('Too long sentence, skipped', sentence_index, file=sys.stderr)
+			yield None, sentence_index
 			continue
 		
 		words_count = len(groups_list)

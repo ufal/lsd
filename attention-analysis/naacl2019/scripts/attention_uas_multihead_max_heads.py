@@ -37,6 +37,50 @@ def uas_from_matrices(matrices, dep_rels, all_posmasks):
             print(f"UAS for {k} : {retrived[k]/total[k]} (number of relations: {total[k]})")
         else:
             print(f"No relations for {k}")
+           
+            
+def recall_stats_from_matrices(matrices, dep_rels, req_rel_type):
+    retrived = 0
+    total = 0
+
+    for matrix, dep_rel in zip(matrices, dep_rels):
+        np.fill_diagonal(matrix,0.0)
+        retr_pairs = set(zip(range(matrix.shape[0]), np.argmax(matrix, axis=1)))
+        rel_pairs = dep_rel[req_rel_type]
+        retrived += len(set(rel_pairs).intersection(retr_pairs))
+        total += len(set(rel_pairs))
+
+    if total > 0:
+        print(f"Best reacall for {req_rel_type} : {retrived/total}")
+        
+        
+def precision_stats_from_matrices(matrices, dep_rels, req_rel_type):
+    gold_scores = []
+    n_gold = 0
+    attention_scores = []
+    for matrix, dep_rel in zip(matrices, dep_rels):
+        np.fill_diagonal(matrix, 0.0)
+        rel_pairs = dep_rel[req_rel_type]
+        
+        gold_matrix = np.zeros_like(matrix)
+        for i, j in rel_pairs:
+            gold_matrix[i, j] = 1.
+            n_gold += 1
+        
+        gold_scores += list(gold_matrix.ravel())
+        attention_scores += list(matrix.ravel())
+
+    attention_scores_ranks = np.argsort(attention_scores)
+    gold_scores = np.array(gold_scores)
+
+    prec = gold_scores[attention_scores_ranks[-n_gold:]].sum() / n_gold
+    prec5p = gold_scores[attention_scores_ranks[-int(len(attention_scores)*0.05):]].sum() / n_gold
+
+    print(f"Best precision for {req_rel_type[:-4]} : {prec}")
+    print(f"Best precision for {req_rel_type[:-4]} : {prec}")
+
+    print(f"Best precision 5p for {req_rel_type[:-4]} : {prec5p}")
+    print(f"Best precision 5p for {req_rel_type[:-4]} : {prec5p}")
 
 
 def uas_from_matrices_rel(matrices, dep_rels, rel_type, all_posmasks):
@@ -69,17 +113,24 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--attentions", required=True, help="NPZ file with attentions")
     ap.add_argument("-t", "--tokens", required=True, help="Labels (tokens) separated by spaces")
+    
+    ap.add_argument("-ta", "--test-attentions", required=True, help="NPZ file with attentions for test")
+    ap.add_argument("-tt", "--test-tokens", required=True, help="Labels (tokens) separated by spaces for test")
 
     ap.add_argument("-u", "--uas", help="Output uas measuere into this file")
-    ap.add_argument("-c", "--conllu", help="Eval against the given conllu faile")
+    ap.add_argument("-c", "--conllu", help="Eval against the given conllu file")
+    ap.add_argument("-tc", "--test-conllu", help="Eval against the given conllu file")
 
     ap.add_argument("-f", "--format", default="png",
                     help="Output visualisation as this format (pdf, png, maybe other options)")
     ap.add_argument("-F", "--fontsize", default=8, type=int,
                     help="Fontsize for heatmap; 8 is good for png. 10 is good for PDF it seems")
 
-    ap.add_argument("-s", "--sentences", nargs='*', type=int, default=None,
+    ap.add_argument("-s", "--sentences", type=int, default=None,
                     help="Only use the specified sentences; 0-based")
+    
+    ap.add_argument("-r", "--randomize", action="store_true",
+                    help="whether to shuffle sentences")
     ap.add_argument("-m", "--maxlen", type=int, default=1000,
                     help="Skip sentences longer than this many words. A word split into several wordpieces is counted as one word. EOS is not counted.")
 
@@ -91,6 +142,9 @@ if __name__ == '__main__':
 
     ap.add_argument("-n", "--no-softmax", action="store_true",
                     help="Whether not to use softmax for attention matrices, use with bert metrices")
+    
+    ap.add_argument("-tn", "--test-no-softmax", action="store_true",
+                    help="Whether not to use softmax for attention matrices, use with bert metrices")
 
     args = ap.parse_args()
 
@@ -98,61 +152,80 @@ if __name__ == '__main__':
     sentences_count = len(attentions_loaded.files)
     layers_count = attentions_loaded['arr_0'].shape[0]
     heads_count = attentions_loaded['arr_0'].shape[1]
-
     with open(args.tokens) as tokens_file:
         tokens_loaded = [l.split() for l in tokens_file]
+    grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
+    
+    test_attentions_loaded = np.load(args.test_attentions)
+    with open(args.test_tokens) as test_token_file:
+        test_tokens_loaded = [l.split() for l in test_token_file]
+    test_grouped_tokens, _ = dependency.group_wordpieces(test_tokens_loaded, args.test_conllu)
 
     # in dependency_rels for each sentece there is a lists of tuples (token, token's head)
     # in dependency_rels_rev tuples are reversed.
     dependency_rels = dependency.read_conllu(args.conllu, directional=True)
+    test_dependency_rels = dependency.read_conllu(args.test_conllu, directional=True)
 
     uas = {aggr: np.zeros((sentences_count, layers_count, heads_count))
            for aggr in dependency.labels}
-
     rel_number = {aggr: np.zeros((sentences_count, 1, 1)) for aggr in dependency.labels}
-
-
-    grouped_tokens, _ = dependency.group_wordpieces(tokens_loaded, args.conllu)
 
     # NOTE 8 : softmax after averaging
     #no_softmax = True
-
     no_softmax  = args.no_softmax
+    if args.sentences:
+        if args.randomize:
+            sentences = list(np.random.choice(sentences_count, args.sentences, replace=False))
+        else:
+            sentences = list(np.arange(args.sentences))
+    else:
+        sentences = None
     attention_gen = sentence_attentions.generate_matrices(attentions_loaded, grouped_tokens, args.eos, no_softmax,
-                                                          args.maxlen, args.sentences)
+                                                          args.maxlen, sentences)
+    
+    test_attention_gen = sentence_attentions.generate_matrices(test_attentions_loaded, test_grouped_tokens, args.eos, args.test_no_softmax,
+                                                               args.maxlen, None)
 
     dependency_rels_labeled = dependency.read_conllu_labeled(args.conllu, convert=True)
+    test_dependency_rels_labeled = dependency.read_conllu_labeled(args.test_conllu, convert=True)
+    test_all_metrices = []
+    test_sentences_considered = []
+    for tvis, tidx in tqdm(test_attention_gen):
+        test_sentences_considered.append(tidx)
+        test_all_metrices.append(tvis)
+        
     #pos_frame = dependency.conllu2freq_frame(args.train_conllu)
 
     all_metrices = []
     all_pos_masks = []
     sentences_considered = []
     for vis, idx in tqdm(attention_gen):
-        sentences_considered.append(idx)
-        pos_masks = dict()
-        diag_mask = sentence_attentions.diagonal_mask(dependency_rels_labeled[idx])
-        for k in uas.keys():
-            rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
-            #pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
-            # NOTE 10: hard mask used
-            #pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
-
-            pos_masks[k] = diag_mask
-        for layer in range(layers_count):
-            for head in range(heads_count):
-                # deps = vis[layer][head]
-                # deps = (deps == deps.max(axis=1)[:, None]).astype(int)
-                for k in uas.keys():
-                    deps = vis[layer][head] * pos_masks[k]
-                    deps = (deps == deps.max(axis=1)[:, None]).astype(int)
-                    if len(dependency_rels[idx][k]):
-                        uas[k][idx, layer, head] \
-                            = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
-        all_metrices.append(vis)
-        all_pos_masks.append(pos_masks)
+        if vis:
+            sentences_considered.append(idx)
+            pos_masks = dict()
+            diag_mask = sentence_attentions.diagonal_mask(dependency_rels_labeled[idx])
+            for k in uas.keys():
+                rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
+                #pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
+                # NOTE 10: hard mask used
+                #pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame, thr=0.01)
+    
+                pos_masks[k] = diag_mask
+            for layer in range(layers_count):
+                for head in range(heads_count):
+                    # deps = vis[layer][head]
+                    # deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+                    for k in uas.keys():
+                        deps = vis[layer][head] * pos_masks[k]
+                        deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+                        if len(dependency_rels[idx][k]):
+                            uas[k][idx, layer, head] \
+                                = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
+            all_metrices.append(vis)
+            all_pos_masks.append(pos_masks)
 
     dependency_rels = [dependency_rels[idx] for idx in sentences_considered]
-
+    test_dependency_rels = [test_dependency_rels[tidx] for tidx in test_sentences_considered]
     for k in uas.keys():
         uas[k] = uas[k][sentences_considered, :, :]
         rel_number[k] = rel_number[k][sentences_considered, :, :]
@@ -201,29 +274,36 @@ if __name__ == '__main__':
 
             all_uas[k].append(max_uas[k])
 
-        print('\n*****\n')
-        print(f"Best uas for: {k} : {max_uas[k]}")
-        print(f"Head mixture : {best_head_mixture[k]}")
-        best_gen = (average_heads(np.array(c_m), best_head_mixture[k][0], best_head_mixture[k][1]) for c_m in all_metrices)
-        uas_from_matrices(best_gen, dependency_rels, all_pos_masks)
+        rec_best_gen = (average_heads(np.array(c_m), best_head_mixture[k][0], best_head_mixture[k][1]) for c_m in
+                    test_all_metrices)
 
-    print_next = []
+        recall_stats_from_matrices(rec_best_gen, test_dependency_rels, k)
+
+    print_best = []
+    print_worse = []
     for k in tqdm(sorted(max_uas.keys())):
         if k.endswith('d2p'):
             alt_k = k[:-4] + '-p2d'
+            prec_best_gen = (average_heads(np.array(c_m), best_head_mixture[k][0], best_head_mixture[k][1]) *
+                             average_heads(np.array(c_m), best_head_mixture[alt_k][0], best_head_mixture[alt_k][1]).transpose()
+                             for c_m in test_all_metrices)
+            precision_stats_from_matrices(prec_best_gen, test_dependency_rels, k)
+            
             if max_uas[k] > max_uas[alt_k]:
-                print(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
-                print_next.append(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
+                print_best.append(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
+                print_worse.append(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
             else:
-                print(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
-                print_next.append(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
+                print_best.append(f"'{alt_k}': RelData({list(best_head_mixture[alt_k][0])}, {list(best_head_mixture[alt_k][1])},False, False),")
+                print_worse.append(f"'{k}': RelData({list(best_head_mixture[k][0])}, {list(best_head_mixture[k][1])},False, True),")
 
+    print("best directions")
+    print("\n".join(print_best))
     print("worse relations")
-    print("\n".join(print_next))
-    for k in sorted(uas.keys()):
-        uas_filename = f'{args.uas}-{k}.{args.format}'
-
-        plot_uas(all_uas[k], f"Accuracy for {k}", "number best heads averaged", "accuracy", "green")
-
-        plt.savefig(uas_filename, dpi=200, format=args.format)
-        plt.close()
+    print("\n".join(print_worse))
+    # for k in sorted(uas.keys()):
+    #     uas_filename = f'{args.uas}-{k}.{args.format}'
+    #
+    #     plot_uas(all_uas[k], f"Accuracy for {k}", "number best heads averaged", "accuracy", "green")
+    #
+    #     plt.savefig(uas_filename, dpi=200, format=args.format)
+    #     plt.close()

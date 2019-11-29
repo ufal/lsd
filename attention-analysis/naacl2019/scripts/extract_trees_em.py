@@ -97,34 +97,34 @@ RelData3 = namedtuple('RelData', 'layers heads weights d2p')
 #     }
 
 
-# relation_rules2 = {
-# 	'adj-modifier-d2p': RelData2([3, 5, 0], [5, 1, 2], [3, 7, 5], [9, 10, 7]),
-# 	'adv-modifier-d2p': RelData2([4, 5, 8], [3, 4, 7],[7, 3, 6], [6, 10, 5]),
-# 	'auxiliary-d2p': RelData2([7, 9, 7], [4, 2, 3],[3, 8, 4], [9, 5, 5]),
-# 	'clausal subject-p2d': RelData2([8, 0, 0], [10, 8, 5],[9, 0, 2], [2, 0, 4]),
-# 	'compound-d2p': RelData2([3, 7, 0], [5, 11, 2],[3, 7, 5], [9, 6, 7]),
-# 	'conjunct-d2p': RelData2([5, 11, 0], [5, 8, 8],[4, 6, 0], [3, 0, 1]),
-# 	'determiner-d2p': RelData2([5, 3, 8], [6, 2, 6],[7, 3, 4], [10, 9, 5]),
-# 	'noun-modifier-p2d': RelData2([4, 0, 5], [5, 8, 8],[7, 0, 0], [9, 8, 7]),
-# 	'num-modifier-d2p': RelData2([7, 9, 6], [11, 4, 2],[7, 6, 0], [10, 5, 8]),
-# 	'object-d2p': RelData2([7, 4, 3], [10, 5, 9],[7, 6, 3], [9, 9, 8]),
-# 	'other-d2p': RelData2([6, 8], [9, 6],[7, 4, 8], [10, 5, 5]),
-# 	'subject-p2d': RelData2([7, 4], [11, 10],[5, 1, 7], [9, 6, 1])
-#     }
-
-relation_rules3 = {'adj-modifier-d2p': RelData3([3, 7, 5], [9, 10, 7],[1/3,1/4,1/2], True),
-	'adv-modifier-d2p': RelData3([7, 3, 6], [6, 10, 5],[1/2,1,1/2], True),
-	'auxiliary-d2p': RelData3([3, 8, 4], [9, 5, 5],[1/3,1/2,1/4], True),
-	'clausal subject-p2d': RelData3([8, 0, 0], [10, 8, 5],[1,1/3,1], False),
-	'compound-d2p': RelData3([3, 7, 5], [9, 6, 7],[1/3,1/2,1/2], True),
-	'conjunct-d2p': RelData3([4, 6, 0], [3, 0, 1],[1,1,1], True),
-	'determiner-d2p': RelData3([7, 3, 4], [10, 9, 5],[1/3,1/3,1/3], True),
-	'noun-modifier-p2d': RelData3([4, 0, 5], [5, 8, 8],[1/3,1/2,1], False),
-	'num-modifier-d2p': RelData3([7, 6, 0], [10, 5, 8],[1/4,1/2,1/3], True),
-	'object-d2p': RelData3([7, 6, 3], [9, 9, 8],[1,1,1], True),
-	'other-d2p': RelData3([7, 4, 8], [10, 5, 5],[1/4,1/4,1/2], True),
-	'subject-p2d': RelData3([7, 4], [11, 10],[1,1], False)
+relation_rules2 = {
+	'adj-modifier-d2p': RelData2([3, 5, 0], [5, 1, 2], [3, 7, 5], [9, 10, 7]),
+	'adv-modifier-d2p': RelData2([4, 5, 8], [3, 4, 7],[7, 3, 6], [6, 10, 5]),
+	'auxiliary-d2p': RelData2([7, 9, 7], [4, 2, 3],[3, 8, 4], [9, 5, 5]),
+	'clausal subject-p2d': RelData2([8, 0, 0], [10, 8, 5],[9, 0, 2], [2, 0, 4]),
+	'compound-d2p': RelData2([3, 7, 0], [5, 11, 2],[3, 7, 5], [9, 6, 7]),
+	'conjunct-d2p': RelData2([5, 11, 0], [5, 8, 8],[4, 6, 0], [3, 0, 1]),
+	'determiner-d2p': RelData2([5, 3, 8], [6, 2, 6],[7, 3, 4], [10, 9, 5]),
+	'noun-modifier-p2d': RelData2([4, 0, 5], [5, 8, 8],[7, 0, 0], [9, 8, 7]),
+	'num-modifier-d2p': RelData2([7, 9, 6], [11, 4, 2],[7, 6, 0], [10, 5, 8]),
+	'object-d2p': RelData2([7, 4, 3], [10, 5, 9],[7, 6, 3], [9, 9, 8]),
+	'other-d2p': RelData2([6, 8], [9, 6],[7, 4, 8], [10, 5, 5]),
+	'subject-p2d': RelData2([7, 4], [11, 10],[5, 1, 7], [9, 6, 1])
     }
+
+# relation_rules3 = {'adj-modifier-d2p': RelData3([3, 7, 5], [9, 10, 7],[1/3,1/4,1/2], True),
+# 	'adv-modifier-d2p': RelData3([7, 3, 6], [6, 10, 5],[1/2,1,1/2], True),
+# 	'auxiliary-d2p': RelData3([3, 8, 4], [9, 5, 5],[1/3,1/2,1/4], True),
+# 	'clausal subject-p2d': RelData3([8, 0, 0], [10, 8, 5],[1,1/3,1], False),
+# 	'compound-d2p': RelData3([3, 7, 5], [9, 6, 7],[1/3,1/2,1/2], True),
+# 	'conjunct-d2p': RelData3([4, 6, 0], [3, 0, 1],[1,1,1], True),
+# 	'determiner-d2p': RelData3([7, 3, 4], [10, 9, 5],[1/3,1/3,1/3], True),
+# 	'noun-modifier-p2d': RelData3([4, 0, 5], [5, 8, 8],[1/3,1/2,1], False),
+# 	'num-modifier-d2p': RelData3([7, 6, 0], [10, 5, 8],[1/4,1/2,1/3], True),
+# 	'object-d2p': RelData3([7, 6, 3], [9, 9, 8],[1,1,1], True),
+# 	'other-d2p': RelData3([7, 4, 8], [10, 5, 5],[1/4,1/4,1/2], True),
+# 	'subject-p2d': RelData3([7, 4], [11, 10],[1,1], False)
+#     }
 
 # diagonal mask dpendent 2 parent only:
 # relation_rules  = {'adj-clause-p2d': RelData([4, 7, 6, 0], [5, 6, 5, 8],False, False),
@@ -191,42 +191,43 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 	reverse_label_map = {value: key for key, value in dependency.label_map.items()}
 	reverse_label_map['other'] = 'dep'
 	
-	lengths = []
-	uas= []
+
 	length_sent = 0
 	out_lines = []
 	out_lines_gold =[]
+	
+	dowrite = True
+	pred = None
+	gold = None
+	ord2pos = None
 	with open(conllu_file, 'r') as in_conllu:
 		sentid = 0
 		for line in in_conllu:
 			if sentid > break_after:
 				break
 			if line == '\n':
-				out_lines.append(line.strip())
-				out_lines_gold.append(line.strip())
-				uas_sent = (np.array(list(map(int, gold.ravel() != 'no edge'))) * np.array(
-					list(map(int, pred.ravel() != 'no edge')))).sum() / np.array(list(map(int,gold.ravel()!='no edge'))).sum()
-				uas.append(uas_sent)
-				lengths.append(length_sent)
+				out_line = line.strip()
+				out_line_gold = line.strip()
 				if not sentid % 20:
 					print(f"Processed sentence {sentid}", flush=True)
 				sentid += 1
 				
 			elif line.startswith('#'):
 				if line.startswith('# sent_id'):
-					out_lines.append(line.strip() + '/pred')
-					out_lines_gold.append(line.strip() + '/gold')
+					out_line_ = line.strip() + '/pred'
+					out_line_gold = line.strip() + '/gold'
 					pred, gold, ord2pos = multigraph_aborescene(sentid,first_iter, past_ann, new_ann, past_params, new_params)
 					# pred, gold, node2lab = multigraph_aborescene(sentid, first_iter, past_ann, new_ann, past_params,
 					#                                             new_params)
+					dowrite = (pred is not None)
 					length_sent = 0
 				else:
-					out_lines_gold.append(line.strip())
-					out_lines.append(line.strip())
+					out_line_gold = line.strip()
+					out_line = line.strip()
 			else:
 				fields = line.strip().split('\t')
-				out_lines_gold.append(line.strip())
-				if fields[CONLLU_ID].isdigit():
+				out_line_gold = line.strip()
+				if fields[CONLLU_ID].isdigit() and pred is not None:
 					length_sent += 1
 					if fields[CONLLU_LABEL].strip() != 'root':
 						col = pred.transpose()[int(fields[CONLLU_ID]) - 1]
@@ -240,14 +241,17 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 						
 					fields[CONLLU_POS] = ord2pos[int(fields[CONLLU_ID]) - 1]
 					#fields[CONLLU_POS] = dependency.transform_label2pos(node2lab[int(fields[CONLLU_ID]) - 1])
-				out_lines.append('\t'.join(fields))
+				out_line  ='\t'.join(fields)
+					
+			if dowrite:
+				out_lines.append(out_line)
+				out_lines_gold.append(out_line_gold)
 	
 	with open(conllu_out_pred, 'w') as out_conllu:
 		out_conllu.write('\n'.join(out_lines))
 		
 	with open(conllu_out_gold, 'w') as out_conllu:
 		out_conllu.write('\n'.join(out_lines_gold))
-
 
 	np.savez(ann_file, *new_ann)
 	
@@ -256,14 +260,12 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 		
 	print("Estimaitions:")
 	print(new_params)
-	print("mena uas:")
-	print(np.mean(np.array(uas)))
-	print("length uas corr coef:")
-	print(np.corrcoef(np.array(uas), np.array(lengths)))
 
 
 def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_params, new_params):
 	matrices, sentence_id = next(attention_gen)
+	if not matrices:
+		return None, None, None
 
 	assert sentence_index == sentence_id
 	
@@ -295,16 +297,18 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 	MultiAttention.add_nodes_from(DG.nodes())
 	
 	multi_edge2label = dict()
-	for relation, rules in relation_rules3.items():
-		aggr_matrix = np.average(np.array(matrices)[rules.layers, rules.heads, :, :],weights=rules.weights, axis=0)
-		# aggr_matrix *= np.mean(np.array(matrices)[rules.layersT, rules.headsT, :, :], axis=0).transpose()
+	for relation, rules in relation_rules2.items():
+		#aggr_matrix = np.average(np.array(matrices)[rules.layers, rules.heads, :, :],weights=rules.weights, axis=0)
+		aggr_matrix = np.average(np.array(matrices)[rules.layers, rules.heads, :, :], axis=0)
+		aggr_matrix *= np.mean(np.array(matrices)[rules.layersT, rules.headsT, :, :], axis=0).transpose()
 		#aggr_matrix /= aggr_matrix.sum(axis=0, keepdims=True)
-		if rules.d2p == True:
-			aggr_matrix = aggr_matrix.transpose()
+		# if rules.d2p == True:
+		# 	aggr_matrix = aggr_matrix.transpose()
+		aggr_matrix = aggr_matrix/aggr_matrix.sum(axis=0,keepdims=True)/aggr_matrix.sum(axis=1, keepdims=True)
 		aggr_matrix[:, root_ord] = 0.
 		np.fill_diagonal(aggr_matrix, 0.)
 		aggr_matrix = np.clip(aggr_matrix, 0.001, 0.999)
-		aggr_matrix = np.log(aggr_matrix/(1.-aggr_matrix))
+		aggr_matrix = np.log(aggr_matrix)
 		
 		if not first_iter:
 			y_ord = pos2ord[dependency.transform_label2pos(relation[:-4])]
@@ -350,14 +354,14 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 		
 		deel = dependency.transform_label(deel)
 		
-		if deel + '-d2p' in relation_rules3:
+		if deel + '-d2p' in relation_rules2:
 			dlabelm[dedge[0], dedge[1]] = deel + '-d2p'
-		elif deel + '-p2d' in relation_rules3:
+		elif deel + '-p2d' in relation_rules2:
 			dlabelm[dedge[0], dedge[1]] = deel + '-p2d'
 		
-		elif 'other-d2p' in relation_rules3:
+		elif 'other-d2p' in relation_rules2:
 			dlabelm[dedge[0], dedge[1]] = 'other-d2p'
-		elif 'other-p2d' in relation_rules3:
+		elif 'other-p2d' in relation_rules2:
 			dlabelm[dedge[1], dedge[0]] = 'other-p2d'
 	
 	#annotate POS-like tags

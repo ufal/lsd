@@ -104,19 +104,20 @@ if __name__ == '__main__':
                                                           args.maxlen, args.sentences)
     sentences_considered = []
     for vis, idx in attention_gen:
-        sentences_considered.append(idx)
-        sent_relations = dependency_rels_labeled[idx]
-        
-        for layer in range(layers_count):
-            for head in range(heads_count):
-                deps = vis[layer][head]
-                deps = deps.mean(axis=0)
-                # NOTE: for hard selection of POS uncomment:
-                #deps = (deps == deps.max()).astype(int)
-                for token_id, _, rell, posl in sent_relations:
-                    pos[posl][idx, layer, head] += deps[token_id]
-                    if rell == 'root':
-                        pos['root'][idx, layer, head] += deps[token_id]
+        if vis:
+            sentences_considered.append(idx)
+            sent_relations = dependency_rels_labeled[idx]
+            
+            for layer in range(layers_count):
+                for head in range(heads_count):
+                    deps = vis[layer][head]
+                    deps = deps.mean(axis=0)
+                    # NOTE: for hard selection of POS uncomment:
+                    #deps = (deps == deps.max()).astype(int)
+                    for token_id, _, rell, posl in sent_relations:
+                        pos[posl][idx, layer, head] += deps[token_id]
+                        if rell == 'root':
+                            pos['root'][idx, layer, head] += deps[token_id]
 
 
     for k in pos.keys():

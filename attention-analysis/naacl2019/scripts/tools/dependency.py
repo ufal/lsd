@@ -22,13 +22,13 @@ label_map = {'acl': 'adj-clause',
              'parataxis': 'parataxis',
              'ccomp': 'clausal',
              'compound': 'compound',
-             'flat': 'compound',
+             #'flat': 'compound',
              'conj': 'conjunct',
              'cc': 'cc',
              'csubj': 'clausal subject',
              'det': 'determiner',
              'nmod': 'noun-modifier',
-             'obl': 'noun-modifier',
+             #'obl': 'noun-modifier',
              'nsubj': 'subject',
              'nummod': 'num-modifier',
              'obj': 'object',
@@ -99,11 +99,9 @@ dep2pos_map = {#'adv-modifier' : 'ADV',
 def define_labels(consider_directionality):
 	labels_raw = list(set(label_map.values())) + ['all', 'other']
 	global labels
-	global made_directional
-	if consider_directionality and not made_directional:
+	if consider_directionality:
 		labels = [ar + '-d2p' for ar in labels_raw]
 		labels.extend([ar + '-p2d' for ar in labels_raw])
-		made_directional = True
 	else:
 		labels = labels_raw
 

@@ -114,25 +114,26 @@ if __name__ == '__main__':
     
     sentences_considered = []
     for vis, idx in tqdm(attention_gen):
-        sentences_considered.append(idx)
-        pos_masks = dict()
-        for k in uas.keys():
-            rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
-            # NOTE 9: pos soft mask is used (
-            pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
-            # NOTE 10: hard mask used
-            #pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame)
-        for layer in range(layers_count):
-            for head in range(heads_count):
-                # deps = vis[layer][head]
-                #
-                for k in uas.keys():
-                    # NOTE 9: pos soft mask is used (based on frequency of nodes)
-                    deps = vis[layer][head] * pos_masks[k]
-                    deps = (deps == deps.max(axis=1)[:, None]).astype(int)
-                    if len(dependency_rels[idx][k]):
-                        uas[k][idx, layer, head] \
-                            = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
+        if vis:
+            sentences_considered.append(idx)
+            pos_masks = dict()
+            for k in uas.keys():
+                rel_number[k][idx, 0, 0] = len(dependency_rels[idx][k])
+                # NOTE 9: pos soft mask is used (
+                pos_masks[k] = sentence_attentions.pos_soft_mask(dependency_rels_labeled[idx], k, pos_frame)
+                # NOTE 10: hard mask used
+                #pos_masks[k] = sentence_attentions.pos_hard_mask(dependency_rels_labeled[idx], k, pos_frame)
+            for layer in range(layers_count):
+                for head in range(heads_count):
+                    # deps = vis[layer][head]
+                    #
+                    for k in uas.keys():
+                        # NOTE 9: pos soft mask is used (based on frequency of nodes)
+                        deps = vis[layer][head] * pos_masks[k]
+                        deps = (deps == deps.max(axis=1)[:, None]).astype(int)
+                        if len(dependency_rels[idx][k]):
+                            uas[k][idx, layer, head] \
+                                = np.sum(deps[tuple(zip(*dependency_rels[idx][k]))])
 
     dependency_rels = [dependency_rels[idx] for idx in sentences_considered]
     for k in uas.keys():
