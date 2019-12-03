@@ -11,7 +11,7 @@ import pandas as pd
 
 
 RelData = namedtuple('RelData','layers heads transpose d2p')
-RelData2 = namedtuple('RelData', 'layers heads layersT headsT')
+RelData2 = namedtuple('RelData', 'layers heads layersT headsT weight weightT')
 RelData3 = namedtuple('RelData', 'layers heads weights d2p')
 #DF = 0.33
 
@@ -96,21 +96,113 @@ RelData3 = namedtuple('RelData', 'layers heads weights d2p')
 # 	'subject-p2d': RelData([7, 4], [11, 10],False, False)
 #     }
 
+# up to 3 heads (diagonl mask), 20 sents to pick
+relation_rules = {'adj-modifier-d2p': RelData([3, 0], [9, 10],False, True),
+ 	'adv-modifier-d2p': RelData([9, 3, 7], [7, 10, 1],False, True),
+ 	'auxiliary-p2d': RelData([5, 8], [6, 11],False, False),
+ 	'compound-d2p': RelData([5, 5], [11, 7],False, True),
+ 	'conjunct-d2p': RelData([6, 0], [0, 5],False, True),
+ 	'determiner-d2p': RelData([7], [10],False, True),
+ 	'noun-modifier-p2d': RelData([0, 5], [8, 8],False, False),
+ 	'num-modifier-p2d': RelData([7], [11],False, False),
+ 	'object-d2p': RelData([7, 6, 4, 6], [9, 9, 6, 5],False, True),
+ 	'other-d2p': RelData([6], [5],False, True),
+ 	'subject-p2d': RelData([7, 4, 6, 8], [11, 10, 4, 10],False, False)}
 
+#relation_rules={'adj-modifier-d2p': RelData([3, 7, 6, 5], [9, 10, 5, 7],False, True),
+# 	'adv-modifier-d2p': RelData([7, 3, 6, 8], [6, 10, 5, 5],False, True),
+# 	'auxiliary-d2p': RelData([3, 8, 7, 4], [9, 5, 10, 5],False, True),
+# 	'case-d2p': RelData([7, 4, 5, 3], [10, 5, 0, 9],False, True),
+# 	'cc-p2d': RelData([7, 3, 7], [7, 11, 0],False, False),
+# 	'compound-d2p': RelData([3, 5, 6, 0], [9, 11, 5, 8],False, True),
+# 	'determiner-d2p': RelData([7, 3, 4, 8], [10, 9, 5, 10],False, True),
+#        'mark-d2p': RelData([7, 8, 5, 7], [10, 5, 7, 1],False, True),
+# 	'noun-modifier-p2d': RelData([4, 0, 0, 3], [5, 8, 1, 3],False, False),
+# 	'num-modifier-d2p': RelData([7, 6, 3, 1], [10, 5, 10, 5],False, True),
+# 	'object-d2p': RelData([7, 6, 4, 5], [9, 9, 6, 3],False, True),
+# 	'other-d2p': RelData([6, 7, 4, 2], [5, 9, 0, 11],False, True),
+# 	'subject-p2d': RelData([7, 4], [11, 10],False, False)}
+
+
+# relation_rules = {'adj-modifier-d2p': RelData([3], [9],False, True),
+# 	'adv-modifier-p2d': RelData([0], [11],False, False),
+# 	'auxiliary-p2d': RelData([6], [3],False, False),
+# 	'clausal subject-p2d': RelData([3, 2], [1, 3],False, False),
+# 	'compound-p2d': RelData([1], [4],False, False),
+# 	'conjunct-d2p': RelData([4], [3],False, True),
+# 	'determiner-d2p': RelData([3, 7], [9, 10],False, True),
+# 	'noun-modifier-p2d': RelData([0], [8],False, False),
+# 	'num-modifier-p2d': RelData([9], [8],False, False),
+# 	'object-d2p': RelData([7], [9],False, True),
+# 	'other-d2p': RelData([3, 6, 6], [10, 5, 3],False, True),
+# 	'subject-p2d': RelData([7, 4], [11, 10],False, False)
+#	}
+
+
+# relation_rules2 = {
+# 	'adj-modifier-d2p': RelData2([3, 5, 0], [5, 1, 2], [3, 7, 5], [9, 10, 7]),
+# 	'adv-modifier-d2p': RelData2([4, 5, 8], [3, 4, 7],[7, 3, 6], [6, 10, 5]),
+# 	'auxiliary-d2p': RelData2([7, 9, 7], [4, 2, 3],[3, 8, 4], [9, 5, 5]),
+# 	'clausal subject-p2d': RelData2([8, 0, 0], [10, 8, 5],[9, 0, 2], [2, 0, 4]),
+# 	'compound-d2p': RelData2([3, 7, 0], [5, 11, 2],[3, 7, 5], [9, 6, 7]),
+# 	'conjunct-d2p': RelData2([5, 11, 0], [5, 8, 8],[4, 6, 0], [3, 0, 1]),
+# 	'determiner-d2p': RelData2([5, 3, 8], [6, 2, 6],[7, 3, 4], [10, 9, 5]),
+# 	'noun-modifier-p2d': RelData2([4, 0, 5], [5, 8, 8],[7, 0, 0], [9, 8, 7]),
+# 	'num-modifier-d2p': RelData2([7, 9, 6], [11, 4, 2],[7, 6, 0], [10, 5, 8]),
+# 	'object-d2p': RelData2([7, 4, 3], [10, 5, 9],[7, 6, 3], [9, 9, 8]),
+# 	'other-d2p': RelData2([6, 8], [9, 6],[7, 4, 8], [10, 5, 5]),
+# 	'subject-p2d': RelData2([7, 4], [11, 10],[5, 1, 7], [9, 6, 1])
+#     }
+
+#en dev set
 relation_rules2 = {
-	'adj-modifier-d2p': RelData2([3, 5, 0], [5, 1, 2], [3, 7, 5], [9, 10, 7]),
-	'adv-modifier-d2p': RelData2([4, 5, 8], [3, 4, 7],[7, 3, 6], [6, 10, 5]),
-	'auxiliary-d2p': RelData2([7, 9, 7], [4, 2, 3],[3, 8, 4], [9, 5, 5]),
-	'clausal subject-p2d': RelData2([8, 0, 0], [10, 8, 5],[9, 0, 2], [2, 0, 4]),
-	'compound-d2p': RelData2([3, 7, 0], [5, 11, 2],[3, 7, 5], [9, 6, 7]),
-	'conjunct-d2p': RelData2([5, 11, 0], [5, 8, 8],[4, 6, 0], [3, 0, 1]),
-	'determiner-d2p': RelData2([5, 3, 8], [6, 2, 6],[7, 3, 4], [10, 9, 5]),
-	'noun-modifier-p2d': RelData2([4, 0, 5], [5, 8, 8],[7, 0, 0], [9, 8, 7]),
-	'num-modifier-d2p': RelData2([7, 9, 6], [11, 4, 2],[7, 6, 0], [10, 5, 8]),
-	'object-d2p': RelData2([7, 4, 3], [10, 5, 9],[7, 6, 3], [9, 9, 8]),
-	'other-d2p': RelData2([6, 8], [9, 6],[7, 4, 8], [10, 5, 5]),
-	'subject-p2d': RelData2([7, 4], [11, 10],[5, 1, 7], [9, 6, 1])
-    }
+	#'adj-clause-d2p': RelData2([6, 4, 0, 8], [4, 6, 3, 10], [4, 7, 6, 0], [5, 6, 5, 8], 0.5146579804560261, 0.5374592833876222),
+	'adj-modifier-d2p': RelData2([3, 7, 6, 5], [9, 10, 5, 7], [3, 5, 0, 4], [5, 1, 2, 7], 0.9047344110854504, 0.7725173210161663),
+	#'adv-clause-d2p': RelData2([4, 4, 8, 3], [9, 3, 8, 1], [4, 5, 5, 0], [3, 4, 8, 8], 0.2617924528301887, 0.2028301886792453),
+	'adv-modifier-d2p': RelData2([7, 3, 6, 8], [6, 10, 5, 5], [7, 4, 0, 6], [3, 7, 11, 2], 0.6071428571428571, 0.5411490683229814),
+	#'apposition-d2p': RelData2([4, 0, 4, 3], [3, 9, 9, 8], [0, 9], [8, 0], 0.23636363636363636, 0.2727272727272727),
+	'auxiliary-d2p': RelData2([3, 8, 7, 4], [9, 5, 10, 5], [7, 6, 7, 6], [4, 3, 3, 9], 0.9090909090909091, 0.8668373879641486),
+	'case-d2p': RelData2([7, 4, 5, 3], [10, 5, 0, 9], [6, 8, 3, 4], [9, 6, 11, 10], 0.8917861799217731, 0.652542372881356),
+	'cc-d2p': RelData2([3, 7, 4, 0], [10, 10, 5, 8], [7, 3, 7], [7, 11, 0], 0.6986143187066974, 0.7759815242494227),
+	#'clausal subject-d2p': RelData2([9, 1, 2, 1], [2, 11, 4, 8], [8, 0, 0, 0], [10, 8, 5, 1], 0.5, 0.5526315789473685),
+	#'clausal-d2p': RelData2([4, 6, 8, 8], [6, 2, 8, 11], [7, 4, 5, 7], [6, 5, 7, 1], 0.5769854132901134, 0.47974068071312803),
+	'compound-d2p': RelData2([3, 5, 6, 0], [9, 11, 5, 8], [3, 6, 0, 7], [5, 5, 2, 4], 0.8942042318307267, 0.8610855565777369),
+	#'conjunct-d2p': RelData2([4, 6, 5, 1], [3, 0, 4, 10], [5, 0, 6, 4], [5, 8, 8, 4], 0.4430512016718913, 0.39080459770114945),
+	'determiner-d2p': RelData2([7, 3, 4, 8], [10, 9, 5, 10], [5, 1, 3, 8], [6, 4, 2, 6], 0.9434502505368647, 0.6875447387258411),
+	'mark-d2p': RelData2([7, 8, 5, 7], [10, 5, 7, 1], [0, 8, 7, 3], [2, 6, 0, 11], 0.720949957591179, 0.6556403731976251),
+	'noun-modifier-d2p': RelData2([7, 0, 5, 0], [9, 8, 3, 7], [4, 0, 0, 3], [5, 8, 1, 3], 0.48764629388816644, 0.6514954486345904),
+	'num-modifier-d2p': RelData2([7, 6, 3, 1], [10, 5, 10, 5], [7, 9, 1, 0], [11, 4, 10, 8], 0.7936507936507936, 0.6296296296296297),
+	'object-d2p': RelData2([7, 6, 4, 5], [9, 9, 6, 3], [7, 4, 0, 3], [10, 5, 8, 9], 0.853239656518345, 0.7720530835284933),
+	'other-d2p': RelData2([6, 7, 4, 2], [5, 9, 0, 11], [5, 7, 7, 4], [7, 10, 4, 5], 0.3338538413491568, 0.30199875078076205),
+	#'parataxis-d2p': RelData2([4, 4, 8, 2], [3, 4, 8, 3], [4, 0, 0], [3, 4, 7], 0.3218390804597701, 0.28735632183908044),
+	#'punctuation-d2p': RelData2([4, 8, 3, 7], [5, 5, 9, 5], [11, 7, 2, 11], [1, 7, 2, 2], 0.24524714828897337, 0.40722433460076046),
+	'subject-d2p': RelData2([5, 1, 7, 7], [9, 6, 1, 8], [7, 4], [11, 10], 0.6888766519823789, 0.8188325991189427)
+}
+
+#PUD
+# relation_rules2 = {
+# 	#'adj-clause-d2p': RelData2([5, 6], [3, 4], [4, 5], [5, 0], 0.7142857142857143, 0.6428571428571429),
+# 	'adj-modifier-d2p': RelData2([3, 7, 2], [9, 10, 1], [3, 0], [5, 2], 0.9830508474576272, 0.847457627118644),
+# 	#'adv-clause-d2p': RelData2([8, 1, 5, 6], [8, 11, 3, 1], [4, 11, 4], [9, 8, 4], 0.6470588235294118, 0.5882352941176471),
+# 	'adv-modifier-d2p': RelData2([8, 6, 3, 7], [5, 5, 10, 10], [7, 4, 7], [3, 7, 0], 0.7222222222222222, 0.7777777777777778),
+# 	#'apposition-d2p': RelData2([8], [10], [8], [10], 0.75, 1.0),
+# 	'auxiliary-d2p': RelData2([3, 5, 6], [9, 0, 5], [3], [5], 0.896551724137931, 0.7586206896551724),
+# 	'case-d2p': RelData2([7, 4, 5, 3], [10, 5, 0, 9], [6, 9], [9, 3], 0.8773584905660378, 0.6886792452830188),
+# 	'cc-d2p': RelData2([8, 7], [5, 1], [5, 7, 7, 5], [3, 7, 0, 5], 0.44, 0.56),
+# 	#'clausal subject-d2p': RelData2([6], [2], [5], [8], 1.0, 1.0),
+# 	#'clausal-d2p': RelData2([4, 7, 6, 9], [6, 9, 2, 2], [4, 6, 7], [5, 6, 1], 0.7222222222222222, 0.5555555555555556),
+# 	'compound-d2p': RelData2([3, 7], [9, 6], [4, 6], [7, 11], 0.95, 0.9),
+# 	#'conjunct-d2p': RelData2([4], [4], [5], [5], 0.5, 0.375),
+# 	'determiner-d2p': RelData2([7, 10, 3], [10, 10, 10], [2, 6, 1], [1, 8, 10], 0.9690721649484536, 0.7628865979381443),
+# 	'mark-d2p': RelData2([7], [1], [3, 7], [5, 7], 0.8604651162790697, 0.7209302325581395),
+# 	'noun-modifier-d2p': RelData2([4, 6, 3, 6], [6, 10, 11, 5], [7, 0, 5, 0], [10, 8, 0, 1], 0.4727272727272727, 0.5818181818181818),
+# 	'num-modifier-d2p': RelData2([7, 2], [10, 1], [0], [3], 0.8181818181818182, 0.5454545454545454),
+# 	'object-d2p': RelData2([6, 7, 3, 4], [9, 9, 8, 6], [7, 0], [10, 8], 0.9122807017543859, 0.7894736842105263),
+# 	'other-d2p': RelData2([6], [5], [5, 7, 9, 9], [7, 10, 1, 2], 0.3829787234042553, 0.3475177304964539),
+# 	#'parataxis-d2p': RelData2([5, 2, 1], [4, 8, 11], [8, 2, 4, 3], [8, 3, 2, 1], 0.45454545454545453, 0.7272727272727273),
+# 	#'punctuation-d2p': RelData2([4, 3, 8, 7], [5, 10, 5, 5], [11], [1], 0.28346456692913385, 0.3858267716535433),
+# 	'subject-d2p': RelData2([7, 5, 7, 4], [2, 11, 6, 4], [7, 4, 5, 8], [11, 10, 10, 10], 0.7792207792207793, 0.8571428571428571)
+# }
 
 # relation_rules3 = {'adj-modifier-d2p': RelData3([3, 7, 5], [9, 10, 7],[1/3,1/4,1/2], True),
 # 	'adv-modifier-d2p': RelData3([7, 3, 6], [6, 10, 5],[1/2,1,1/2], True),
@@ -191,7 +283,8 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 	reverse_label_map = {value: key for key, value in dependency.label_map.items()}
 	reverse_label_map['other'] = 'dep'
 	
-
+	lengths = []
+	uas= []
 	length_sent = 0
 	out_lines = []
 	out_lines_gold =[]
@@ -210,11 +303,16 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 				out_line_gold = line.strip()
 				if not sentid % 20:
 					print(f"Processed sentence {sentid}", flush=True)
+				if dowrite:
+					uas_sent = (np.array(list(map(int, gold.ravel() != 'no edge'))) * np.array(
+						list(map(int, pred.ravel() != 'no edge')))).sum() / np.array(list(map(int,gold.ravel()!='no edge'))).sum()
+					uas.append(uas_sent)
+					lengths.append(length_sent)
 				sentid += 1
 				
 			elif line.startswith('#'):
 				if line.startswith('# sent_id'):
-					out_line_ = line.strip() + '/pred'
+					out_line = line.strip() + '/pred'
 					out_line_gold = line.strip() + '/gold'
 					pred, gold, ord2pos = multigraph_aborescene(sentid,first_iter, past_ann, new_ann, past_params, new_params)
 					# pred, gold, node2lab = multigraph_aborescene(sentid, first_iter, past_ann, new_ann, past_params,
@@ -241,7 +339,7 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 						
 					fields[CONLLU_POS] = ord2pos[int(fields[CONLLU_ID]) - 1]
 					#fields[CONLLU_POS] = dependency.transform_label2pos(node2lab[int(fields[CONLLU_ID]) - 1])
-				out_line  ='\t'.join(fields)
+				out_line = '\t'.join(fields)
 					
 			if dowrite:
 				out_lines.append(out_line)
@@ -260,6 +358,10 @@ def rewrite_conllu(conllu_file, conllu_out_pred, conllu_out_gold,params_file, an
 		
 	print("Estimaitions:")
 	print(new_params)
+	print("mena uas:")
+	print(np.mean(np.array(uas)))
+	print("length uas corr coef:")
+	print(np.corrcoef(np.array(uas), np.array(lengths)))
 
 
 def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_params, new_params):
@@ -297,18 +399,27 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 	MultiAttention.add_nodes_from(DG.nodes())
 	
 	multi_edge2label = dict()
-	for relation, rules in relation_rules2.items():
+	for relation, rules in relation_rules.items():
 		#aggr_matrix = np.average(np.array(matrices)[rules.layers, rules.heads, :, :],weights=rules.weights, axis=0)
 		aggr_matrix = np.average(np.array(matrices)[rules.layers, rules.heads, :, :], axis=0)
-		aggr_matrix *= np.mean(np.array(matrices)[rules.layersT, rules.headsT, :, :], axis=0).transpose()
+		#aggr_matrixT = np.mean(np.array(matrices)[rules.layersT, rules.headsT, :, :], axis=0)
 		#aggr_matrix /= aggr_matrix.sum(axis=0, keepdims=True)
-		# if rules.d2p == True:
-		# 	aggr_matrix = aggr_matrix.transpose()
-		aggr_matrix = aggr_matrix/aggr_matrix.sum(axis=0,keepdims=True)/aggr_matrix.sum(axis=1, keepdims=True)
+		if rules.d2p == True:
+			aggr_matrix = aggr_matrix.transpose()
+		#aggr_matrix = aggr_matrix/aggr_matrix.sum(axis=0,keepdims=True)/aggr_matrix.sum(axis=1, keepdims=True)
 		aggr_matrix[:, root_ord] = 0.
 		np.fill_diagonal(aggr_matrix, 0.)
 		aggr_matrix = np.clip(aggr_matrix, 0.001, 0.999)
-		aggr_matrix = np.log(aggr_matrix)
+		#aggr_matrixT[:, root_ord] = 0.
+		#np.fill_diagonal(aggr_matrixT, 0.)
+		#aggr_matrixT = np.clip(aggr_matrixT, 0.001, 0.999)
+		
+		aggr_matrix = np.log(aggr_matrix/(1-aggr_matrix))
+		
+		#weight = rules.weight ** 5
+		#weightT = rules.weightT ** 5
+
+		#aggr_matrix = (weight * np.log(aggr_matrix) + weightT * np.log(aggr_matrixT))/(weight + weightT)
 		
 		if not first_iter:
 			y_ord = pos2ord[dependency.transform_label2pos(relation[:-4])]
@@ -354,14 +465,14 @@ def multigraph_aborescene(sentence_index, first_iter, past_ann, new_ann, past_pa
 		
 		deel = dependency.transform_label(deel)
 		
-		if deel + '-d2p' in relation_rules2:
+		if deel + '-d2p' in relation_rules:
 			dlabelm[dedge[0], dedge[1]] = deel + '-d2p'
-		elif deel + '-p2d' in relation_rules2:
+		elif deel + '-p2d' in relation_rules:
 			dlabelm[dedge[0], dedge[1]] = deel + '-p2d'
 		
-		elif 'other-d2p' in relation_rules2:
+		elif 'other-d2p' in relation_rules:
 			dlabelm[dedge[0], dedge[1]] = 'other-d2p'
-		elif 'other-p2d' in relation_rules2:
+		elif 'other-p2d' in relation_rules:
 			dlabelm[dedge[1], dedge[0]] = 'other-p2d'
 	
 	#annotate POS-like tags
