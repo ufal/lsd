@@ -22,13 +22,11 @@ label_map = {'acl': 'adj-clause',
              'parataxis': 'parataxis',
              'ccomp': 'clausal',
              'compound': 'compound',
-             #'flat': 'compound',
              'conj': 'conjunct',
              'cc': 'cc',
              'csubj': 'clausal subject',
              'det': 'determiner',
              'nmod': 'noun-modifier',
-             #'obl': 'noun-modifier',
              'nsubj': 'subject',
              'nummod': 'num-modifier',
              'obj': 'object',
@@ -38,15 +36,12 @@ label_map = {'acl': 'adj-clause',
              'mark': 'mark'}
 
 pos_map = {'ADJ': 'ADJ',
-           #'ADP': 'ADP',
-           #'ADV': 'ADV',
            'AUX': 'VERB',
            'DET': 'ADJ',
            'NOUN': 'NOUN',
            'NUM': 'ADJ',
            'PRON': 'NOUN',
            'PROPN': 'NOUN',
-           #'PUNCT': 'PUNCT',
            'VERB': 'VERB'}
 
 
@@ -62,38 +57,6 @@ dep2pos_map = {#'adv-modifier' : 'ADV',
 	'noun-modifier': 'NOUN',
 	'subject': 'NOUN',
 	'num-modifier': 'ADJ'}
-#'punctuation': 'PUNCT'}
-
-#all relations
-# label_map = {'acl': 'acl',
-# 	            'advcl': 'advcl',
-# 	            'advmod': 'advmod',
-# 	            'amod': 'amod',
-# 	            'appos': 'appos',
-# 	            'aux': 'aux',
-# 	            'ccomp': 'ccomp',
-# 	            'compound': 'compound',
-# 	            'conj': 'conj',
-#                 'cc': 'cc',
-# 	            'csubj': 'csubj',
-#                 'xcomp': 'xcomp',
-#                 'parataxis': 'parataxis',
-# 	            'det': 'det',
-#                 'dep': 'dep',
-# 	            'iobj': 'iobj',
-# 	            'nmod': 'nmod',
-# 	            'nsubj': 'nsubj',
-# 	            'nummod': 'nummod',
-# 	            'obj': 'obj',
-#                 'mark': 'mark',
-#                 'case': 'case',
-#                 'punct': 'punct',
-#                 'discourse': 'discourse',
-#                 'vocative': 'vocative',
-#                 'flat': 'flat',
-#                 'fixed': 'fixed',
-#                 'expl': 'expl',
-#                 'orphan': 'orphan'}
 
 
 def define_labels(consider_directionality):
@@ -123,7 +86,7 @@ def transform_label2pos(label):
 
 def transform_label(label):
 	# NOTE: version 4 when line below commented
-	# label = label.split(':')[0]  # to cope with nsubj:pass for instance
+	label = label.split(':')[0]  # to cope with nsubj:pass for instance
 	if label in label_map or label + '-p2d' in label_map:
 		label = label_map[label]
 	else:
@@ -178,7 +141,7 @@ def conllu2pp_frame(conllu_file):
 			pp_frame[posj][posi] = 0
 	
 	if conllu_file:
-		relation_labeled = read_conllu_labeled(conllu_file, convert=True)
+		relation_labeled = read_conllu_labeled(conllu_file)
 		for sent_rels in relation_labeled:
 			for dep, head, label, pos in sent_rels:
 				if label != 'root':
@@ -191,7 +154,7 @@ def conllu2pp_frame(conllu_file):
 
 def conllu2freq_frame(conllu_file, directional=True):
 	dependency_pos_freq = defaultdict(lambda: pos_dict(pos_labels))
-	relation_labeled = read_conllu_labeled(conllu_file, convert=True)
+	relation_labeled = read_conllu_labeled(conllu_file)
 	for sent_rels in relation_labeled:
 		for dep, head, label, pos in sent_rels:
 			if label != 'root':
@@ -230,7 +193,7 @@ def read_conllu(conllu_file, directional=False):
 	return relations
 
 
-def read_conllu_labeled(conllu_file, convert=False):
+def read_conllu_labeled(conllu_file):
 	CONLLU_ID = 0
 	CONLLU_LABEL = 7
 	CONLLU_HEAD = 6
@@ -241,9 +204,6 @@ def read_conllu_labeled(conllu_file, convert=False):
 		sentid = 0
 		for line in in_conllu:
 			if line == '\n':
-				# if convert:
-				# 	relations_labeled.append(DependencyConverter(sentence_rel).convert(return_root=True))
-				# else:
 				relations_labeled.append(sentence_rel)
 				sentence_rel = []
 				sentid += 1
@@ -286,6 +246,15 @@ def read_conllu_tokens(conllu_file):
 
 # NOTE 6: fixed alignment between conllu and Bert tokenization
 def group_wordpieces(wordpieces_all, conllu_file):
+	'''
+	Joins wordpices of tokens, so that they correspond to the tokens in conllu file.
+	
+	:param wordpieces_all: lists of BPE pieces for each sentence
+	:param conllu_file: location of the conllu file
+	:return: group_ids_all list of grouped token ids, e.g. for a BPE sentence:
+	"Mr. Kowal@@ ski called" joined to "Mr. Kowalski called" it would be [[0], [1, 2], [3]]
+	tokens_out_all is list of output tokens.
+	'''
 	grouped_ids_all = []
 	tokens_out_all = []
 	conllu_tokens_all = read_conllu_tokens(conllu_file)

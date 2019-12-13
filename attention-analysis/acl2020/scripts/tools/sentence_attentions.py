@@ -31,12 +31,11 @@ def pos_hard_mask(sentence_rels, relation_label, pos_frame, thr=0.005):
 				pos_mask[jdx, idx] = 1.0
 	return pos_mask
 
+
 def diagonal_mask(sentnce_rels):
 	mask = np.ones((len(sentnce_rels), len(sentnce_rels)))
 	np.fill_diagonal(mask, 0)
 	return mask
-	
-	
 
 
 def aggregate_subtoken_matrix(attention_matrix, tokens_grouped):
@@ -63,7 +62,6 @@ def generate_matrices(attentions_loaded, tokens_grouped, eos=True, no_softmax=Fa
 		if sentences and sentence_index not in sentences:
 			continue
 
-		
 		sentence_id = 'arr_' + str(sentence_index)
 		tokens_count = attentions_loaded[sentence_id].shape[2]
 		
