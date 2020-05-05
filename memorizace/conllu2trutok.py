@@ -14,10 +14,25 @@ FORM = 1
 LEMMA = 2
 POS = 3
 
-# TODO truecase
-
 def printword(fields):
-    print(fields[FORM], end=' ')
+    # !!! hack: assume multiword tokens are function words and therefore
+    # lower
+    # TODO correct: check case of first part of multitoken word and set case
+    # accordingly
+    if fields[LEMMA] == fields[FORM]:
+        # no need to truecase
+        form = fields[FORM]
+    elif fields[LEMMA].islower() or fields[LEMMA] == '_':
+        form = fields[FORM].lower()
+    elif fields[LEMMA].isupper():
+        form = fields[FORM].upper()
+    elif fields[LEMMA].istitle():
+        form = fields[FORM].title()
+    else:
+        logging.warn('Cannot truecase {} with lemma {}'.format(
+            fields[FORM], fields[LEMMA]))
+        form = fields[FORM]
+    print(form, end=' ')
 
 skipwords = set()
 for line in sys.stdin:
